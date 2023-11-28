@@ -1,0 +1,12 @@
+{% macro tnaSensitiveImage(params) %}
+{%- set containerClasses = [params.classes] if params.classes else [] -%}
+<div class="tna-sensitive-image {{ ' '.join(containerClasses) }}" data-module="tna-sensitive-image" style="--sensitive-image: url('{{ params.image.src }}'); --sensitive-image-width: {{ params.image.width }}; --sensitive-image-height: {{ params.image.height }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+  <p class="tna-sensitive-image__warning">{{ params.warning }}</p>
+  <details class="tna-sensitive-image__details">
+    <summary class="tna-sensitive-image__show" data-action="{{ params.action }}">{{ params.action }}</summary>
+    <div class="tna-sensitive-image__container">
+      <img src="{{ params.image.src }}" alt="{{ params.image.alt }}" class="tna-sensitive-image__image" />
+    </div>
+  </details>
+</div>
+{% endmacro %}

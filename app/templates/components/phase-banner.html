@@ -1,0 +1,20 @@
+{% macro tnaPhaseBanner(params) %}
+{%- set containerClasses = [params.classes] if params.classes else [] -%}
+{%- if params.accent -%}
+  {%- set containerClasses = containerClasses + ['tna-phase-banner--accent'] -%}
+{%- endif -%}
+<div class="tna-phase-banner {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+  <div class="tna-container">
+    <div class="tna-column tna-column--full-tiny">
+      <span class="tna-phase-banner__phase">
+        {{ params.phase | lower | capitalize }}
+      </span>
+    </div>
+    <div class="tna-column tna-column--flex-1 tna-column--full-tiny">
+      <p class="tna-phase-banner__message">
+        {{ params.message | safe }}
+      </p>
+    </div>
+  </div>
+</div>
+{% endmacro %}

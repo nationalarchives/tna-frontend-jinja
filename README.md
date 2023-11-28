@@ -12,3 +12,8 @@ The rationale behind choosing Jinja was that it works with the two most popular 
 The Jinja2 templates and macros will be published to [PyPi](https://pypi.org/) which can then be included as a dependecy in Python projects.
 
 For a full relationship diagram, see https://github.com/nationalarchives/tna-frontend#component-diagram.
+
+```sh
+flask --app tna-frontend-jinja run --debug --port 5000
+node tasks/test.mjs
+```

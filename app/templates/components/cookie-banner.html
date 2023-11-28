@@ -1,0 +1,63 @@
+{% macro tnaCookieBanner(params) %}
+{% from "components/button.html" import tnaButton %}
+
+{%- set containerClasses = [params.classes] if params.classes else [] -%}
+<div class="tna-cookie-banner {{ containerClasses | join(' ') }}" role="region" aria-label="Cookie usage" data-module="tna-cookie-banner" data-policies="{{ params.policies if params.policies }}" data-preferenceskey="{{ params.preferencesSetKey if params.preferencesSetKey else 'cookie_preferences_set' }}" data-policies-key="{{ params.policiesKey if params.policiesKey }}" data-domain="{{ params.cookiesDomain if params.cookiesDomain }}" data-path="{{ params.cookiesPath if params.cookiesPath }}" data-insecure="{{ 'true' if params.allowInsecure else 'false' }}" role="region" aria-label="Cookies on {{ params.serviceName }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %} hidden>
+  <div class="tna-container">
+    <div class="tna-column tna-column--full tna-cookie-banner__message tna-cookie-banner__message--prompt">
+      <h2 class="tna-heading-m">This website uses cookies</h2>
+      <p>We use some essential cookies to make this service work.</p>
+      <p>We'd also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+      <div class="tna-button-group">
+        {{ tnaButton({
+          "text": "Accept cookies",
+          "buttonElement": True,
+          "attributes": {
+            "value": "accept"
+          }
+        }) }}
+        {{ tnaButton({
+          "text": "Reject cookies",
+          "buttonElement": True,
+          "attributes": {
+            "value": "reject"
+          }
+        }) }}
+        {{ tnaButton({
+          "text": "Set cookie preferences",
+          "href": params.cookiesUrl,
+          "plain": True
+        }) }}
+      </div>
+    </div>
+    <div class="tna-column tna-column--full tna-cookie-banner__message tna-cookie-banner__message--accepted" tabindex="0" hidden>
+      <p>
+        You have accepted optional cookies. You can change your cookie settings on the <a href="{{ params.cookiesUrl }}">Cookies page</a>.
+      </p>
+      <div class="tna-button-group">
+        {{ tnaButton({
+          "text": "Close this message",
+          "buttonElement": true,
+          "attributes": {
+            "value": "close"
+          }
+        }) }}
+      </div>
+    </div>
+    <div class="tna-column tna-column--full tna-cookie-banner__message tna-cookie-banner__message--rejected" tabindex="0" hidden>
+      <p>
+        You have rejected optional cookies. You can change your cookie settings on the <a href="{{ params.cookiesUrl }}">Cookies page</a>.
+      </p>
+      <div class="tna-button-group">
+        {{ tnaButton({
+          "text": "Close this message",
+          "buttonElement": true,
+          "attributes": {
+            "value": "close"
+          }
+        }) }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}

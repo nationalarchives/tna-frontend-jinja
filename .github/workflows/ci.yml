@@ -1,0 +1,43 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+      - name: Install Python requirements
+        run: pip install -r requirements.txt
+      - name: Lint Python
+        run: |
+          isort . --diff --verbose
+          black . --check --verbose
+          flake8 . --verbose
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+      - name: Get fixtures
+        run: cd .. && git clone https://github.com/nationalarchives/tna-frontend.git
+      - name: Install Python requirements
+        run: poetry install
+      - name: Install Node dependencies
+        run: cd tasks && npm install
+      - name: Run server
+        run: flask --app tna-frontend-jinja run --debug --port 5000 &
+      - name: Run the tests
+        run: node ./tasks/test.mjs || exit 1
