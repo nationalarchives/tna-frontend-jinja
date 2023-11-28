@@ -1,0 +1,21 @@
+{% macro tnaButton(params) %}
+{%- set buttonClasses = [params.classes] if params.classes else [] -%}
+{%- if params.accent -%}
+  {%- set buttonClasses = buttonClasses + ['tna-button--accent'] -%}
+{%- endif -%}
+{%- if params.small -%}
+  {%- set buttonClasses = buttonClasses + ['tna-button--small'] -%}
+{%- endif -%}
+{%- if params.plain -%}
+  {%- set buttonClasses = buttonClasses + ['tna-button--plain'] -%}
+{%- endif -%}
+{%- set classes = ' '.join(buttonClasses) -%}
+<{{ 'button' if params.buttonElement else 'a' }}{%- if not params.buttonElement %} href="{{ params.href }}"{%- endif %} class="tna-button{% if classes %} {{ classes }}{% endif %}"{%- if not params.buttonElement %} role="button"{%- endif -%}{%- if params.title %} title="{{ params.title }}"{% endif %} {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+  {%- if params.brandIcon -%}
+  <i class="fa-brands fa-fw fa-{{ params.brandIcon }}"></i>
+  {%- elif params.icon -%}
+  <i class="fa-solid fa-fw fa-{{ params.icon }}"></i>
+  {%- endif -%}
+  {{ params.text }}
+</{{ 'button' if params.buttonElement else 'a' }}>
+{% endmacro %}

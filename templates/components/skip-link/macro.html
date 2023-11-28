@@ -1,0 +1,6 @@
+{% macro tnaSkipLink(params) %}
+{%- set containerClasses = [params.classes] if params.classes else [] -%}
+<a href="#{{ params.href if params.href else 'main-content' }}" class="tna-skip-link {{ containerClasses | join(' ') }}" data-module="tna-skip-link" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+  {{ params.text if params.text else 'Skip to main content' }}
+</a>
+{% endmacro %}
