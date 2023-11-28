@@ -1,10 +1,10 @@
 [tool.poetry]
 name = "tna-frontend-jinja"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Andrew Hosgood <andrew.hosgood@nationalarchives.gov.uk>"]
 readme = "README.md"
-packages = [{include = "app"}]
+packages = [{include = "templates"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"

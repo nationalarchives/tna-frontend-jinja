@@ -1,5 +1,5 @@
 {% macro tnaCookieBanner(params) %}
-{% from "components/button.html" import tnaButton %}
+{% from "components/button/macro.html" import tnaButton %}
 
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
 <div class="tna-cookie-banner {{ containerClasses | join(' ') }}" role="region" aria-label="Cookie usage" data-module="tna-cookie-banner" data-policies="{{ params.policies if params.policies }}" data-preferenceskey="{{ params.preferencesSetKey if params.preferencesSetKey else 'cookie_preferences_set' }}" data-policies-key="{{ params.policiesKey if params.policiesKey }}" data-domain="{{ params.cookiesDomain if params.cookiesDomain }}" data-path="{{ params.cookiesPath if params.cookiesPath }}" data-insecure="{{ 'true' if params.allowInsecure else 'false' }}" role="region" aria-label="Cookies on {{ params.serviceName }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %} hidden>
