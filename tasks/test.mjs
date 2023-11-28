@@ -84,8 +84,8 @@ for (let i = 0; i < components.length; i++) {
         .join("");
       console.log(diff);
       console.log("\n");
-      // process.exitCode = 1;
-      // throw new Error("Fixtures tests failed");
+      process.exitCode = 1;
+      throw new Error("Fixtures tests failed");
     } else {
       console.log(`  🟢 [PASS] ${fixture.name}`);
     }
