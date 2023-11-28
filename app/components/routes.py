@@ -15,9 +15,11 @@ def render_component(template):
 def breadcrumbs():
     return render_component("breadcrumbs.html")
 
+
 @bp.route("/button")
 def button():
     return render_component("button.html")
+
 
 @bp.route("/card")
 def card():
@@ -82,6 +84,7 @@ def sensitive_image():
 @bp.route("/skip-link")
 def skip_link():
     return render_component("skip-link.html")
+
 
 @bp.route("/tabs")
 def tabs():
