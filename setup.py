@@ -5,10 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="tna-frontend-jinja",
-    version="0.1.3",
+    version="0.1.4",
     author="Andrew Hosgood",
     author_email="andrew.hosgood@nationalarchives.gov.uk",
-    description="The National Archives frontend Jinja templates",
+    description="TNA Frontend Jinja templates",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/nationalarchives/tna-frontend-jinja",
