@@ -18,13 +18,13 @@ jobs:
       - name: Get fixtures
         run: cd .. && git clone https://github.com/nationalarchives/tna-frontend.git
       - name: Install Python requirements
-        run: pip install -r requirements.txt
+        run: pip install -r test/requirements.txt
       - name: Install Node dependencies
-        run: cd tasks && npm install
+        run: cd test/tasks && npm install
       - name: Run server
-        run: flask --app tna-frontend-jinja run --debug --port 5000 &
+        run: flask --app test run --debug --port 5000 &
       - name: Run the tests
-        run: node ./tasks/test.mjs || exit 1
+        run: node ./test/tasks/test-fixtures.mjs || exit 1
 
   deploy:
     name: Upload release to PyPI

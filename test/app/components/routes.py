@@ -1,8 +1,7 @@
 import json
+from test.app.components import bp
 
 from flask import render_template, request
-
-from app.components import bp
 
 
 def render_component(template):

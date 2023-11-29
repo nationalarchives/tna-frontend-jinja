@@ -25,9 +25,9 @@ setuptools.setup(
         "Topic :: Software Development :: User Interfaces",
         "Topic :: Text Processing :: Markup :: HTML",
     ],
-    packages=setuptools.find_packages(exclude=["app"]),
+    packages=["tna_frontend_jinja"],
     package_data={
-        "templates": ["*.html"],
+        "": ["**/*.html"],
     },
     python_requires=">=3.8",
     install_requires=["flask>=2"],

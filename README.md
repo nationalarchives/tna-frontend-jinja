@@ -9,6 +9,8 @@
 ## Quickstart
 
 ```sh
-flask --app tna-frontend-jinja run --debug --port 5000
-node tasks/test.mjs
+python -m venv venv
+python install -r test/requirements.txt
+flask --app test run --debug --port 5000
+node test/tasks/test-fixtures.mjs
 ```
