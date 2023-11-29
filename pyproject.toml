@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "tna-frontend-jinja"
-version = "0.1.1"
+name = "tna_frontend_jinja"
+version = "0.1.2"
 description = ""
 authors = ["Andrew Hosgood <andrew.hosgood@nationalarchives.gov.uk>"]
 readme = "README.md"
