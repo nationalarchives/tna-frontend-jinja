@@ -9,12 +9,21 @@
 {%- if params.plain -%}
   {%- set buttonClasses = buttonClasses + ['tna-button--plain'] -%}
 {%- endif -%}
+{%- if params.iconOnly -%}
+  {%- set buttonClasses = buttonClasses + ['tna-button--icon-only'] -%}
+{%- endif -%}
+{%- if params.iconOnlyOnMobile -%}
+  {%- set buttonClasses = buttonClasses + ['tna-button--icon-only-mobile'] -%}
+{%- endif -%}
+{%- if params.rightAlignIcon -%}
+  {%- set buttonClasses = buttonClasses + ['tna-button--icon-right'] -%}
+{%- endif -%}
 {%- set classes = ' '.join(buttonClasses) -%}
-<{{ 'button' if params.buttonElement else 'a' }}{%- if not params.buttonElement %} href="{{ params.href }}"{%- endif %} class="tna-button{% if classes %} {{ classes }}{% endif %}"{%- if not params.buttonElement %} role="button"{%- endif -%}{%- if params.title %} title="{{ params.title }}"{% endif %} {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+<{{ 'button' if params.buttonElement else 'a' }}{%- if not params.buttonElement %} href="{{ params.href }}"{%- endif %} class="tna-button {{ classes }}"{%- if params.buttonElement %} type="{{ params.buttonType or 'button' }}"{%- endif -%}{%- if params.title %} title="{{ params.title }}"{% endif %} {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
   {%- if params.brandIcon -%}
-  <i class="fa-brands fa-fw fa-{{ params.brandIcon }}"></i>
+  <i class="fa-brands fa-fw fa-{{ params.brandIcon }}" aria-hidden="true"></i>
   {%- elif params.icon -%}
-  <i class="fa-solid fa-fw fa-{{ params.icon }}"></i>
+  <i class="fa-solid fa-fw fa-{{ params.icon }}" aria-hidden="true"></i>
   {%- endif -%}
   {{ params.text }}
 </{{ 'button' if params.buttonElement else 'a' }}>

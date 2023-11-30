@@ -25,9 +25,29 @@ def card():
     return render_component("card.html")
 
 
+@bp.route("/checkboxes")
+def checkboxes():
+    return render_component("checkboxes.html")
+
+
 @bp.route("/cookie-banner")
 def cookie_banner():
     return render_component("cookie-banner.html")
+
+
+@bp.route("/date-input")
+def date_input():
+    return render_component("date-input.html")
+
+
+@bp.route("/date-search")
+def date_search():
+    return render_component("date-search.html")
+
+
+@bp.route("/featured-records")
+def featured_records():
+    return render_component("featured-records.html")
 
 
 @bp.route("/filters")
@@ -65,6 +85,11 @@ def message():
     return render_component("message.html")
 
 
+@bp.route("/pagination")
+def pagination():
+    return render_component("pagination.html")
+
+
 @bp.route("/phase-banner")
 def phase_banner():
     return render_component("phase-banner.html")
@@ -73,6 +98,21 @@ def phase_banner():
 @bp.route("/picture")
 def picture():
     return render_component("picture.html")
+
+
+@bp.route("/radios")
+def radios():
+    return render_component("radios.html")
+
+
+@bp.route("/search-field")
+def search_field():
+    return render_component("search-field.html")
+
+
+@bp.route("/select")
+def select():
+    return render_component("select.html")
 
 
 @bp.route("/sensitive-image")
@@ -88,3 +128,13 @@ def skip_link():
 @bp.route("/tabs")
 def tabs():
     return render_component("tabs.html")
+
+
+@bp.route("/text-input")
+def text_input():
+    return render_component("text-input.html")
+
+
+@bp.route("/textarea")
+def textarea():
+    return render_component("textarea.html")

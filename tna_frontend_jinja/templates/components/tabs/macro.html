@@ -1,2 +1,22 @@
 {% macro tnaTabs(params) %}
+{%- set containerClasses = [params.classes] if params.classes else [] -%}
+{%- if params.sticky -%}
+  {%- set containerClasses = containerClasses + ['tna-tabs--sticky'] -%}
+{%- endif -%}
+<div class="tna-tabs {{ ' '.join(containerClasses) }}" data-module="tna-tabs"{% for attribute, value in params.attributes %} {{ attribute }}="{{ value }}"{% endfor %}>
+  <ul class="tna-tabs__list">
+  {% for item in params['items'] %}
+    <li class="tna-tabs__list-item">
+      <a href="#{{ item.id }}" class="tna-tabs__list-item-link" id="{{ item.id }}-tab">{{ item.title }}</a>
+    </li>
+  {% endfor %}
+  </ul>
+  <div class="tna-tabs__items">
+  {% for item in params['items'] %}
+    <section id="{{ item.id }}" class="tna-tabs__item">
+      {{ item.body | safe }}
+    </section>
+  {% endfor %}
+  </div>
+</div>
 {% endmacro %}

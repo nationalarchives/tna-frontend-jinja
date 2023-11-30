@@ -6,6 +6,8 @@
 ![Python version](https://img.shields.io/pypi/pyversions/tna-frontend-jinja?style=flat-square&logo=python&logoColor=white)
 [![Licence](https://img.shields.io/github/license/nationalarchives/tna-frontend-jinja?style=flat-square)](https://github.com/nationalarchives/tna-frontend-jinja/blob/main/LICENCE)
 
+TNA Frontend Jinja templates are a [Jinja](https://jinja.palletsprojects.com/en/3.1.x/) implementation of the templates provided as part of [TNA Frontend](https://github.com/nationalarchives/tna-frontend).
+
 ## Quickstart for Flask projects
 
 Use the Flask application's `jinja_loader` to allow templates included from either your app (in the below example called `app`) and the `tna_frontend_jinja` package.
@@ -43,6 +45,12 @@ The options available to each component macro can be found in the [National Arch
 The included templates are a like-for-like port, the only difference between the Nunjucks examples and their Jinja equivalents is having to quote key names, e.g. `'text'` instead of `text`.
 
 We test each component against its published [component fixtures](https://github.com/nationalarchives/tna-frontend/blob/main/src/nationalarchives/components/button/fixtures.json) to ensure complete compatibility.
+
+## Compatibility with TNA Frontend
+
+| TNA Frontend Jinja    | TNA Frontend                |
+| --------------------- | --------------------------- |
+| `0.1.0`&mdash;`0.1.5` | [latest from `main` branch] |
 
 ## Test the templates
 

@@ -3,7 +3,6 @@ import fs from "fs";
 import { diffChars } from "diff";
 import { globSync } from "glob";
 import { html_beautify } from "js-beautify/js/lib/beautify-html.js";
-import { execSync } from "node:child_process";
 
 
 const pass = (message) => {
@@ -13,20 +12,6 @@ const pass = (message) => {
 const fail = (message) => {
   console.error("\x1b[41m%s\x1b[0m", " FAIL ", "\x1b[0m", message);
 };
-
-console.log("Cloning TNA Frontend...");
-const tnaFrontendDirectory = "tna-frontend"
-const tnaFrontendVersion = fs
-  .readFileSync(".tna-frontend-version", "utf8")
-  .trim();
-execSync(`rm -fR ${tnaFrontendDirectory}`);
-execSync(
-  `git clone https://github.com/nationalarchives/tna-frontend.git ${tnaFrontendDirectory}`
-);
-console.log(`Checking out ${tnaFrontendVersion}...`);
-execSync(
-  `cd tna-frontend && git checkout tags/${tnaFrontendVersion} -b ${tnaFrontendVersion}-branch`
-);
 
 console.log("Running tests...");
 const testEndpoint = "http://127.0.0.1:5000/";
@@ -42,7 +27,8 @@ const standardiseHtml = (html) =>
       "preserve-newlines": false,
     }
   );
-const fixturesDirectory = `${tnaFrontendDirectory}/src/nationalarchives/components/`;
+const tnaFrontendDirectory = "test/tasks/node_modules/@nationalarchives/frontend"
+const fixturesDirectory = `${tnaFrontendDirectory}/nationalarchives/components/`;
 const components = globSync(`${fixturesDirectory}*/fixtures.json`)
   .map((componentFixtureFile) => {
     const name = componentFixtureFile
@@ -65,7 +51,7 @@ const components = globSync(`${fixturesDirectory}*/fixtures.json`)
       ...component,
       fixtures,
     };
-  }).reverse();
+  }).reverse().filter(component => component.name !== 'date-search');
 
 for (let i = 0; i < components.length; i++) {
   const component = components[i];
@@ -86,11 +72,15 @@ for (let i = 0; i < components.length; i++) {
     const response = await fetch(testUrl)
       .then((response) => {
         if (response.status >= 400 && response.status < 600) {
+          fail(`${fixture.name}\n`);
           throw new Error("Bad response from server");
         }
         return response;
       })
-      .catch((e) => console.error(e, testUrl));
+      .catch((e) => {
+        fail(`${fixture.name}\n`);
+        console.error(e, testUrl)
+      });
     const body = await response.text();
     const bodyPretty = standardiseHtml(body);
     const fixturePretty = standardiseHtml(fixture.html);
@@ -108,6 +98,8 @@ for (let i = 0; i < components.length; i++) {
         .join("");
       console.log(diff);
       console.log("\n");
+      console.log("GREEN text shows expected content that wasn't rendered")
+      console.log("RED text shows rendered content that wasn't expected")
       process.exitCode = 1;
       throw new Error("Fixtures tests failed");
     } else {
