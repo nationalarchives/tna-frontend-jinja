@@ -17,12 +17,12 @@ jobs:
           python-version: '3.x'
       - name: Install Python requirements
         run: pip install -r test/requirements.txt
-      - name: Install Node dependencies
-        run: cd test/tasks && npm install
       - name: Run server
         run: flask --app test run --debug --port 5000 &
+      - name: Install Node dependencies
+        run: npm install
       - name: Run the tests
-        run: node ./test/tasks/test-fixtures.mjs || exit 1
+        run: node test-fixtures.mjs || exit 1
 
   deploy:
     name: Upload release to PyPI
