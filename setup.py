@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="tna-frontend-jinja",
-    version="0.1.5",
+    version="0.1.6",
     author="Andrew Hosgood",
     author_email="andrew.hosgood@nationalarchives.gov.uk",
     description="TNA Frontend Jinja templates",

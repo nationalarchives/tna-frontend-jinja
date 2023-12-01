@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [0.1.6](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.5...v0.1.6) - 2023-12-01
+
+### Changed
+
+- Upgraded TNA Frontend to `v0.1.29-prerelease`
+
 ## [0.1.5](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.4...v0.1.5) - 2023-11-29
 
 ### Added

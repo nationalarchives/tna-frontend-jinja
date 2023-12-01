@@ -48,9 +48,10 @@ We test each component against its published [component fixtures](https://github
 
 ## Compatibility with TNA Frontend
 
-| TNA Frontend Jinja    | TNA Frontend                |
-| --------------------- | --------------------------- |
-| `0.1.0`&mdash;`0.1.5` | [latest from `main` branch] |
+| TNA Frontend Jinja    | TNA Frontend                                                                                             |
+| --------------------- | -------------------------------------------------------------------------------------------------------- |
+| `0.1.6`               | [`v0.1.29-prerelease`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.1.29-prerelease) |
+| `0.1.0`&mdash;`0.1.5` | [latest from `main` branch when published]                                                               |
 
 ## Test the templates
 
@@ -58,5 +59,5 @@ We test each component against its published [component fixtures](https://github
 python -m venv venv
 python install -r test/requirements.txt
 flask --app test run --debug --port 5000
-node test/tasks/test-fixtures.mjs
+node test-fixtures.mjs
 ```

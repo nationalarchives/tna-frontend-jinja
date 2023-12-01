@@ -4,7 +4,6 @@ import { diffChars } from "diff";
 import { globSync } from "glob";
 import { html_beautify } from "js-beautify/js/lib/beautify-html.js";
 
-
 const pass = (message) => {
   console.log("\x1b[42m%s\x1b[0m", " PASS ", "\x1b[0m", message);
 };
@@ -27,7 +26,7 @@ const standardiseHtml = (html) =>
       "preserve-newlines": false,
     }
   );
-const tnaFrontendDirectory = "test/tasks/node_modules/@nationalarchives/frontend"
+const tnaFrontendDirectory = "node_modules/@nationalarchives/frontend";
 const fixturesDirectory = `${tnaFrontendDirectory}/nationalarchives/components/`;
 const components = globSync(`${fixturesDirectory}*/fixtures.json`)
   .map((componentFixtureFile) => {
@@ -51,12 +50,11 @@ const components = globSync(`${fixturesDirectory}*/fixtures.json`)
       ...component,
       fixtures,
     };
-  }).reverse().filter(component => component.name !== 'date-search');
+  }).reverse();
 
 for (let i = 0; i < components.length; i++) {
   const component = components[i];
-  console.log(`------------------------------------------`);
-  console.log(`Component: ${component.name}`);
+  console.log(`\nComponent: ${component.name}`);
   const { fixtures } = JSON.parse(
     fs.readFileSync(
       `${fixturesDirectory}${component.name}/fixtures.json`,
@@ -79,7 +77,7 @@ for (let i = 0; i < components.length; i++) {
       })
       .catch((e) => {
         fail(`${fixture.name}\n`);
-        console.error(e, testUrl)
+        console.error(e, testUrl);
       });
     const body = await response.text();
     const bodyPretty = standardiseHtml(body);
@@ -98,8 +96,8 @@ for (let i = 0; i < components.length; i++) {
         .join("");
       console.log(diff);
       console.log("\n");
-      console.log("GREEN text shows expected content that wasn't rendered")
-      console.log("RED text shows rendered content that wasn't expected")
+      console.log("GREEN text shows expected content that wasn't rendered");
+      console.log("RED text shows rendered content that wasn't expected");
       process.exitCode = 1;
       throw new Error("Fixtures tests failed");
     } else {
