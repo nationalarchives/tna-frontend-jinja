@@ -1,4 +1,4 @@
-name: Python Package
+name: Publish Python Package
 
 on:
   release:
@@ -6,7 +6,6 @@ on:
 
 jobs:
   test:
-    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,7 +24,6 @@ jobs:
         run: node test-fixtures.mjs || exit 1
 
   deploy:
-    name: Upload release to PyPI
     runs-on: ubuntu-latest
     needs: [test]
     steps:
