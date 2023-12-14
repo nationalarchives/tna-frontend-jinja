@@ -52,6 +52,7 @@ We test each component against its published [component fixtures](https://github
 
 | TNA Frontend Jinja    | TNA Frontend                               |
 | --------------------- | ------------------------------------------ |
+| `0.1.7`               | `v0.1.31`                                  |
 | `0.1.6`               | `v0.1.29-prerelease`&ndash;`v0.1.30`       |
 | `0.1.0`&ndash;`0.1.5` | [latest from `main` branch when published] |
 
