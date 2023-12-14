@@ -27,7 +27,7 @@
       <link rel="stylesheet" type="text/css" href="https://use.typekit.net/hkj3kuz.css">
     {% endblock %}
   </head>
-    <body class="tna-template__body {{ bodyClasses }}" {%- for attribute, value in bodyAttributes %} {{attribute}}="{{value}}"{% endfor %}>
+    <body class="tna-template__body {{ bodyClasses }}" {%- if bodyAttributes %}{% for attribute, value in bodyAttributes.items %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
     {% block bodyStart %}
       {% block cookies %}
         {{ tnaCookieBanner({
