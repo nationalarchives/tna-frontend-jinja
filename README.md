@@ -50,10 +50,11 @@ We test each component against its published [component fixtures](https://github
 
 ## Compatibility with TNA Frontend
 
-| TNA Frontend Jinja    | TNA Frontend                               |
+| TNA Frontend Jinja    | Compatible TNA Frontend versions           |
 | --------------------- | ------------------------------------------ |
-| `0.1.7`&ndash;`0.1.8` | `v0.1.31`                                  |
-| `0.1.6`               | `v0.1.29-prerelease`&ndash;`v0.1.30`       |
+| `0.1.8`               | `v0.1.31`, `v0.1.32`                       |
+| `0.1.7`               | `v0.1.31`, `v0.1.32`                       |
+| `0.1.6`               | `v0.1.29-prerelease`, `v0.1.30`            |
 | `0.1.0`&ndash;`0.1.5` | [latest from `main` branch when published] |
 
 ## Test the templates
