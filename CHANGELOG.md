@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.9...HEAD)
+## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.10...HEAD)
 
 ### Added
 ### Changed
@@ -13,6 +13,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 ### Security
+
+## [0.1.10](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.9...v0.1.10) - 2023-12-29
+
+### Added
+
+- Allow `htmlAttributes` on the base template
+- Added new compound filters component
+
+### Changed
+
+- Upgraded TNA Frontend to `v0.1.34`
+
+### Fixed
+
+- Fixed attributes for lots of components
+- Fixed `bodyAttributes` on the base template
 
 ## [0.1.9](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.8...v0.1.9) - 2023-12-29
 

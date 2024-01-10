@@ -5,12 +5,12 @@
 {%- if params.spaced -%}
   {%- set containerClasses = containerClasses + ['tna-pagination--spaced'] -%}
 {%- endif -%}
-<nav class="tna-pagination {{ ' '.join(containerClasses) }}" role="navigation" aria-label="{{ params.landmarkLabel if params.landmarkLabel else 'Pagination' }}" {%- for attribute, value in params.attributes %} {{ attribute }}="{{ value }}"{% endfor %}>
+<nav class="tna-pagination {{ ' '.join(containerClasses) }}" role="navigation" aria-label="{{ params.landmarkLabel if params.landmarkLabel else 'Pagination' }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
   {% if params.previous -%}
   <div class="tna-pagination__prev">
     {{ tnaButton({
       'text': params.previous.text if params.previous.text else "Previous",
-      'href': "#",
+      'href': params.previous.href,
       'title': params.previous.title,
       'icon': "arrow-left",
       'iconOnlyOnMobile': True,
@@ -47,7 +47,7 @@
   <div class="tna-pagination__next">
     {{ tnaButton({
       'text': params.next.text if params.next.text else "Next",
-      'href': "#",
+      'href': params.next.href,
       'title': params.next.title,
       'icon': "arrow-right",
       'iconOnlyOnMobile': True,

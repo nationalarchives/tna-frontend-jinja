@@ -27,6 +27,6 @@
   {%- if params.maxLength %} maxlength="{{ params.maxLength }}"{% endif %}
   {%- if params.autofill %} autofill="{{ params.autofill }}"{% endif %}
   {%- if params.inputmode %} inputmode="{{ params.inputmode }}"{% endif %}
-  {%- for attribute, value in params.attributes %} {{ attribute }}="{{ value }}"{% endfor %}>
+  {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
 </div>
 {% endmacro %}

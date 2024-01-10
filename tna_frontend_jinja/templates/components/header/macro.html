@@ -3,7 +3,7 @@
 {%- if params.accent -%}
   {%- set containerClasses = containerClasses + ['tna-header--accent'] -%}
 {%- endif -%}
-<header class="tna-header {{ ' '.join(containerClasses) }}" data-module="tna-header"{% for attribute, value in params.attributes %} {{ attribute }}="{{ value }}"{% endfor %}>
+<header class="tna-header {{ ' '.join(containerClasses) }}" data-module="tna-header" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
   {%- if params.exit -%}
   <div class="tna-header__exit">
     <div class="tna-container">

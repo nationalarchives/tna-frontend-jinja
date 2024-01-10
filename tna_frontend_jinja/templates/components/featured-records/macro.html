@@ -1,6 +1,6 @@
 {% macro tnaFeaturedRecords(params) %}
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
-<ul class="tna-featured-records {{ ' '.join(containerClasses) }}" {%- for attribute, value in params.attributes %} {{ attribute }}="{{ value }}"{% endfor %}>
+<ul class="tna-featured-records {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
   {%- for item in params['items'] %}
   <li class="tna-featured-records__item">
     {%- if item.imageSrc %}

@@ -30,6 +30,11 @@ def checkboxes():
     return render_component("checkboxes.html")
 
 
+@bp.route("/compound-filters")
+def compound_filters():
+    return render_component("compound-filters.html")
+
+
 @bp.route("/cookie-banner")
 def cookie_banner():
     return render_component("cookie-banner.html")
