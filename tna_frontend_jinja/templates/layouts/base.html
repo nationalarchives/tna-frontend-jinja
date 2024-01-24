@@ -3,7 +3,7 @@
 {% from "components/header/macro.html" import tnaHeader -%}
 {% from "components/skip-link/macro.html" import tnaSkipLink -%}
 <!DOCTYPE html>
-<html lang="{{ htmlLang | default('en-GB') }}" class="tna-template tna-template--{{ theme | default('system') }}-theme tna-template--{{ themeAccent | default('black') }}-accent {{ htmlClasses }}" {%- if htmlAttributes %}{% for attribute, value in htmlAttributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+<html lang="{{ htmlLang | default('en') }}" class="tna-template tna-template--{{ theme | default('system') }}-theme tna-template--{{ themeAccent | default('black') }}-accent {{ htmlClasses }}" {%- if htmlAttributes %}{% for attribute, value in htmlAttributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
   <head>
     <meta charset="utf-8">
     <title>{% block pageTitle %}The National Archives{% endblock %}</title>
