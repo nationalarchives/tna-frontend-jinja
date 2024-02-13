@@ -70,6 +70,11 @@ def grid():
     return render_component("grid.html")
 
 
+@bp.route("/global-header")
+def globalHeader():
+    return render_component("global-header.html")
+
+
 @bp.route("/header")
 def header():
     return render_component("header.html")

@@ -24,7 +24,7 @@
       {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
       <button type="submit" class="tna-button tna-search-field__button">
         Search
-        <i class="fa-solid fa-fw fa-arrow-right tna-!--hide-on-tiny"></i>
+        <i class="fa-solid fa-fw fa-arrow-right tna-!--hide-on-tiny" aria-hidden="true"></i>
       </button>
     </div>
   </div>
