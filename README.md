@@ -52,7 +52,7 @@ We test each component against its published [component fixtures](https://github
 
 | TNA Frontend Jinja    | Compatible TNA Frontend versions           |
 | --------------------- | ------------------------------------------ |
-| `0.1.14`              | `v0.1.40`                                  |
+| `0.1.14`              | `v0.1.40`, `v0.1.41`                       |
 | `0.1.13`              | `v0.1.39`                                  |
 | `0.1.12`              | `v0.1.37`, `v0.1.38`                       |
 | `0.1.11`              | `v0.1.36`                                  |
