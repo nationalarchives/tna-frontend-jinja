@@ -50,14 +50,14 @@ def date_search():
     return render_component("date-search.html")
 
 
+@bp.route("/error-summary")
+def error_summary():
+    return render_component("error-summary.html")
+
+
 @bp.route("/featured-records")
 def featured_records():
     return render_component("featured-records.html")
-
-
-@bp.route("/filters")
-def filters():
-    return render_component("filters.html")
 
 
 @bp.route("/footer")
@@ -110,6 +110,11 @@ def picture():
     return render_component("picture.html")
 
 
+@bp.route("/quick-filters")
+def quick_filters():
+    return render_component("quick-filters.html")
+
+
 @bp.route("/radios")
 def radios():
     return render_component("radios.html")
@@ -118,6 +123,11 @@ def radios():
 @bp.route("/search-field")
 def search_field():
     return render_component("search-field.html")
+
+
+@bp.route("/search-filters")
+def search_filters():
+    return render_component("search-filters.html")
 
 
 @bp.route("/select")

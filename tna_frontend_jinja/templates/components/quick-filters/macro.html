@@ -1,0 +1,10 @@
+{% macro tnaQuickFilters(params) %}
+{%- set containerClasses = [params.classes] if params.classes else [] -%}
+<ul class="tna-quick-filters{% if params.stack %} tna-quick-filters--stacked{% endif %} {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+  {%- for item in params['items'] -%}
+  <li class="tna-quick-filters__item{%- if item.selected %} tna-quick-filters__item--selected{% endif %}">
+    <a href="{{ item.href }}" {%- if item.title %} title="{{ item.title }}"{% endif %} class="tna-quick-filters__link">{{ item.label }}</a>
+  </li>
+  {%- endfor -%}
+</ul>
+{% endmacro %}
