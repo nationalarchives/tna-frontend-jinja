@@ -24,7 +24,7 @@ const standardiseHtml = (html) =>
     {
       "wrap-attributes": "force",
       "preserve-newlines": false,
-    }
+    },
   );
 const tnaFrontendDirectory = "node_modules/@nationalarchives/frontend";
 const fixturesDirectory = `${tnaFrontendDirectory}/nationalarchives/components/`;
@@ -43,14 +43,15 @@ const components = globSync(`${fixturesDirectory}*/fixtures.json`)
     const { fixtures } = JSON.parse(
       fs.readFileSync(
         `${fixturesDirectory}${component.name}/fixtures.json`,
-        "utf8"
-      )
+        "utf8",
+      ),
     );
     return {
       ...component,
       fixtures,
     };
-  }).reverse();
+  })
+  .reverse();
 
 for (let i = 0; i < components.length; i++) {
   const component = components[i];
@@ -58,14 +59,14 @@ for (let i = 0; i < components.length; i++) {
   const { fixtures } = JSON.parse(
     fs.readFileSync(
       `${fixturesDirectory}${component.name}/fixtures.json`,
-      "utf8"
-    )
+      "utf8",
+    ),
   );
 
   for (let j = 0; j < component.fixtures.length; j++) {
     const fixture = component.fixtures[j];
     const testUrl = `${component.testUrl}?params=${encodeURIComponent(
-      JSON.stringify(fixture.options)
+      JSON.stringify(fixture.options),
     )}`;
     const response = await fetch(testUrl)
       .then((response) => {
@@ -91,7 +92,7 @@ for (let i = 0; i < components.length; i++) {
           (part) =>
             `${
               part.added ? "\x1b[32m" : part.removed ? "\x1b[31m" : "\x1b[0m"
-            }${part.value === " " ? "█" : part.value}`
+            }${part.value === " " ? "█" : part.value}`,
         )
         .join("");
       console.log(diff);

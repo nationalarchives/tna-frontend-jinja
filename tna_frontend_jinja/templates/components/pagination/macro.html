@@ -13,6 +13,7 @@
       'href': params.previous.href,
       'title': params.previous.title,
       'icon': "arrow-left",
+      'plain': not params.solid,
       'iconOnlyOnMobile': True,
       'attributes': {
         'rel': "prev"
@@ -30,7 +31,8 @@
         {{ tnaButton({
           'text': item.number,
           'href': item.href,
-          'accent': item.current,
+          'accent': params.solid and item.current,
+          'plain': not params.solid and not item.current,
           'classes': "tna-pagination__link",
           'attributes': {
             'aria-label': item.label
@@ -50,6 +52,7 @@
       'href': params.next.href,
       'title': params.next.title,
       'icon': "arrow-right",
+      'plain': not params.solid,
       'iconOnlyOnMobile': True,
       'classes': "tna-button--icon-right",
       'attributes': {
