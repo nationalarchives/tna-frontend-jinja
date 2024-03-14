@@ -5,7 +5,7 @@
 {%- if params.spaced -%}
   {%- set containerClasses = containerClasses + ['tna-pagination--spaced'] -%}
 {%- endif -%}
-<nav class="tna-pagination {{ ' '.join(containerClasses) }}" role="navigation" aria-label="{{ params.landmarkLabel if params.landmarkLabel else 'Pagination' }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+<nav class="tna-pagination {{ ' '.join(containerClasses) }}" aria-label="{{ params.landmarkLabel if params.landmarkLabel else 'Pagination' }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
   {% if params.previous -%}
   <div class="tna-pagination__prev">
     {{ tnaButton({

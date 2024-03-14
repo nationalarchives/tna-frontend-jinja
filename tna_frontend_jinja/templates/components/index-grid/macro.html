@@ -48,16 +48,17 @@
     {%- for item in params['items'] -%}
     <li class="{{ ' '.join(itemClasses) }}">
       <a href="{{ item.href }}" class="tna-index-grid__item" title="{{ item.title }}">
-        <img src="{{ item.src }}" class="tna-index-grid__item-image" width="{{ item.width }}" height="{{ item.height }}" alt="{{ item.alt }}" />
+        <img src="{{ item.src }}" class="tna-index-grid__item-image" width="{{ item.width }}" height="{{ item.height }}" alt="{{ item.alt }}">
         <span class="tna-index-grid__item-content">
           <span class="tna-index-grid__item-title">{{ item.title }}</span>
           {%- if item.label -%}
           <span class="tna-chip tna-index-grid__item-label">{{ item.label }}<span class="tna-!--visually-hidden">:</span></span>
           {%- endif -%}
-          {%- if item.subtitle -%}
+          {%- if item.subtitle %}
           <br>
-          <span class="tna-index-grid__item-subtitle">{{ item.subtitle }}</span>
-          {%- endif -%}
+          <span class="tna-index-grid__item-subtitle">
+            <span class="tna-visually-hidden">(</span>{{ item.subtitle }}<span class="tna-visually-hidden">)</span></span>
+          {%- endif %}
         </span>
       </a>
     </li>

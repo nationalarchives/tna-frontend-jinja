@@ -35,7 +35,7 @@ const components = globSync(`${fixturesDirectory}*/fixtures.json`)
       .replace(new RegExp(/\/fixtures.json$/), "");
     return {
       name,
-      testUrl: `${testEndpoint}${name}`,
+      testUrl: `${testEndpoint}components/${name}`,
       fixtures: [],
     };
   })
@@ -106,3 +106,51 @@ for (let i = 0; i < components.length; i++) {
     }
   }
 }
+
+
+
+const templatesDirectory = `${tnaFrontendDirectory}/nationalarchives/templates/`;
+  const { fixtures } = JSON.parse(
+    fs.readFileSync(`${templatesDirectory}fixtures.json`,
+      "utf8",
+    ),
+  );
+  const genericFixture = fixtures.find(fixture => fixture.name==="generic")
+const testUrl = `${testEndpoint}templates/base`
+console.log("\nTemplates");
+    const response = await fetch(testUrl)
+      .then((response) => {
+        if (response.status >= 400 && response.status < 600) {
+          fail(`${genericFixture.name}\n`);
+          throw new Error("Bad response from server");
+        }
+        return response;
+      })
+      .catch((e) => {
+        fail(`${genericFixture.name}\n`);
+        console.error(e, testUrl);
+      });
+    const body = await response.text();
+    const bodyPretty = standardiseHtml(body);
+    const fixturePretty = standardiseHtml(genericFixture.html);
+    const mismatch = bodyPretty !== fixturePretty;
+    if (mismatch) {
+      fail(`${genericFixture.name}\n`);
+      console.error(testUrl);
+      const diff = diffChars(bodyPretty, fixturePretty)
+        .map(
+          (part) =>
+            `${
+              part.added ? "\x1b[32m" : part.removed ? "\x1b[31m" : "\x1b[0m"
+            }${part.value === " " ? "█" : part.value}`,
+        )
+        .join("");
+      console.log(diff);
+      console.log("\n");
+      console.log("GREEN text shows expected content that wasn't rendered");
+      console.log("RED text shows rendered content that wasn't expected");
+      process.exitCode = 1;
+      throw new Error("Fixtures tests failed");
+    } else {
+      pass(genericFixture.name);
+    }
