@@ -24,7 +24,7 @@
       {%- if params.social -%}
         <h3 class="tna-!--visually-hidden">Follow us</h3>
         <nav class="tna-footer__social" role="navigation" aria-label="Social">
-          <menu class="tna-ul tna-ul--plain tna-footer__social-items">
+          <ul class="tna-ul tna-ul--plain tna-footer__social-items">
           {%- for item in params.social -%}
             <li class="tna-footer__social-item">
               <a href="{{ item.href }}" class="tna-footer__social-item-link" data-name="{{ item.icon }}">
@@ -51,7 +51,7 @@
               </a>
             </li>
           {%- endfor -%}
-          </menu>
+          </ul>
         </nav>
       {%- endif -%}
     </div>
@@ -62,7 +62,7 @@
         <h3 class="tna-footer__navigation-block-heading tna-heading-m">
           {{ group.title }}
         </h3>
-        <menu class="tna-footer__navigation-block-items tna-ul tna-ul--plain">
+        <ul class="tna-footer__navigation-block-items tna-ul tna-ul--plain">
         {%- for item in group['items'] -%}
           <li class="tna-footer__navigation-block-item">
             <a href="{{ item.href }}" class="tna-footer__navigation-block-item-link"{%- if item.title or item.newTab %} title="{{ item.title if item.title else item.text }}{%- if item.newTab %} (opens in new tab){% endif %}"{% endif %}{%- if item.newTab %} target="_blank" rel="noreferrer noopener"{% endif %}>
@@ -70,7 +70,7 @@
             </a>
           </li>
         {%- endfor -%}
-        </menu>
+        </ul>
       </nav>
       {%- endfor -%}
     </div>
@@ -96,7 +96,7 @@
   <div class="tna-container">
     {%- if params.legal -%}
     <nav class="tna-footer__legal tna-column tna-column--full" role="navigation" aria-label="Legal">
-      <menu class="tna-footer__legal-items tna-ul tna-ul--plain">
+      <ul class="tna-footer__legal-items tna-ul tna-ul--plain">
         {%- for item in params.legal -%}
         <li class="tna-footer__legal-item">
           <a href="{{ item.href }}" class="tna-footer__legal-item-link" {%- if item.title %} title="{{ item.title }}"{% endif %}>
@@ -104,7 +104,7 @@
           </a>
         </li>
         {%- endfor -%}
-      </menu>
+      </ul>
       <hr>
     </nav>
     {%- else -%}
