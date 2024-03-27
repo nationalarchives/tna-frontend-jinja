@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.21...HEAD)
+## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.22...HEAD)
 
 ### Added
 ### Changed
@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 ### Security
+
+## [0.1.22](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.21...v0.1.22) - 2024-03-27
+
+### Fixed
+
+- Card actions now work without attributes
 
 ## [0.1.21](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.20...v0.1.21) - 2024-03-26
 
