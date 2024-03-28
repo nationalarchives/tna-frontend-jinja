@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Upgraded TNA Frontend to `v0.1.50`
+- Renamed "message" component to "warning"
 
 ## [0.1.22](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.21...v0.1.22) - 2024-03-27
 
