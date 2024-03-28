@@ -6,6 +6,8 @@
 {%- endif -%}
 {%- if params.style == "contrast" -%}
   {%- set containerClasses = containerClasses + ['tna-card--contrast'] -%}
+{%- elif params.style == "tint" -%}
+  {%- set containerClasses = containerClasses + ['tna-card--tint'] -%}
 {%- elif params.style == "accent" -%}
   {%- set containerClasses = containerClasses + ['tna-card--accent'] -%}
 {%- endif -%}

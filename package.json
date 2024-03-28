@@ -1,9 +1,11 @@
 {
   "scripts": {
-    "prettier": "prettier --write '*.{mjs,json}'"
+    "prettier": "prettier --write '*.{mjs,json}'",
+    "run": "flask --app test run --debug --port 5000",
+    "test": "node test-fixtures.mjs"
   },
   "dependencies": {
-    "@nationalarchives/frontend": "0.1.49",
+    "@nationalarchives/frontend": "0.1.50",
     "diff": "^5.1.0",
     "glob": "^10.2.7",
     "js-beautify": "^1.14.8",

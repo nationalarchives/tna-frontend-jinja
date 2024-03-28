@@ -90,11 +90,6 @@ def index_grid():
     return render_component("index-grid.html")
 
 
-@bp.route("/message")
-def message():
-    return render_component("message.html")
-
-
 @bp.route("/pagination")
 def pagination():
     return render_component("pagination.html")
@@ -158,3 +153,8 @@ def text_input():
 @bp.route("/textarea")
 def textarea():
     return render_component("textarea.html")
+
+
+@bp.route("/warning")
+def warning():
+    return render_component("warning.html")
