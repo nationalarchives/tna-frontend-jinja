@@ -19,7 +19,7 @@
       <h{{ params.headingLevel }} class="tna-hgroup__title">
         <span class="tna-hgroup__supertitle{% if params.plainSupertitle %} tna-hgroup__supertitle--plain{% endif %}">{{ params.supertitle }}</span>
         {%- if params.href %}
-        <a href="{{ params.href }}" class="tna-card__heading-link{% if params.hrefClasses %} {{ params.hrefClasses }}{% endif %}" {%- for attribute, value in params.hrefAttributes %} {{ attribute }}="{{ value }}"{% endfor %}>{{ params.title }}</a>
+        <a href="{{ params.href }}" class="tna-card__heading-link{% if params.hrefClasses %} {{ params.hrefClasses }}{% endif %}" {%- if params.hrefAttributes %}{%- for attribute, value in params.hrefAttributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>{{ params.title }}</a>
         {%- else %}
         {{ params.title }}
         {%- endif %}
@@ -28,7 +28,7 @@
   {%- else %}
     <h{{ params.headingLevel }} class=" tna-heading-{{ params.headingSize or 's' }} tna-card__heading">
       {%- if params.href %}
-      <a href="{{ params.href }}" class="tna-card__heading-link{% if params.hrefClasses %} {{ params.hrefClasses }}{% endif %}" {%- for attribute, value in params.hrefAttributes %} {{ attribute }}="{{ value }}"{% endfor %}>{{ params.title }}</a>
+      <a href="{{ params.href }}" class="tna-card__heading-link{% if params.hrefClasses %} {{ params.hrefClasses }}{% endif %}" {%- if params.hrefAttributes %}{%- for attribute, value in params.hrefAttributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>{{ params.title }}</a>
       {%- else %}
       {{ params.title }}
       {%- endif %}
@@ -36,7 +36,7 @@
   {%- endif %}
   {%- if params.imageSrc %}
     {%- if params.href %}
-    <a href="{{ params.href }}" class="tna-card__image-container{% if params.hrefClasses %} {{ params.hrefClasses }}{% endif %}" tabindex="-1" {%- for attribute, value in params.hrefAttributes %} {{ attribute }}="{{ value }}"{% endfor %}>
+    <a href="{{ params.href }}" class="tna-card__image-container{% if params.hrefClasses %} {{ params.hrefClasses }}{% endif %}" tabindex="-1" {%- if params.hrefAttributes %}{%- for attribute, value in params.hrefAttributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
     {%- else %}
     <div class="tna-card__image-container">
     {%- endif %}
@@ -50,7 +50,7 @@
         <img src="{{ params.imageSrc }}" alt="{{ params.imageAlt }}" width="{{ params.imageWidth }}" height="{{ params.imageHeight }}">
       </picture>
       {%- if params.label %}
-      <div class="tna-chip tna-card__image-label">
+      <div class="tna-chip{% if params.labelColour %} tna-chip--{{ params.labelColour }}{% endif %} tna-card__image-label">
         {{ params.label }}
       </div>
       {%- endif %}
