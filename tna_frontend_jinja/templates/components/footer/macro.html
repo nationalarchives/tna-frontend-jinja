@@ -1,11 +1,13 @@
 {% macro tnaFooter(params) %}
+{% from "components/button/macro.html" import tnaButton %}
+
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
 <footer class="tna-footer {{ ' '.join(containerClasses) }}" data-module="tna-footer" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
   {%- if params.themeSelector %}
   <section class="tna-footer__theme-selector tna-background-tint" hidden>
     <div class="tna-container tna-!--padding-vertical-xs">
       <div class="tna-column tna-column--flex-1">
-        <h2 class="tna-visually-hidden">Change the theme</h2>
+        <h2 class="tna-visually-hidden">Change the site theme</h2>
       </div>
       <div class="tna-column tna-column--full-small tna-column--full-tiny">
         <div class="tna-button-group tna-button-group--small">
@@ -17,7 +19,7 @@
             'plain': params.currentTheme != 'system',
             'attributes': {
               'value': 'system',
-              'aria-current': params.currentTheme == 'system'
+              'aria-current': 'true' if params.currentTheme == 'system' else 'false'
             }
           }) }}
           {{ tnaButton({
@@ -28,7 +30,7 @@
             'plain': params.currentTheme and params.currentTheme != 'light',
             'attributes': {
               'value': 'light',
-              'aria-current': not params.currentTheme or params.currentTheme == 'light'
+              'aria-current': 'true' if not params.currentTheme or params.currentTheme == 'light' else 'false'
             }
           }) }}
           {{ tnaButton({
@@ -39,7 +41,7 @@
             'plain': params.currentTheme != 'dark',
             'attributes': {
               'value': 'dark',
-              'aria-current': params.currentTheme == 'dark'
+              'aria-current': 'true' if params.currentTheme == 'dark' else 'false'
             }
           }) }}
         </div>
