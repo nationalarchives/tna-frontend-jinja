@@ -10,6 +10,11 @@ def render_component(template):
     return render_template(template, context=context)
 
 
+@bp.route("/accordion")
+def accordion():
+    return render_component("accordion.html")
+
+
 @bp.route("/breadcrumbs")
 def breadcrumbs():
     return render_component("breadcrumbs.html")
@@ -48,6 +53,11 @@ def date_input():
 @bp.route("/date-search")
 def date_search():
     return render_component("date-search.html")
+
+
+@bp.route("/details")
+def details():
+    return render_component("details.html")
 
 
 @bp.route("/error-summary")

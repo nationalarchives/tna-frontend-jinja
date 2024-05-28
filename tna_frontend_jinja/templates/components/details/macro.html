@@ -1,0 +1,16 @@
+{% macro tnaDetails(params) %}
+{%- set containerClasses = [params.classes] if params.classes else [] -%}
+{%- set classes = containerClasses | join(' ') -%}
+<div class="tna-details{% if classes %} {{ classes }}{% endif %}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+  <details class="tna-details__details"{%- if params.open %} open{% endif %}>
+    <summary class="tna-details__summary">{{ params.title }}</summary>
+    <div class="tna-details__content">
+      {%- if params.text %}
+        <p>{{ params.text }}</p>
+      {%- else %}
+        {{ params.body | safe }}
+      {%- endif %}
+    </div>
+  </details>
+</div>
+{% endmacro %}

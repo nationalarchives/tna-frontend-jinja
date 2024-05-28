@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.27...HEAD)
+## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.28...HEAD)
 
 ### Added
 ### Changed
@@ -14,7 +14,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [0.1.28](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.27...v0.1.28) - 2024-05-28
+
+### Changed
+
+- Upgraded TNA Frontend to `v0.1.56`
+
 ## [0.1.27](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.26...v0.1.27) - 2024-05-13
+
+### Changed
+
+- Upgraded TNA Frontend to `v0.1.54`
 
 ### Fixed
 
