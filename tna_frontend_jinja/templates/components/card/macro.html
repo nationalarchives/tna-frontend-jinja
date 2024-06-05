@@ -5,19 +5,19 @@
   {%- set containerClasses = containerClasses + ['tna-card--horizontal'] -%}
 {%- endif -%}
 {%- if params.style == "contrast" -%}
-  {%- set containerClasses = containerClasses + ['tna-card--contrast'] -%}
+  {%- set containerClasses = containerClasses + ['tna-background-contrast'] -%}
 {%- elif params.style == "tint" -%}
-  {%- set containerClasses = containerClasses + ['tna-card--tint'] -%}
+  {%- set containerClasses = containerClasses + ['tna-background-tint'] -%}
 {%- elif params.style == "accent" -%}
-  {%- set containerClasses = containerClasses + ['tna-card--accent'] -%}
+  {%- set containerClasses = containerClasses + ['tna-background-accent'] -%}
 {%- endif -%}
 {%- set classes = ' '.join(containerClasses) -%}
 <{{ htmlElement }} class="tna-card{% if classes %} {{ classes }}{% endif %}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
   <div class="tna-card__inner">
   {%- if params.supertitle %}
     <hgroup class="tna-hgroup-{{ params.headingSize or 's' }} tna-card__heading">
+      <p class="tna-hgroup__supertitle{% if params.plainSupertitle %} tna-hgroup__supertitle--plain{% endif %}">{{ params.supertitle }}</p>
       <h{{ params.headingLevel }} class="tna-hgroup__title">
-        <span class="tna-hgroup__supertitle{% if params.plainSupertitle %} tna-hgroup__supertitle--plain{% endif %}">{{ params.supertitle }}</span>
         {%- if params.href %}
         <a href="{{ params.href }}" class="tna-card__heading-link{% if params.hrefClasses %} {{ params.hrefClasses }}{% endif %}" {%- if params.hrefAttributes %}{%- for attribute, value in params.hrefAttributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>{{ params.title }}</a>
         {%- else %}
@@ -62,18 +62,19 @@
   {%- endif %}
     <div class="tna-card__body">
     {%- if params.meta %}
-      <ul class="tna-card__meta tna-chip-list">
+      <dl class="tna-card__meta tna-dl-chips tna-dl-chips--plain">
         {%- for item in params.meta %}
-        <li class="tna-chip-list__item">
-          <div class="tna-chip tna-chip--plain">
+        <dt>{{ item.title }}</dt>
+        <dd class="tna-dl-chips__item">
+          <span class="tna-chip tna-chip--plain">
             {%- if item.icon %}
             <i class="fa-solid fa-fw fa-{{ item.icon }}" aria-hidden="true"></i>
             {%- endif %}
             {{ item.text }}
-          </div>
-        </li>
+          </span>
+        </dd>
         {%- endfor %}
-      </ul>
+      </dl>
     {%- endif %}
     {%- if params.text %}
       <p>{{ params.text }}</p>
