@@ -145,6 +145,11 @@ def sensitive_image():
     return render_component("sensitive-image.html")
 
 
+@bp.route("/sidebar")
+def sidebar():
+    return render_component("sidebar.html")
+
+
 @bp.route("/skip-link")
 def skip_link():
     return render_component("skip-link.html")
