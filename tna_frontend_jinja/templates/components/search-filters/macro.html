@@ -6,7 +6,7 @@
 {% from "components/text-input/macro.html" import tnaTextInputElement %}
 
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
-<div class="tna-search-filters {{ ' '.join(containerClasses) }}" data-module="tna-search-filters" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+<div class="tna-search-filters {{ ' '.join(containerClasses) }}" data-module="tna-search-filters" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <h{{ params.rootHeadingLevel }} class="tna-heading-m tna-search-filters__title">
     {{ params.title }}
   </h{{ params.rootHeadingLevel }}>

@@ -2,7 +2,7 @@
 {% from "components/button/macro.html" import tnaButton %}
 
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
-<footer class="tna-footer {{ ' '.join(containerClasses) }}" data-module="tna-footer" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+<footer class="tna-footer {{ ' '.join(containerClasses) }}" data-module="tna-footer" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   {%- if params.themeSelector %}
   <section class="tna-footer__theme-selector tna-background-tint" hidden>
     <div class="tna-container tna-!--padding-vertical-xs">

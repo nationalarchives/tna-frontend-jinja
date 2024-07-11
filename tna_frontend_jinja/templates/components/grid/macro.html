@@ -10,7 +10,7 @@
 {%- if params.noPaddingAll -%}
   {%- set containerClasses = containerClasses + ['tna-container--no-padding-all'] -%}
 {%- endif -%}
-<{{ htmlElement }} class="tna-container {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+<{{ htmlElement }} class="tna-container {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
 {%- for item in params.columns %}
   {%- set columnHtmlElement = item.htmlElement if item.htmlElement else 'div' -%}
   {%- set columnClasses = [item.classes] if item.classes else [] -%}

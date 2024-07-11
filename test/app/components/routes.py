@@ -70,9 +70,19 @@ def featured_records():
     return render_component("featured-records.html")
 
 
+@bp.route("/files")
+def files():
+    return render_component("files.html")
+
+
 @bp.route("/footer")
 def footer():
     return render_component("footer.html")
+
+
+@bp.route("/gallery")
+def gallery():
+    return render_component("gallery.html")
 
 
 @bp.route("/grid")

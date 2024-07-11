@@ -11,9 +11,9 @@
   {%- set containerClasses = containerClasses + ['tna-sidebar--sticky'] -%}
 {%- endif -%}
 {%- set classes = ' '.join(containerClasses) -%}
-<nav class="tna-sidebar{% if classes %} {{ classes }}{% endif %}" aria-label="Sidebar" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+<nav class="tna-sidebar{% if classes %} {{ classes }}{% endif %}" aria-label="Sidebar" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <h{{ params.headingLevel }} class="tna-sidebar__heading tna-heading-m">
-    {{ params.heading }}
+    {{ params.title }}
   </h{{ params.headingLevel }}>
   <ul class="tna-sidebar__items">
     {%- for item in params['items'] %}

@@ -3,7 +3,7 @@
 {%- if params.collapseOnMedium -%}
   {%- set containerClasses = containerClasses + ['tna-global-header--collapse-on-medium'] -%}
 {%- endif -%}
-<header class="tna-global-header {{ ' '.join(containerClasses) }}" data-module="tna-global-header" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+<header class="tna-global-header {{ ' '.join(containerClasses) }}" data-module="tna-global-header" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <div class="tna-container tna-global-header__main">
     <div class="tna-column tna-column--flex-1 tna-column--order-2">
       <span class="tna-global-header__logo-wrapper">

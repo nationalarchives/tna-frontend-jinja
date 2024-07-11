@@ -3,7 +3,7 @@
 {%- if params.accent -%}
   {%- set containerClasses = containerClasses + ['tna-phase-banner--accent'] -%}
 {%- endif -%}
-<div class="tna-phase-banner {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+<div class="tna-phase-banner {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <div class="tna-container">
     <div class="tna-column tna-column--full-tiny">
       <span class="tna-phase-banner__phase">

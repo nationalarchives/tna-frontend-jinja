@@ -1,6 +1,6 @@
 {% macro tnaCompoundFilters(params) %}
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
-<ul class="tna-compound-filters {{ containerClasses | join(' ') }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+<ul class="tna-compound-filters {{ containerClasses | join(' ') }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   {%- for item in params['items'] -%}
   <li class="tna-compound-filters__item">
     <span class="tna-compound-filters__label">{{ item.label }}</span>

@@ -3,7 +3,7 @@
 {%- if params.inline -%}
   {%- set containerClasses = containerClasses + ['tna-form__group--inline'] -%}
 {%- endif -%}
-<div class="tna-form__group{% if params.error %} tna-form__group--error{% endif %} {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+<div class="tna-form__group{% if params.error %} tna-form__group--error{% endif %} {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <div class="tna-form__group-contents">
     <h{{ params.headingLevel }} class="tna-form__heading tna-form__heading--{{ params.headingSize or 'm' }}">
       <label class="tna-form__label" for="{{ params.id }}">
@@ -29,6 +29,6 @@
 {%- set inputClasses = [params.classes] if params.classes else [] -%}
 <input type="date" id="{{ params.id }}" class="tna-date-search{% if params.maxWidth %} tna-date-search--max-width{% endif %} {{ inputClasses | join(' ') }}" name="{{ params.name }}" value="{{ params.value }}"
 {%- if params.hint or params.error %} aria-describedby="{%- if params.hint -%}{{ params.id }}-hint{%- endif %} {% if params.error -%}{{ params.id }}-error{%- endif -%}"{%- endif %}
-{%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}
-{%- if extraAttributes %}{% for attribute, value in extraAttributes.items() %} {{ attribute }}="{{ value }}"{% endfor %}{% endif %}>
+{%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}
+{%- if extraAttributes %}{% for attribute, value in extraAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
 {% endmacro %}
