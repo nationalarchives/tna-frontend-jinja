@@ -1,0 +1,22 @@
+{% macro tnaRecordsList(params) %}
+{%- set containerClasses = [params.classes] if params.classes else [] -%}
+<ul class="tna-records-list {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+  {%- for item in params['items'] %}
+  <li class="tna-records-list__item">
+    {%- if item.imageSrc %}
+    <img src="{{ item.imageSrc }}" width="{{ item.imageWidth }}" height="{{ item.imageHeight }}" class="tna-records-list__image" alt="{{ item.imageAlt }}">
+    {%- endif %}
+    <dl class="tna-records-list__details">
+      <dt class="tna-records-list__collection-label tna-chip tna-chip--plain">From our collection</dt>
+      <dd class="tna-records-list__collection-description tna-chip tna-chip--plain">{{ item.collection }}</dd>
+      <dt class="tna-records-list__title-label">Title</dt>
+      <dd class="tna-records-list__title-description">
+        <a href="{{ item.href }}">{{ item.title }}</a>
+      </dd>
+      <dt class="tna-records-list__date-label">Date</dt>
+      <dd class="tna-records-list__date-description">{{ item.date }}</dd>
+    </dl>
+  </li>
+  {%- endfor %}
+</ul>
+{% endmacro %}

@@ -65,14 +65,9 @@ def error_summary():
     return render_component("error-summary.html")
 
 
-@bp.route("/featured-records")
-def featured_records():
-    return render_component("featured-records.html")
-
-
-@bp.route("/files")
-def files():
-    return render_component("files.html")
+@bp.route("/files-list")
+def files_list():
+    return render_component("files-list.html")
 
 
 @bp.route("/footer")
@@ -135,24 +130,19 @@ def radios():
     return render_component("radios.html")
 
 
+@bp.route("/records-list")
+def records_list():
+    return render_component("records-list.html")
+
+
 @bp.route("/search-field")
 def search_field():
     return render_component("search-field.html")
 
 
-@bp.route("/search-filters")
-def search_filters():
-    return render_component("search-filters.html")
-
-
 @bp.route("/select")
 def select():
     return render_component("select.html")
-
-
-@bp.route("/sensitive-image")
-def sensitive_image():
-    return render_component("sensitive-image.html")
 
 
 @bp.route("/sidebar")
