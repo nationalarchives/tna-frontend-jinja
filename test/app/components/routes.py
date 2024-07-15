@@ -80,11 +80,6 @@ def gallery():
     return render_component("gallery.html")
 
 
-@bp.route("/grid")
-def grid():
-    return render_component("grid.html")
-
-
 @bp.route("/global-header")
 def globalHeader():
     return render_component("global-header.html")

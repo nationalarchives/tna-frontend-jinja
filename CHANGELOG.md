@@ -19,6 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Upgraded TNA Frontend to `v0.2.0`
+- Renamed "files" component to "files list" (`files` -> `files-list`, `tnaFiles()` -> `tnaFilesList()`)
+- Renamed "featured records" component to "records list" (`featured-records` -> `records-list`, `tnaFeaturedRecords()` -> `tnaRecordsList()`)
+- Moved the grid component to utilities
+
+### Removed
+
+- Removed search filters component
+- Removed sensitive image component
 
 ## [0.1.34](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.1.33...v0.1.34) - 2024-07-11
 
