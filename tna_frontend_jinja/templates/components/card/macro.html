@@ -1,6 +1,9 @@
 {% macro tnaCard(params) %}
-{%- set htmlElement = params.htmlElement if params.htmlElement else 'div' -%}
+{%- set htmlElement = params.htmlElement if params.htmlElement else 'article' -%}
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
+{%- if params.fullAreaClick and params.href and not params.actions -%}
+  {%- set containerClasses = containerClasses + ['tna-card--full-click'] -%}
+{%- endif -%}
 {%- if params.horizontal -%}
   {%- set containerClasses = containerClasses + ['tna-card--horizontal'] -%}
 {%- endif -%}
@@ -35,7 +38,7 @@
     </h{{ params.headingLevel }}>
   {%- endif %}
   {%- if params.imageSrc %}
-    {%- if params.href %}
+    {%- if params.href and (not params.fullAreaClick or params.actions) %}
     <a href="{{ params.href }}" class="tna-card__image-container{% if params.hrefClasses %} {{ params.hrefClasses }}{% endif %}" tabindex="-1" {%- if params.hrefAttributes %}{%- for attribute, value in params.hrefAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
     {%- else %}
     <div class="tna-card__image-container">
@@ -54,7 +57,7 @@
         {{ params.label }}
       </div>
       {%- endif %}
-    {%- if params.href %}
+    {%- if params.href and (not params.fullAreaClick or params.actions) %}
     </a>
     {%- else %}
     </div>
