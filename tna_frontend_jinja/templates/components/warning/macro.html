@@ -2,8 +2,7 @@
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
 <div class="tna-warning {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <h{{ params.headingLevel }} class="tna-warning__heading">
-    <span class="tna-visually-hidden">{{ params.heading or 'Important information' }}</span>
-    <span class="tna-warning__heading-icon" aria-hidden="true">!</span>
+    <span class="tna-visually-hidden">{{ params.heading or 'Important information' }}</span><span class="tna-warning__heading-icon" aria-hidden="true">!</span>
   </h{{ params.headingLevel }}>
   <div class="tna-warning__body">
     {{ params.body | safe }}
