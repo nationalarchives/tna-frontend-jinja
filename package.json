@@ -1,7 +1,6 @@
 {
   "scripts": {
     "prettier": "prettier --write '*.{mjs,json}'",
-    "run": "flask --app test run --debug --port 5000",
     "test": "node test-fixtures.mjs"
   },
   "dependencies": {
