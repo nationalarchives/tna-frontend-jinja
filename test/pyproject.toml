@@ -10,7 +10,9 @@ readme = "README.md"
 python = "^3.12"
 Flask = "^3.0.3"
 Flask-WTF = "^1.2.1"
-
+deepmerge = "^1.1.1"
+markupsafe = "^2.1.5"
+email-validator = "^2.2.0"
 
 [build-system]
 requires = ["poetry-core"]

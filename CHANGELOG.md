@@ -8,10 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.2.8...HEAD)
 
 ### Added
+
 ### Changed
+
 ### Deprecated
+
 ### Removed
+
 ### Fixed
+
 ### Security
 
 ## [0.2.8](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.2.7...v0.2.8) - 2024-08-16

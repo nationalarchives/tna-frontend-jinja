@@ -1,7 +1,6 @@
 services:
   app:
     build:
-      # context: test
       dockerfile: test/Dockerfile
     environment:
       - ENVIRONMENT=develop
@@ -12,3 +11,7 @@ services:
     volumes:
       - ./test:/app
       - ./tna_frontend_jinja:/home/app/tna_frontend_jinja
+  dev:
+    image: ghcr.io/nationalarchives/tna-python-dev:preview
+    volumes:
+      - ./:/app

@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "prettier": "npx --yes prettier --write '*.{mjs,json}'",
     "test": "node test-fixtures.mjs"
   },
   "dependencies": {
