@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask
-from jinja2 import ChoiceLoader, PackageLoader, PrefixLoader
+from jinja2 import ChoiceLoader, PackageLoader
 from tna_frontend_jinja.wtforms.widgets import WTFormsHelpers
 
 from .components import bp as components_bp

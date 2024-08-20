@@ -1,7 +1,9 @@
-FROM ghcr.io/nationalarchives/tna-python:latest
+FROM ghcr.io/nationalarchives/tna-python-dev:latest
 
 COPY --chown=app . .
 
 RUN tna-build
 
-CMD ["tna-run", "test:app"]
+ENV FLASK_APP="test:app"
+
+CMD ["tna-run", "$FLASK_APP"]

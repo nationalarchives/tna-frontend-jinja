@@ -5,166 +5,166 @@ from flask import render_template, request
 
 
 def render_component(template):
-    params = request.args.get("params")
-    context = json.loads(params) if params else {}
-    return render_template(template, context=context)
+    params_str = request.args.get("params")
+    params = json.loads(params_str) if params_str else {}
+    return render_template(template, params=params)
 
 
 @bp.route("/accordion")
 def accordion():
-    return render_component("accordion.html")
+    return render_component("components/accordion.html")
 
 
 @bp.route("/breadcrumbs")
 def breadcrumbs():
-    return render_component("breadcrumbs.html")
+    return render_component("components/breadcrumbs.html")
 
 
 @bp.route("/button")
 def button():
-    return render_component("button.html")
+    return render_component("components/button.html")
 
 
 @bp.route("/card")
 def card():
-    return render_component("card.html")
+    return render_component("components/card.html")
 
 
 @bp.route("/checkboxes")
 def checkboxes():
-    return render_component("checkboxes.html")
+    return render_component("components/checkboxes.html")
 
 
 @bp.route("/compound-filters")
 def compound_filters():
-    return render_component("compound-filters.html")
+    return render_component("components/compound-filters.html")
 
 
 @bp.route("/cookie-banner")
 def cookie_banner():
-    return render_component("cookie-banner.html")
+    return render_component("components/cookie-banner.html")
 
 
 @bp.route("/date-input")
 def date_input():
-    return render_component("date-input.html")
+    return render_component("components/date-input.html")
 
 
 @bp.route("/date-search")
 def date_search():
-    return render_component("date-search.html")
+    return render_component("components/date-search.html")
 
 
 @bp.route("/details")
 def details():
-    return render_component("details.html")
+    return render_component("components/details.html")
 
 
 @bp.route("/error-summary")
 def error_summary():
-    return render_component("error-summary.html")
+    return render_component("components/error-summary.html")
 
 
 @bp.route("/files-list")
 def files_list():
-    return render_component("files-list.html")
+    return render_component("components/files-list.html")
 
 
 @bp.route("/footer")
 def footer():
-    return render_component("footer.html")
+    return render_component("components/footer.html")
 
 
 @bp.route("/gallery")
 def gallery():
-    return render_component("gallery.html")
+    return render_component("components/gallery.html")
 
 
 @bp.route("/global-header")
 def globalHeader():
-    return render_component("global-header.html")
+    return render_component("components/global-header.html")
 
 
 @bp.route("/header")
 def header():
-    return render_component("header.html")
+    return render_component("components/header.html")
 
 
 @bp.route("/hero")
 def hero():
-    return render_component("hero.html")
+    return render_component("components/hero.html")
 
 
 @bp.route("/index-grid")
 def index_grid():
-    return render_component("index-grid.html")
+    return render_component("components/index-grid.html")
 
 
 @bp.route("/pagination")
 def pagination():
-    return render_component("pagination.html")
+    return render_component("components/pagination.html")
 
 
 @bp.route("/phase-banner")
 def phase_banner():
-    return render_component("phase-banner.html")
+    return render_component("components/phase-banner.html")
 
 
 @bp.route("/picture")
 def picture():
-    return render_component("picture.html")
+    return render_component("components/picture.html")
 
 
 @bp.route("/quick-filters")
 def quick_filters():
-    return render_component("quick-filters.html")
+    return render_component("components/quick-filters.html")
 
 
 @bp.route("/radios")
 def radios():
-    return render_component("radios.html")
+    return render_component("components/radios.html")
 
 
 @bp.route("/records-list")
 def records_list():
-    return render_component("records-list.html")
+    return render_component("components/records-list.html")
 
 
 @bp.route("/search-field")
 def search_field():
-    return render_component("search-field.html")
+    return render_component("components/search-field.html")
 
 
 @bp.route("/select")
 def select():
-    return render_component("select.html")
+    return render_component("components/select.html")
 
 
 @bp.route("/sidebar")
 def sidebar():
-    return render_component("sidebar.html")
+    return render_component("components/sidebar.html")
 
 
 @bp.route("/skip-link")
 def skip_link():
-    return render_component("skip-link.html")
+    return render_component("components/skip-link.html")
 
 
 @bp.route("/tabs")
 def tabs():
-    return render_component("tabs.html")
+    return render_component("components/tabs.html")
 
 
 @bp.route("/text-input")
 def text_input():
-    return render_component("text-input.html")
+    return render_component("components/text-input.html")
 
 
 @bp.route("/textarea")
 def textarea():
-    return render_component("textarea.html")
+    return render_component("components/textarea.html")
 
 
 @bp.route("/warning")
 def warning():
-    return render_component("warning.html")
+    return render_component("components/warning.html")

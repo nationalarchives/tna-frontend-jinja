@@ -1,10 +1,24 @@
 [tool.poetry]
 name = "tna-frontend-jinja"
 version = "0.2.8"
-description = ""
+description = "TNA Frontend Jinja templates"
 authors = ["Andrew Hosgood <andrew.hosgood@nationalarchives.gov.uk>"]
 license = "MIT"
 readme = "README.md"
+repository = "https://github.com/nationalarchives/tna-frontend-jinja"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Code Generators",
+    "Topic :: Software Development :: User Interfaces",
+    "Topic :: Text Processing :: Markup :: HTML",
+]
+packages = [{include = "tna_frontend_jinja"}]
+include = ["**/*.html"]
+exclude = ["test"]
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -18,6 +32,9 @@ optional = true
 
 [tool.poetry.group.dev.dependencies]
 email-validator = "^2.2.0"
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/nationalarchives/tna-frontend-jinja/issues"
 
 [build-system]
 requires = ["poetry-core"]

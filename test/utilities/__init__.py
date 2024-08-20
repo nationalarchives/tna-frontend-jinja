@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-bp = Blueprint("utilities", __name__, template_folder="test-templates")
+bp = Blueprint("utilities", __name__)
 
 from test.utilities import routes  # noqa: E402,F401

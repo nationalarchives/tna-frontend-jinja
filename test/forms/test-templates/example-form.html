@@ -21,12 +21,43 @@
     <h1 class="tna-heading-xl">Example form</h1>
     <form action="" method="post" novalidate>
       {{ form.csrf_token }}
+
       {{ form.email_address(params={
         'headingLevel': 2,
         'type': 'email',
         'autofill': 'email',
         'spellcheck': False
       }) }}
+
+      {{ form.password(params={
+        'headingLevel': 2,
+        'spellcheck': False
+      }) }}
+
+      {{ form.remember(params={
+        'headingLevel': 2
+      }) }}
+
+      {{ form.shopping(params={
+        'headingLevel': 2
+      }) }}
+
+      {{ form.day(params={
+        'headingLevel': 2
+      }) }}
+
+      {{ form.birthday(params={
+        'headingLevel': 2
+      }) }}
+
+      {{ form.message(params={
+        'headingLevel': 2
+      }) }}
+
+      {{ form.order(params={
+        'headingLevel': 2
+      }) }}
+      
       <div class="tna-button-group">
         {{ form.submit }}
       </div>
@@ -37,8 +68,5 @@
 
 {% block bodyEnd %}
   <script src="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.2.8/nationalarchives/all.js" integrity="sha384-s768ALHSnzGU2X2ENYTrlF+CfnKaa3Us1eU78VrZ4eTKwLjWob1Wbb9tIT2xfmBq" crossorigin="anonymous"></script>
-  <script>
-    // Initialise all TNA components
-    window.TNAFrontend.initAll();
-  </script>
+  <script>window.TNAFrontend.initAll();</script>
 {% endblock %}

@@ -5,11 +5,11 @@ from flask import render_template, request
 
 
 def render_component(template):
-    params = request.args.get("params")
-    context = json.loads(params) if params else {}
-    return render_template(template, context=context)
+    params_str = request.args.get("params")
+    params = json.loads(params_str) if params_str else {}
+    return render_template(template, params=params)
 
 
 @bp.route("/grid")
 def grid():
-    return render_component("grid.html")
+    return render_component("utilities/grid.html")

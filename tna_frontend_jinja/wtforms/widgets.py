@@ -83,7 +83,7 @@ merger = Merger(
 )
 
 
-class GovFormBase(object):
+class TnaFormBase(object):
     """Collection of helpers
 
     These are mixed into the WTForms classes which we are subclassing
@@ -154,7 +154,7 @@ class GovFormBase(object):
         return Markup(render_template(self.template, params=params))
 
 
-class GovIterableBase(GovFormBase):
+class TnaIterableBase(TnaFormBase):
     def __call__(self, field, **kwargs):
         kwargs.setdefault("id", field.id)
 
@@ -207,7 +207,7 @@ class GovIterableBase(GovFormBase):
         return params
 
 
-# from govuk_frontend_wtf.gov_form_base import GovFormBase, GovIterableBase
+# from govuk_frontend_wtf.gov_form_base import TnaFormBase, TnaIterableBase
 
 """Lifted from WTForms and modified to generate GOV.UK markup
 
@@ -216,7 +216,7 @@ see if any modifications need to be brought in
 """
 
 
-class GovInput(GovFormBase, Input):
+class TnaInput(TnaFormBase, Input):
     """Render a basic ``<input>`` field.
 
     This is used as the basis for most of the other input fields.
@@ -225,7 +225,7 @@ class GovInput(GovFormBase, Input):
     to provide the ``value=`` HTML attribute.
     """
 
-    template = "wtforms/text-input.html"
+    template = "components/text-input.html"
 
     def __call__(self, field, **kwargs):
         kwargs.setdefault("id", field.id)
@@ -240,20 +240,179 @@ class GovInput(GovFormBase, Input):
         return super().__call__(field, **kwargs)
 
 
-class GovTextInput(GovInput, TextInput):
+class TnaTextInput(TnaInput, TextInput):
     """Render a single-line text input."""
 
     input_type = "text"
 
 
-class GovSubmitInput(GovInput, SubmitInput):
+class TnaPasswordInput(TnaInput, PasswordInput):
+    """Render a password input."""
+
+    input_type = "password"
+
+
+class TnaCheckboxesInput(TnaIterableBase):
+    """Multiple checkboxes, from a SelectMultipleField
+
+    This widget type doesn't exist in WTForms - the recommendation
+    there is to use a combination of the list and checkbox widgets.
+    However in the GOV.UK macros this type of field is not simply
+    a list of smaller widgets - multiple checkboxes are a single
+    construct of their own.
+    """
+
+    template = "components/checkboxes.html"
+    input_type = "checkbox"
+
+    def map_gov_params(self, field, **kwargs):
+        params = super().map_gov_params(field, **kwargs)
+        params.setdefault(
+            "label",
+            field.label.text,
+        )
+        return params
+
+
+class TnaCheckboxInput(TnaCheckboxesInput):
+    """Render a single checkbox (i.e. a WTForms BooleanField)."""
+
+    def __call__(self, field, **kwargs):
+        # We are subclassing TnaCheckboxesInput which expects
+        # the field to be an iterable yielding each checkbox "subfield"
+        # In order to make our single BooleanField comply with this, we
+        # need to provide it with a similar construct, but which only
+        # yields a single checkbox
+        class IterableField(object):
+            def __init__(self, field):
+                self.field = field
+                self.max = 1
+
+            def __iter__(self):
+                self.index = 0
+                return self
+
+            def __next__(self):
+                if self.index < self.max:
+                    self.index += 1
+
+                    return self.field
+                else:
+                    raise StopIteration
+
+            def __getattr__(self, name):
+                return getattr(self.field, name)
+
+        field_group = IterableField(field)
+
+        return super().__call__(field_group, **kwargs)
+
+    def map_gov_params(self, field, **kwargs):
+        params = super().map_gov_params(field, **kwargs)
+        params.pop("label")
+        return params
+
+
+class TnaRadioInput(TnaIterableBase):
+    """Render radio button inputs.
+
+    Uses the field label as the fieldset legend.
+    """
+
+    template = "components/radios.html"
+    input_type = "radio"
+
+    def map_gov_params(self, field, **kwargs):
+        params = super().map_gov_params(field, **kwargs)
+        params.setdefault(
+            "label",
+            field.label.text,
+        )
+        return params
+
+
+class TnaDateInput(TnaFormBase):
+    """Renders three input fields representing Day, Month and Year.
+
+    To be used as a widget for WTForms' DateField or DateTimeField.
+    The input field labels are hardcoded to "Day", "Month" and "Year".
+    The provided label is set as a legend above the input fields.
+    The field names MUST all be the same for this widget to work.
+    """
+
+    template = "components/date-input.html"
+
+    def __call__(self, field, **kwargs):
+        kwargs.setdefault("id", field.id)
+        if "value" not in kwargs:
+            kwargs["value"] = field._value()
+        if "required" not in kwargs and "required" in getattr(
+            field, "flags", []
+        ):
+            kwargs["required"] = True
+        return super().__call__(field, **kwargs)
+
+    def map_gov_params(self, field, **kwargs):
+        params = super().map_gov_params(field, **kwargs)
+        day, month, year = [None] * 3
+        if field.raw_data is not None:
+            day, month, year = field.raw_data
+        elif field.data:
+            day, month, year = field.data.strftime("%d %m %Y").split(" ")
+
+        params.setdefault("label", field.label.text)
+        params.setdefault(
+            "items",
+            [
+                {
+                    "label": "Day",
+                    "id": "{}-day".format(field.name),
+                    "name": field.name,
+                    "classes": " ".join(
+                        [
+                            "govuk-input--width-2",
+                            "govuk-input--error" if field.errors else "",
+                        ]
+                    ).strip(),
+                    "value": day,
+                },
+                {
+                    "label": "Month",
+                    "id": "{}-month".format(field.name),
+                    "name": field.name,
+                    "classes": " ".join(
+                        [
+                            "govuk-input--width-2",
+                            "govuk-input--error" if field.errors else "",
+                        ]
+                    ).strip(),
+                    "value": month,
+                },
+                {
+                    "label": "Year",
+                    "id": "{}-year".format(field.name),
+                    "name": field.name,
+                    "classes": " ".join(
+                        [
+                            "govuk-input--width-4",
+                            "govuk-input--error" if field.errors else "",
+                        ]
+                    ).strip(),
+                    "value": year,
+                },
+            ],
+        )
+        return params
+
+
+class TnaSubmitInput(TnaInput, SubmitInput):
     """Renders a submit button.
 
     The field's label is used as the text of the submit button instead of the
     data on the field.
     """
 
-    template = "wtforms/button.html"
+    template = "components/button.html"
 
     def __call__(self, field, **kwargs):
         return super().__call__(field, **kwargs)
@@ -264,5 +423,70 @@ class GovSubmitInput(GovInput, SubmitInput):
         params.setdefault("text", field.label.text)
         params.setdefault("buttonElement", True)
         params.setdefault("buttonType", "submit")
+
+        return params
+
+
+class TnaTextArea(TnaFormBase, TextArea):
+    """Renders a multi-line text area.
+
+    `rows` and `cols` ought to be passed as keyword args when rendering.
+    """
+
+    template = "components/textarea.html"
+
+    def __call__(self, field, **kwargs):
+        kwargs.setdefault("id", field.id)
+        if "value" not in kwargs:
+            kwargs["value"] = field._value()
+        if "required" not in kwargs and "required" in getattr(
+            field, "flags", []
+        ):
+            kwargs["required"] = True
+        return super().__call__(field, **kwargs)
+
+
+class TnaSelect(TnaFormBase, Select):
+    """Renders a select field.
+
+    If `multiple` is True, then the `size` property should be specified on
+    rendering to make the field useful.
+
+    The field must provide an `iter_choices()` method which the widget will
+    call on rendering; this method must yield tuples of
+    `(value, label, selected)`.
+    """
+
+    template = "components/select.html"
+
+    def __call__(self, field, **kwargs):
+        if self.multiple:
+            raise Exception(
+                "Please do not render mutliselect elements as a select box"
+                " - you should use checkboxes instead in order to comply with"
+                " the GOV.UK service manual"
+            )
+
+        kwargs.setdefault("id", field.id)
+
+        if "required" not in kwargs and "required" in getattr(
+            field, "flags", []
+        ):
+            kwargs["required"] = True
+
+        kwargs["items"] = []
+
+        # Construct select box choices
+        for val, label, selected, render_kw in field.iter_choices():
+            item = {"text": label, "value": val, "selected": selected}
+
+            kwargs["items"].append(item)
+
+        return super().__call__(field, **kwargs)
+
+    def map_gov_params(self, field, **kwargs):
+        params = super().map_gov_params(field, **kwargs)
+
+        params["items"] = kwargs["items"]
 
         return params
