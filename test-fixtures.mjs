@@ -13,7 +13,7 @@ const fail = (message) => {
 };
 
 console.log("Running tests...");
-const testEndpoint = "http://127.0.0.1:5000/";
+const testEndpoint = "http://127.0.0.1:5001/";
 const standardiseHtml = (html) =>
   html_beautify(
     html
@@ -93,7 +93,8 @@ for (let i = 0; i < components.length; i++) {
       const diff = diffChars(bodyPretty, fixturePretty)
         .map(
           (part) =>
-            `${part.added ? "\x1b[32m" : part.removed ? "\x1b[31m" : "\x1b[0m"
+            `${
+              part.added ? "\x1b[32m" : part.removed ? "\x1b[31m" : "\x1b[0m"
             }${part.value === " " ? "█" : part.value}`,
         )
         .join("");
@@ -171,7 +172,8 @@ for (let i = 0; i < utilities.length; i++) {
       const diff = diffChars(bodyPretty, fixturePretty)
         .map(
           (part) =>
-            `${part.added ? "\x1b[32m" : part.removed ? "\x1b[31m" : "\x1b[0m"
+            `${
+              part.added ? "\x1b[32m" : part.removed ? "\x1b[31m" : "\x1b[0m"
             }${part.value === " " ? "█" : part.value}`,
         )
         .join("");
@@ -189,12 +191,10 @@ for (let i = 0; i < utilities.length; i++) {
 
 const templatesDirectory = `${tnaFrontendDirectory}/nationalarchives/templates/`;
 const { fixtures } = JSON.parse(
-  fs.readFileSync(`${templatesDirectory}fixtures.json`,
-    "utf8",
-  ),
+  fs.readFileSync(`${templatesDirectory}fixtures.json`, "utf8"),
 );
-const genericFixture = fixtures.find(fixture => fixture.name === "generic")
-const testUrl = `${testEndpoint}templates/base`
+const genericFixture = fixtures.find((fixture) => fixture.name === "generic");
+const testUrl = `${testEndpoint}templates/base`;
 console.log("\nTemplates");
 const response = await fetch(testUrl)
   .then((response) => {
@@ -218,7 +218,8 @@ if (mismatch) {
   const diff = diffChars(bodyPretty, fixturePretty)
     .map(
       (part) =>
-        `${part.added ? "\x1b[32m" : part.removed ? "\x1b[31m" : "\x1b[0m"
+        `${
+          part.added ? "\x1b[32m" : part.removed ? "\x1b[31m" : "\x1b[0m"
         }${part.value === " " ? "█" : part.value}`,
     )
     .join("");

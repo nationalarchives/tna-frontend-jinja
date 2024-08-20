@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "tna-frontend-jinja-test"
+version = "0.1.0"
+description = ""
+authors = ["Andrew Hosgood <andrew.hosgood@nationalarchives.gov.uk>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+Flask = "^3.0.3"
+Flask-WTF = "^1.2.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      # context: test
+      dockerfile: test/Dockerfile
+    environment:
+      - ENVIRONMENT=develop
+      - CONFIG=config.Develop
+      - SECRET_KEY=abc123
+    ports:
+      - 5001:8080
+    volumes:
+      - ./test:/app
+      - ./tna_frontend_jinja:/home/app/tna_frontend_jinja

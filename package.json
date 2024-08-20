@@ -1,7 +1,6 @@
 {
   "scripts": {
-    "prettier": "prettier --write '*.{mjs,json}'",
-    "run": "flask --app test run --debug --port 5000",
+    "prettier": "npx --yes prettier --write '*.{mjs,json}'",
     "test": "node test-fixtures.mjs"
   },
   "dependencies": {
@@ -9,7 +8,6 @@
     "diff": "^5.1.0",
     "glob": "^10.2.7",
     "js-beautify": "^1.14.8",
-    "node-fetch": "^3.3.1",
-    "prettier": "^3.2.5"
+    "node-fetch": "^3.3.1"
   }
 }

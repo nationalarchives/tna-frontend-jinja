@@ -97,8 +97,7 @@ We test each component against its published [component fixtures](https://github
 ## Test the templates
 
 ```sh
-python -m venv venv
-python install -r test/requirements.txt
-flask --app test run --debug --port 5000
+npm install
+docker compose up -d
 node test-fixtures.mjs
 ```
