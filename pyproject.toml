@@ -26,11 +26,6 @@ Flask = "^3.0.3"
 Flask-WTF = "^1.2.1"
 deepmerge = "^1.1.1"
 markupsafe = "^2.1.5"
-
-[tool.poetry.group.dev]
-optional = true
-
-[tool.poetry.group.dev.dependencies]
 email-validator = "^2.2.0"
 
 [tool.poetry.urls]
