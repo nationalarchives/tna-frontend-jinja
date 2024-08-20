@@ -1,22 +1,24 @@
 import os
-import sys
 
 from flask import Flask
+from jinja2 import ChoiceLoader, PackageLoader, PrefixLoader
+from tna_frontend_jinja.wtforms.widgets import WTFormsHelpers
 
 from .components import bp as components_bp
 from .forms import bp as forms_bp
-# from .forms.routes import WTFormsHelpers
 from .templates import bp as templates_bp
 from .utilities import bp as utilities_bp
 
-
-sys.path.append('/home/app/')
-
-from tna_frontend_jinja.wtforms.widgets import WTFormsHelpers
-
-app = Flask(__name__, template_folder="/home/app/tna_frontend_jinja/templates")
+app = Flask(__name__)
 
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+
+app.jinja_loader = ChoiceLoader(
+    [
+        PackageLoader("test"),
+        PackageLoader("tna_frontend_jinja"),
+    ]
+)
 
 
 @app.route("/healthcheck/live/")

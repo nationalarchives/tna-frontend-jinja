@@ -1,7 +1,7 @@
 services:
   app:
     build:
-      dockerfile: test/Dockerfile
+      context: .
     environment:
       - ENVIRONMENT=develop
       - CONFIG=config.Develop
@@ -9,8 +9,7 @@ services:
     ports:
       - 5001:8080
     volumes:
-      - ./test:/app
-      - ./tna_frontend_jinja:/home/app/tna_frontend_jinja
+      - ./:/app
   dev:
     image: ghcr.io/nationalarchives/tna-python-dev:preview
     volumes:

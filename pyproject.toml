@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "tna-frontend-jinja-test"
-version = "0.1.0"
+name = "tna-frontend-jinja"
+version = "0.2.8"
 description = ""
 authors = ["Andrew Hosgood <andrew.hosgood@nationalarchives.gov.uk>"]
 license = "MIT"
@@ -12,8 +12,17 @@ Flask = "^3.0.3"
 Flask-WTF = "^1.2.1"
 deepmerge = "^1.1.1"
 markupsafe = "^2.1.5"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
 email-validator = "^2.2.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 80
+include = '\.pyi?$'

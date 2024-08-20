@@ -1,12 +1,11 @@
 import sys
-from app.forms import bp
+from test.forms import bp
+
 from flask import redirect, render_template, url_for
 from flask_wtf import FlaskForm
+from tna_frontend_jinja.wtforms.widgets import GovSubmitInput, GovTextInput
 from wtforms import StringField, SubmitField
 from wtforms.validators import Email, InputRequired, Length
-
-sys.path.append('/home/app/')
-from tna_frontend_jinja.wtforms.widgets import GovTextInput, GovSubmitInput
 
 
 class ExampleForm(FlaskForm):
