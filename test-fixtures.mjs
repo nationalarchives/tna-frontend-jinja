@@ -13,7 +13,7 @@ const fail = (message) => {
 };
 
 console.log("Running tests...");
-const testEndpoint = "http://127.0.0.1:5000/";
+const testEndpoint = "http://127.0.0.1:5001/";
 const standardiseHtml = (html) =>
   html_beautify(
     html

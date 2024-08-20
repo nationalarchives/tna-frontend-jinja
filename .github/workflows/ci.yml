@@ -8,22 +8,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: 3.12
-      - uses: snok/install-poetry@v1
-        with:
-          version: 1.8.1
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-          virtualenvs-path: .venv
-      - name: Install Poetry dependencies
-        run: |
-          cd test
-          poetry install --no-interaction --no-root
-      - name: Run server
-        run: flask --app test run --debug --port 5000 &
       - name: Install Node dependencies
         run: npm install
+      - name: Start test server
+        run: docker compose up web -d
       - name: Run the tests
         run: node test-fixtures.mjs || exit 1
