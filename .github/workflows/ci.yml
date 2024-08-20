@@ -12,5 +12,9 @@ jobs:
         run: npm install
       - name: Start test server
         run: docker compose up -d
+      - name: Wait for response
+        uses: nev7n/wait_for_response@v1
+        with:
+          url: http://localhost:5001/ready/
       - name: Run the tests
         run: node test-fixtures.mjs || exit 1
