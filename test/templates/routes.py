@@ -6,6 +6,6 @@ from flask import render_template, request
 
 @bp.route("/base")
 def base():
-    params = request.args.get("params")
-    context = json.loads(params) if params else {}
-    return render_template("layouts/base.html", context=context)
+    params_str = request.args.get("params")
+    params = json.loads(params_str) if params_str else {}
+    return render_template("layouts/base.html", context=params)

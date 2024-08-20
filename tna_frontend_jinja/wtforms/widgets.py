@@ -1,8 +1,6 @@
-from deepmerge import Merger
 from flask import render_template
 from markupsafe import Markup
 from wtforms.widgets.core import (
-    FileInput,
     Input,
     PasswordInput,
     Select,
@@ -11,76 +9,7 @@ from wtforms.widgets.core import (
     TextInput,
 )
 
-
-def wtforms_errors(form, params={}):
-    wtforms_params = {"title": "There is a problem", "items": []}
-
-    id_map = {}
-    for field_name in form._fields.keys():
-        field = getattr(form, field_name, None)
-        if field and hasattr(field, "id"):
-            id_map[field_name] = field.id
-
-    wtforms_params["items"] = flatten_errors(form.errors, id_map=id_map)
-
-    return merger.merge(wtforms_params, params)
-
-
-class WTFormsHelpers(object):
-    """WTForms helpers
-
-    Register some template helpers to allow developers to
-    map WTForms elements to the GOV.UK jinja macros
-    """
-
-    def __init__(self, app=None):
-        self.app = app
-        if app is not None:
-            self.init_app(app)
-
-    def init_app(self, app):
-        app.add_template_global(wtforms_errors)
-
-
-def flatten_errors(errors, prefix="", id_map={}):
-    """Return list of errors from form errors."""
-    error_list = []
-    if isinstance(errors, dict):
-        for key, value in errors.items():
-            # Recurse to handle subforms.
-            if key in id_map:
-                key = id_map[key]
-            error_list += flatten_errors(
-                value, prefix=f"{prefix}{key}-", id_map=id_map
-            )
-    elif isinstance(errors, list) and isinstance(errors[0], dict):
-        for idx, error in enumerate(errors):
-            error_list += flatten_errors(
-                error, prefix=f"{prefix}{idx}-", id_map=id_map
-            )
-    elif isinstance(errors, list):
-        error_list.append(
-            {"text": errors[0], "href": "#{}".format(prefix.rstrip("-"))}
-        )
-    else:
-        error_list.append(
-            {"text": errors, "href": "#{}".format(prefix.rstrip("-"))}
-        )
-    return error_list
-
-
-merger = Merger(
-    # pass in a list of tuple, with the
-    # strategies you are looking to apply
-    # to each type.
-    [(list, ["append"]), (dict, ["merge"])],
-    # next, choose the fallback strategies,
-    # applied to all other types:
-    ["override"],
-    # finally, choose the strategies in
-    # the case where the types conflict:
-    ["override"],
-)
+from .helpers import merger
 
 
 class TnaFormBase(object):
@@ -94,9 +23,9 @@ class TnaFormBase(object):
     """
 
     def __call__(self, field, **kwargs):
-        return self.render(self.map_gov_params(field, **kwargs))
+        return self.render(self.map_tna_params(field, **kwargs))
 
-    def map_gov_params(self, field, **kwargs):
+    def map_tna_params(self, field, **kwargs):
         """Map WTForms' html params to govuk macros
 
         Taking WTForms' output, we need to map it to a params dict
@@ -121,6 +50,7 @@ class TnaFormBase(object):
 
         # Remove items that we've already used from the kwargs
         del kwargs["id"]
+
         if "items" in kwargs:
             del kwargs["items"]
 
@@ -133,7 +63,7 @@ class TnaFormBase(object):
 
         # Map error messages
         if field.errors:
-            params["errorMessage"] = {"text": field.errors[0]}
+            params["error"] = {"text": field.errors[0]}
 
         # And then Merge any remaining attributes directly to the attributes param
         # This catches anything set in the more traditional WTForms manner
@@ -164,6 +94,7 @@ class TnaIterableBase(TnaFormBase):
             kwargs["required"] = True
 
         kwargs["items"] = []
+        kwargs["selected"] = None
 
         # This field is constructed as an iterable of subfields
         for subfield in field:
@@ -171,12 +102,13 @@ class TnaIterableBase(TnaFormBase):
 
             if getattr(subfield, "checked", subfield.data):
                 item["checked"] = True
+                kwargs["selected"] = subfield._value()
 
             kwargs["items"].append(item)
 
         return super().__call__(field, **kwargs)
 
-    def map_gov_params(self, field, **kwargs):
+    def map_tna_params(self, field, **kwargs):
         """Completely override the params mapping for this input type
 
         It bears little resemblance to that of a normal field
@@ -187,6 +119,7 @@ class TnaIterableBase(TnaFormBase):
         params = {
             "name": field.name,
             "items": kwargs["items"],
+            "selected": kwargs["selected"],
             "hint": field.description,
         }
 
@@ -202,18 +135,9 @@ class TnaIterableBase(TnaFormBase):
             params = self.merge_params(params, kwargs["params"])
 
         if field.errors:
-            params["errorMessage"] = {"text": field.errors[0]}
+            params["error"] = {"text": field.errors[0]}
 
         return params
-
-
-# from govuk_frontend_wtf.gov_form_base import TnaFormBase, TnaIterableBase
-
-"""Lifted from WTForms and modified to generate GOV.UK markup
-
-The upstream code should be monitored when updating WTForms to
-see if any modifications need to be brought in
-"""
 
 
 class TnaInput(TnaFormBase, Input):
@@ -265,8 +189,8 @@ class TnaCheckboxesInput(TnaIterableBase):
     template = "components/checkboxes.html"
     input_type = "checkbox"
 
-    def map_gov_params(self, field, **kwargs):
-        params = super().map_gov_params(field, **kwargs)
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
         params.setdefault(
             "label",
             field.label.text,
@@ -307,8 +231,8 @@ class TnaCheckboxInput(TnaCheckboxesInput):
 
         return super().__call__(field_group, **kwargs)
 
-    def map_gov_params(self, field, **kwargs):
-        params = super().map_gov_params(field, **kwargs)
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
         params.pop("label")
         return params
 
@@ -322,8 +246,8 @@ class TnaRadioInput(TnaIterableBase):
     template = "components/radios.html"
     input_type = "radio"
 
-    def map_gov_params(self, field, **kwargs):
-        params = super().map_gov_params(field, **kwargs)
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
         params.setdefault(
             "label",
             field.label.text,
@@ -352,55 +276,22 @@ class TnaDateInput(TnaFormBase):
             kwargs["required"] = True
         return super().__call__(field, **kwargs)
 
-    def map_gov_params(self, field, **kwargs):
-        params = super().map_gov_params(field, **kwargs)
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
         day, month, year = [None] * 3
-        if field.raw_data is not None:
-            day, month, year = field.raw_data
-        elif field.data:
-            day, month, year = field.data.strftime("%d %m %Y").split(" ")
+        # if field.raw_data is not None:
+        #     day, month, year = field.raw_data
+        # elif field.data:
+        #     day, month, year = field.data.strftime("%d %m %Y").split(" ")
 
         params.setdefault("label", field.label.text)
         params.setdefault(
-            "items",
-            [
-                {
-                    "label": "Day",
-                    "id": "{}-day".format(field.name),
-                    "name": field.name,
-                    "classes": " ".join(
-                        [
-                            "govuk-input--width-2",
-                            "govuk-input--error" if field.errors else "",
-                        ]
-                    ).strip(),
-                    "value": day,
-                },
-                {
-                    "label": "Month",
-                    "id": "{}-month".format(field.name),
-                    "name": field.name,
-                    "classes": " ".join(
-                        [
-                            "govuk-input--width-2",
-                            "govuk-input--error" if field.errors else "",
-                        ]
-                    ).strip(),
-                    "value": month,
-                },
-                {
-                    "label": "Year",
-                    "id": "{}-year".format(field.name),
-                    "name": field.name,
-                    "classes": " ".join(
-                        [
-                            "govuk-input--width-4",
-                            "govuk-input--error" if field.errors else "",
-                        ]
-                    ).strip(),
-                    "value": year,
-                },
-            ],
+            "value",
+            {
+                "day": day,
+                "month": month,
+                "year": year,
+            },
         )
         return params
 
@@ -417,8 +308,8 @@ class TnaSubmitInput(TnaInput, SubmitInput):
     def __call__(self, field, **kwargs):
         return super().__call__(field, **kwargs)
 
-    def map_gov_params(self, field, **kwargs):
-        params = super().map_gov_params(field, **kwargs)
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
 
         params.setdefault("text", field.label.text)
         params.setdefault("buttonElement", True)
@@ -484,8 +375,8 @@ class TnaSelect(TnaFormBase, Select):
 
         return super().__call__(field, **kwargs)
 
-    def map_gov_params(self, field, **kwargs):
-        params = super().map_gov_params(field, **kwargs)
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
 
         params["items"] = kwargs["items"]
 

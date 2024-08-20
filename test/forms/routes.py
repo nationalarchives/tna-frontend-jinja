@@ -23,26 +23,26 @@ from wtforms import (
     SubmitField,
     TextAreaField,
 )
-from wtforms.validators import Email, InputRequired, Length
+from wtforms.validators import InputRequired, Length
 
 
 class ExampleForm(FlaskForm):
-    email_address = StringField(
-        "Email address",
+    username = StringField(
+        "Username",
         widget=TnaTextInput(),
         validators=[
             InputRequired(message="Enter an email address"),
             Length(
                 max=256, message="Email address must be 256 characters or fewer"
             ),
-            Email(
-                message="Enter an email address in the correct format, like name@example.com"
-            ),
         ],
         description="We’ll only use this to send you a receipt",
     )
     password = StringField(
         "Password",
+        validators=[
+            InputRequired(message="Enter a password"),
+        ],
         widget=TnaPasswordInput(),
     )
     remember = BooleanField(
@@ -51,28 +51,44 @@ class ExampleForm(FlaskForm):
     )
     shopping = SelectMultipleField(
         "Shopping list",
+        validators=[
+            InputRequired(message="Select an item"),
+        ],
         choices=[("cpp", "C++"), ("py", "Python"), ("text", "Plain Text")],
         widget=TnaCheckboxesInput(),
     )
     day = RadioField(
         "Day",
         choices=[("mon", "Monday"), ("tue", "Tuesday"), ("wed", "Wednesday")],
+        validators=[
+            InputRequired(message="Select a day"),
+        ],
         widget=TnaRadioInput(),
     )
     birthday = DateField(
         "Birthday",
+        validators=[
+            InputRequired(message="Enter a date"),
+        ],
         widget=TnaDateInput(),
     )
     message = TextAreaField(
         "Message",
+        validators=[
+            InputRequired(message="Enter a message"),
+        ],
         widget=TnaTextArea(),
     )
     order = SelectField(
         "Order",
         choices=[
+            ("", "None"),
             ("date", "Date"),
             ("relevance", "Relevance"),
             ("popularity", "Popularity"),
+        ],
+        validators=[
+            InputRequired(message="Select an order"),
         ],
         widget=TnaSelect(),
     )
@@ -84,5 +100,5 @@ class ExampleForm(FlaskForm):
 def index():
     form = ExampleForm()
     if form.validate_on_submit():
-        return redirect(url_for("forms.index"))
+        return redirect(url_for("forms.index", status="Success"))
     return render_template("example-form.html", form=form)
