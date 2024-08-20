@@ -98,6 +98,6 @@ We test each component against its published [component fixtures](https://github
 
 ```sh
 npm install
-docker compose up web -d
+docker compose up -d
 node test-fixtures.mjs
 ```

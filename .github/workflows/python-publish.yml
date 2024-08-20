@@ -16,7 +16,7 @@ jobs:
       - name: Install Node dependencies
         run: npm install
       - name: Start test server
-        run: docker compose up web -d
+        run: docker compose up -d
       - name: Run the tests
         run: node test-fixtures.mjs || exit 1
 
