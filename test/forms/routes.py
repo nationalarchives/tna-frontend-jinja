@@ -57,7 +57,7 @@ class ExampleForm(FlaskForm):
         choices=[("cpp", "C++"), ("py", "Python"), ("text", "Plain Text")],
         widget=TnaCheckboxesInput(),
     )
-    day = RadioField(
+    day_of_week = RadioField(
         "Day",
         choices=[("mon", "Monday"), ("tue", "Tuesday"), ("wed", "Wednesday")],
         validators=[

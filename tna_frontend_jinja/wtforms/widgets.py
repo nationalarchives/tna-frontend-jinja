@@ -117,6 +117,7 @@ class TnaIterableBase(TnaFormBase):
         """
 
         params = {
+            "id": field.id,
             "name": field.name,
             "items": kwargs["items"],
             "selected": kwargs["selected"],
@@ -191,6 +192,7 @@ class TnaCheckboxesInput(TnaIterableBase):
 
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
+
         params.setdefault(
             "label",
             field.label.text,
