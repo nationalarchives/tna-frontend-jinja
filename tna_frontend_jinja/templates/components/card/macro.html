@@ -50,7 +50,7 @@
   {%- endif %}
   {%- if params.imageSrc %}
     {%- if params.href and (not params.fullAreaClick or params.actions) %}
-    <a href="{{ params.href }}" class="tna-card__image-container{% if params.hrefClasses %} {{ params.hrefClasses }}{% endif %}" tabindex="-1" {%- if params.hrefAttributes %}{%- for attribute, value in params.hrefAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+    <a href="{{ params.href }}" class="tna-card__image-container{% if params.hrefClasses %} {{ params.hrefClasses }}{% endif %}" tabindex="-1" aria-hidden="true" {%- if params.hrefAttributes %}{%- for attribute, value in params.hrefAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
     {%- else %}
     <div class="tna-card__image-container">
     {%- endif %}

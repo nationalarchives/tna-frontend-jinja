@@ -4,7 +4,7 @@
     "test": "node test-fixtures.mjs"
   },
   "dependencies": {
-    "@nationalarchives/frontend": "0.2.12",
+    "@nationalarchives/frontend": "0.2.13",
     "diff": "^5.1.0",
     "glob": "^10.2.7",
     "js-beautify": "^1.14.8",

@@ -20,7 +20,7 @@
     }) }}
   </div>
   {% endif -%}
-  {% if params['items'] -%}
+  {% if 'items' in params -%}
   <ul class="tna-pagination__list">
     {% for item in params['items'] -%}
       {% if item.ellipsis -%}

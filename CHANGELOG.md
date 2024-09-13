@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.2.12...HEAD)
+## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.2.13...HEAD)
 
 ### Added
 ### Changed
@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 ### Security
+
+## [0.2.13](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.2.12...v0.2.13) - 2024-09-13
+
+### Changed
+
+- Upgraded TNA Frontend to `v0.2.13`
+
+### Fixed
+
+- Stopped pagination components breaking when no `items` are passed
 
 ## [0.2.12](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.2.11...v0.2.12) - 2024-09-05
 
