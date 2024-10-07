@@ -25,6 +25,10 @@
   {% elif params.iconSvg -%}
   {{ params.iconSvg | safe }}
   {% endif -%}
+  {% if params.html -%}
+  {{ params.html | safe }}
+  {% else -%}
   {{ params.text }}
+  {% endif -%}
 </{{ 'button' if params.buttonElement else 'a' }}>
 {% endmacro %}
