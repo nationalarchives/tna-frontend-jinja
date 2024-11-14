@@ -32,10 +32,47 @@ def create_app():
     )
 ```
 
-### Using the templates
+## Quickstart for Django projects
+
+Update the `TEMPLATES` setting in your application config:
+
+```py
+TEMPLATES = [
+    # Add the Jinja2 backend first
+    {
+        "BACKEND": "django.template.backends.jinja2.Jinja2",
+        "DIRS": [
+            os.path.join(BASE_DIR, "app/templates"),  # Use your application directory here
+            os.path.join(get_path("platlib"), "tna_frontend_jinja/templates"),
+        ],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "environment": "config.jinja2.environment",
+        },
+    },
+    # The DjangoTemplates backend is still needed for tools like Django admin and the debug toolbar
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
+]
+```
+
+Ensure your application is first on the list of template directories. This means you can [overwrite the standard templates](#overriding-templates) by creating a template with the same filename in your project.
+
+## Using the templates
 
 ```jinja
-{% from 'components/button/macro.html' import tnaButton -%}
+{% from 'components/button/macro.html' import tnaButton %}
 
 {{ tnaButton({
   'text': 'Save and continue'
@@ -54,7 +91,7 @@ To make modifications to the templates, create a new file in your applciation te
 
 For example, if your application templates directory is `app/templates`, create `app/templates/components/button/macro.html` and insert your own HTML using the same macro name (e.g. `tnaButton`).
 
-This way you can continue to use the same import (e.g. `{% from 'components/button/macro.html' import tnaButton -%}`) but introduce your own bespoke functionality.
+This way you can continue to use the same import (e.g. `{% from 'components/button/macro.html' import tnaButton %}`) but introduce your own bespoke functionality.
 
 ## Styles and JavaScript
 
