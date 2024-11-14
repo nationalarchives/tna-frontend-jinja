@@ -14,7 +14,7 @@ TNA Frontend Jinja templates are a [Jinja](https://jinja.palletsprojects.com/en/
 
 Use the Flask application's `jinja_loader` to allow templates included from either your app (in the below example called `app`) and the `tna_frontend_jinja` package.
 
-Ensure you application is first on the list. This means you can overwrite the standard templates by creating a template with the same filename in your project.
+Ensure your application is first on the list. This means you can [overwrite the standard templates](#overriding-templates) by creating a template with the same filename in your project.
 
 ```py
 from flask import Flask
@@ -26,7 +26,7 @@ def create_app():
 
     app.jinja_loader = ChoiceLoader(
         [
-            PackageLoader("app"),
+            PackageLoader("app"),  # Use your application directory here
             PackageLoader("tna_frontend_jinja"),
         ]
     )
@@ -35,7 +35,7 @@ def create_app():
 ### Using the templates
 
 ```jinja
-{% from "components/button/macro.html" import tnaButton -%}
+{% from 'components/button/macro.html' import tnaButton -%}
 
 {{ tnaButton({
   'text': 'Save and continue'
@@ -47,6 +47,14 @@ The options available to each component macro can be found in the [National Arch
 The included templates are a like-for-like port, the only difference between the Nunjucks examples and their Jinja equivalents is having to quote key names, e.g. `'text'` instead of `text`.
 
 We test each component against its published [component fixtures](https://github.com/nationalarchives/tna-frontend/blob/main/src/nationalarchives/components/button/fixtures.json) to ensure complete compatibility.
+
+### Overriding templates
+
+To make modifications to the templates, create a new file in your applciation templates directory with the same name as the template you want to customise.
+
+For example, if your application templates directory is `app/templates`, create `app/templates/components/button/macro.html` and insert your own HTML using the same macro name (e.g. `tnaButton`).
+
+This way you can continue to use the same import (e.g. `{% from 'components/button/macro.html' import tnaButton -%}`) but introduce your own bespoke functionality.
 
 ## Compatibility with TNA Frontend
 
