@@ -56,35 +56,43 @@ For example, if your application templates directory is `app/templates`, create 
 
 This way you can continue to use the same import (e.g. `{% from 'components/button/macro.html' import tnaButton -%}`) but introduce your own bespoke functionality.
 
-## Compatibility with TNA Frontend
+## Styles and JavaScript
 
-### v0.2.x
+The CSS and JavaScript are not included in the PyPI package. You must install them separately.
 
-| TNA Frontend Jinja | Compatible TNA Frontend versions |
-| ------------------ | -------------------------------- |
-| `0.2.18`           | `0.2.18`                         |
-| `0.2.17`           | `0.2.17`                         |
-| `0.2.16`           | `0.2.16`                         |
-| `0.2.15`           | `0.2.15`                         |
-| `0.2.14`           | `0.2.14`                         |
-| `0.2.13`           | `0.2.13`                         |
-| `0.2.12`           | `0.2.12`                         |
-| `0.2.11`           | `0.2.11`                         |
-| `0.2.10`           | `0.2.10`                         |
-| `0.2.9`            | `0.2.9`                          |
-| `0.2.8`            | `0.2.8`                          |
-| `0.2.7`            | `0.2.7`                          |
-| `0.2.6`            | `0.2.6`                          |
-| `0.2.5`            | `0.2.5`                          |
-| `0.2.4`            | `0.2.4`                          |
-| `0.2.3`            | `0.2.3`                          |
-| `0.2.2`            | `0.2.2`                          |
-| `0.2.1`            | `0.2.1`                          |
-| `0.2.0`            | `0.2.0`                          |
+Install and use the `@nationalarchives/frontend` package from npm with `npm install @nationalarchives/frontend`.
 
-### v0.1.x
+Ensure you install the correct version of TNA Frontend for the version of the templates you are using.
 
-| TNA Frontend Jinja    | Compatible TNA Frontend versions           |
+### Compatibility with TNA Frontend
+
+#### v0.2.x
+
+| TNA Frontend Jinja | Compatible TNA Frontend version(s) |
+| ------------------ | ---------------------------------- |
+| `0.2.18`           | `0.2.18`                           |
+| `0.2.17`           | `0.2.17`                           |
+| `0.2.16`           | `0.2.16`                           |
+| `0.2.15`           | `0.2.15`                           |
+| `0.2.14`           | `0.2.14`                           |
+| `0.2.13`           | `0.2.13`                           |
+| `0.2.12`           | `0.2.12`                           |
+| `0.2.11`           | `0.2.11`                           |
+| `0.2.10`           | `0.2.10`                           |
+| `0.2.9`            | `0.2.9`                            |
+| `0.2.8`            | `0.2.8`                            |
+| `0.2.7`            | `0.2.7`                            |
+| `0.2.6`            | `0.2.6`                            |
+| `0.2.5`            | `0.2.5`                            |
+| `0.2.4`            | `0.2.4`                            |
+| `0.2.3`            | `0.2.3`                            |
+| `0.2.2`            | `0.2.2`                            |
+| `0.2.1`            | `0.2.1`                            |
+| `0.2.0`            | `0.2.0`                            |
+
+#### v0.1.x
+
+| TNA Frontend Jinja    | Compatible TNA Frontend version(s)         |
 | --------------------- | ------------------------------------------ |
 | `0.1.34`              | `0.1.65`                                   |
 | `0.1.33`              | `0.1.62`, `0.1.63`, `0.1.64`               |
@@ -113,7 +121,7 @@ This way you can continue to use the same import (e.g. `{% from 'components/butt
 | `0.1.6`               | `0.1.29-prerelease`, `0.1.30`              |
 | `0.1.0`&ndash;`0.1.5` | [latest from `main` branch when published] |
 
-## Test the templates
+## Testing the templates
 
 ```sh
 npm install
