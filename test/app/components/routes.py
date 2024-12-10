@@ -125,11 +125,6 @@ def radios():
     return render_component("radios.html")
 
 
-@bp.route("/records-list")
-def records_list():
-    return render_component("records-list.html")
-
-
 @bp.route("/search-field")
 def search_field():
     return render_component("search-field.html")
