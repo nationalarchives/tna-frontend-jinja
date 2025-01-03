@@ -93,6 +93,14 @@ For example, if your application templates directory is `app/templates`, create 
 
 This way you can continue to use the same import (e.g. `{% from 'components/button/macro.html' import tnaButton %}`) but introduce your own bespoke functionality.
 
+## Testing the templates
+
+```sh
+docker compose up -d
+npm install
+node test-fixtures.mjs
+```
+
 ## Styles and JavaScript
 
 The CSS and JavaScript are not included in the PyPI package. You must install them separately.
@@ -102,6 +110,14 @@ Install and use the `@nationalarchives/frontend` package from npm with `npm inst
 Ensure you install the correct version of TNA Frontend for the version of the templates you are using.
 
 ### Compatibility with TNA Frontend
+
+#### v0.3+
+
+| TNA Frontend Jinja | Compatible TNA Frontend version(s) |
+| ------------------ | ---------------------------------- |
+| `0.5.0`            | `0.5.0`                            |
+| `0.4.0`            | `0.4.0`                            |
+| `0.3.0`            | `0.3.0`                            |
 
 #### v0.2.x
 
@@ -157,11 +173,3 @@ Ensure you install the correct version of TNA Frontend for the version of the te
 | `0.1.7`, `0.1.8`      | `0.1.31`, `0.1.32`                         |
 | `0.1.6`               | `0.1.29-prerelease`, `0.1.30`              |
 | `0.1.0`&ndash;`0.1.5` | [latest from `main` branch when published] |
-
-## Testing the templates
-
-```sh
-npm install
-docker compose up -d
-node test-fixtures.mjs
-```

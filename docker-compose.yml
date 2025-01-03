@@ -1,7 +1,6 @@
 services:
   app:
     build:
-      # context: test
       dockerfile: test/Dockerfile
     environment:
       - ENVIRONMENT=develop
