@@ -130,6 +130,11 @@ def search_field():
     return render_component("search-field.html")
 
 
+@bp.route("/secondary-navigation")
+def secondary_navigation():
+    return render_component("secondary-navigation.html")
+
+
 @bp.route("/select")
 def select():
     return render_component("select.html")
