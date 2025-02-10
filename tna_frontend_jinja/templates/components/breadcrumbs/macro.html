@@ -4,7 +4,7 @@
   {%- set containerClasses = containerClasses + ['tna-breadcrumbs--no-collapse'] -%}
 {%- endif -%}
 {%- set classes = ' '.join(containerClasses) -%}
-<nav class="tna-breadcrumbs{% if classes %} {{ classes }}{% endif %}" data-module="tna-breadcrumbs" aria-label="Breadcrumbs" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+<nav class="tna-breadcrumbs{% if classes %} {{ classes }}{% endif %}" data-module="tna-breadcrumbs" aria-label="{{ params.labelText or 'Breadcrumbs' }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <ol class="tna-breadcrumbs__list" {%- if params.structuredData %} itemscope itemtype="https://schema.org/BreadcrumbList"{% endif %}>
   {%- for item in params['items'] -%}
     <li class="tna-breadcrumbs__item" {%- if params.structuredData %} itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"{% endif %}>
