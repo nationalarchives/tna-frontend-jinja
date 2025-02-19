@@ -19,7 +19,9 @@
 {%- if params.style -%}
   {%- set containerClasses = containerClasses + ['tna-card--padded'] -%}
 {%- endif -%}
-{%- if params.style == "contrast" -%}
+{%- if params.style == "plain" -%}
+  {%- set containerClasses = containerClasses + ['tna-card--plain'] -%}
+{%- elif params.style == "contrast" -%}
   {%- set containerClasses = containerClasses + ['tna-background-contrast'] -%}
 {%- elif params.style == "tint" -%}
   {%- set containerClasses = containerClasses + ['tna-background-tint'] -%}
