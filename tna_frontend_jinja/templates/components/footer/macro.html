@@ -116,7 +116,7 @@
           <ul class="tna-footer__navigation-block-items tna-ul tna-ul--plain">
           {%- for item in group['items'] -%}
             <li class="tna-footer__navigation-block-item">
-              <a href="{{ item.href }}" class="tna-footer__navigation-block-item-link"{%- if item.title or item.newTab %} title="{{ item.title if item.title else item.text }}{%- if item.newTab %} (opens in new tab){% endif %}"{% endif %}{%- if item.newTab %} target="_blank" rel="noreferrer noopener"{% endif %}>
+              <a href="{{ item.href }}" class="tna-footer__navigation-block-item-link"{%- if item.title or item.newTab %} title="{{ item.title if item.title else item.text }}{%- if item.newTab %} (opens in new tab){% endif %}"{% endif %}{%- if item.newTab %} target="_blank"{% endif %}{%- if item.external %} rel="noreferrer noopener"{% endif %}>
                 {{ item.text }}
               </a>
             </li>
@@ -136,9 +136,14 @@
             Hear about our latest news, stories from the collection and priority booking for events.
           </p>
           <div class="tna-button-group">
-            <a href="https://pages.enews.nationalarchives.gov.uk/pages/subscribe" class="tna-button">
-              Subscribe
-            </a>
+            {{ tnaButton({
+              'text': 'Subscribe',
+              'href': 'https://pages.enews.nationalarchives.gov.uk/pages/subscribe',
+              'attributes': {
+                'aria-label': 'Subscribe to the National Archives newsletter',
+                'rel': 'noreferrer nofollow noopener'
+              }
+            }) | indent(10) }}
           </div>
         </div>
       </div>

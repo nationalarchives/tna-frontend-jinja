@@ -11,7 +11,7 @@
 {%- endif -%}
 {%- set classes = ' '.join(containerClasses) -%}
 <nav class="tna-secondary-navigation{% if classes %} {{ classes }}{% endif %}" aria-label="{{ params.title }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
-  <h{{ params.headingLevel }} class="tna-secondary-navigation__heading tna-heading-s">
+  <h{{ params.headingLevel }} class="tna-secondary-navigation__heading tna-heading-s{% if params.visuallyHideHeading %} tna-visually-hidden{% endif %}">
     {{ params.title }}
   </h{{ params.headingLevel }}>
   <ul class="tna-secondary-navigation__items">
