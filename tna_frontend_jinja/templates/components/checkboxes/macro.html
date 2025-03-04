@@ -26,10 +26,12 @@
 {% endmacro %}
 
 {% macro tnaCheckboxesElement(params, extraAttributes) %}
+{%- set inputClassesParams = [params.classes] if params.classes else [] -%}
+{%- set inputClasses = ' '.join(inputClassesParams) -%}
 <div class="tna-checkboxes{% if params.small or params.inline %} tna-checkboxes--small{% endif %}{% if params.inline %} tna-checkboxes--inline{% endif %}" id="{{ params.id }}">
   {%- for item in params['items'] %}
   <div class="tna-checkboxes__item">
-    <input type="checkbox" id="{{ params.id }}-{{ item.value }}" value="{{ item.value }}" name="{{ params.name }}"
+    <input type="checkbox" id="{{ params.id }}-{{ item.value }}"{% if inputClasses %} class="{{ inputClasses }}"{% endif %} value="{{ item.value }}" name="{{ params.name }}"
     {%- if item.checked %} checked{% endif %}
     {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}
     {%- if extraAttributes %}{% for attribute, value in extraAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>

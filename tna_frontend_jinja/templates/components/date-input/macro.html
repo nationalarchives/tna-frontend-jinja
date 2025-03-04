@@ -1,9 +1,11 @@
 {% macro tnaDateInput(params) %}
-{%- set containerClasses = [params.classes] if params.classes else [] -%}
+{%- set containerClasses = [params.formGroupClasses] if params.formGroupClasses else [] -%}
 {%- if params.inline -%}
   {%- set containerClasses = containerClasses + ['tna-form__group--inline'] -%}
 {%- endif -%}
-<div class="tna-form__group{% if params.error %} tna-form__group--error{% endif %} {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+{%- set inputClassesParams = [params.classes] if params.classes else [] -%}
+{%- set inputClasses = ' '.join(inputClassesParams) -%}
+<div class="tna-form__group{% if params.error %} tna-form__group--error{% endif %} {{ ' '.join(containerClasses) }}" {%- if params.formGroupAttributes %}{% for attribute, value in params.formGroupAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <fieldset class="tna-form__fieldset"{%- if params.hint or params.error %} aria-describedby="{%- if params.hint -%}{{ params.id }}-hint{%- endif %} {% if params.error -%}{{ params.id }}-error{%- endif -%}"{%- endif %}>
     <legend class="tna-form__legend">
       <h{{ params.headingLevel }} class="tna-form__heading tna-form__heading--{{ params.headingSize or 'm' }}">
@@ -25,19 +27,19 @@
         <label for="{{ params.id }}-day" class="tna-date-input__item-label">
           Day
         </label>
-        <input type="text" id="{{ params.id }}-day" value="{{ params.value.day if params.value }}" name="{{ params.name }}-day" class="tna-date-input__item-input" inputmode="numeric">
+        <input type="text" id="{{ params.id }}-day" value="{{ params.value.day if params.value }}" name="{{ params.name }}-day" class="tna-date-input__item-input{% if inputClasses %} {{ inputClasses }}{% endif %}" inputmode="numeric" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
       </div>
       <div class="tna-date-input__item">
         <label for="{{ params.id }}-month" class="tna-date-input__item-label">
           Month
         </label>
-        <input type="text" id="{{ params.id }}-month" value="{{ params.value.month if params.value }}" name="{{ params.name }}-month" class="tna-date-input__item-input" inputmode="numeric">
+        <input type="text" id="{{ params.id }}-month" value="{{ params.value.month if params.value }}" name="{{ params.name }}-month" class="tna-date-input__item-input{% if inputClasses %} {{ inputClasses }}{% endif %}" inputmode="numeric" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
       </div>
       <div class="tna-date-input__item">
         <label for="{{ params.id }}-year" class="tna-date-input__item-label">
           Year
         </label>
-        <input type="text" id="{{ params.id }}-year" value="{{ params.value.year if params.value }}" name="{{ params.name }}-year" class="tna-date-input__item-input tna-date-input__item-input--wider" inputmode="numeric">
+        <input type="text" id="{{ params.id }}-year" value="{{ params.value.year if params.value }}" name="{{ params.name }}-year" class="tna-date-input__item-input{% if inputClasses %} {{ inputClasses }}{% endif %} tna-date-input__item-input--wider" inputmode="numeric" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
       </div>
     </div>
   </fieldset>

@@ -3,7 +3,7 @@
 {%- if params.inline -%}
   {%- set containerClasses = containerClasses + ['tna-form__group--inline'] -%}
 {%- endif -%}
-<div class="tna-form__group{% if params.error %} tna-form__group--error{% endif %} {{ ' '.join(containerClasses) }}" data-module="tna-text-input" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+<div class="tna-form__group{% if params.error %} tna-form__group--error{% endif %} {{ ' '.join(containerClasses) }}" data-module="tna-text-input" {%- if params.formGroupAttributes %}{% for attribute, value in params.formGroupAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <div class="tna-form__group-contents">
     <h{{ params.headingLevel }} class="tna-form__heading tna-form__heading--{{ params.headingSize or 'm' }}">
       <label class="tna-form__label" for="{{ params.id }}">
