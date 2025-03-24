@@ -81,7 +81,7 @@ Ensure your application is first on the list of template directories. This means
 
 The options available to each component macro can be found in the [National Archives Design System Components](https://nationalarchives.github.io/design-system/components/) documentation.
 
-The included templates are a like-for-like port, the only difference between the Nunjucks examples and their Jinja equivalents is having to quote key names, e.g. `'text'` instead of `text`.
+> ⚠️ The included templates are a like-for-like port, the only difference between the Nunjucks examples and their Jinja equivalents is having to quote key names, e.g. `'text'` instead of `text`.
 
 We test each component against its published [component fixtures](https://github.com/nationalarchives/tna-frontend/blob/main/src/nationalarchives/components/button/fixtures.json) to ensure complete compatibility.
 
@@ -96,8 +96,13 @@ This way you can continue to use the same import (e.g. `{% from 'components/butt
 ## Testing the templates
 
 ```sh
+# Start the test server
 docker compose up -d
+
+# Install the dependencies
 npm install
+
+# Run the fixture tests
 node test-fixtures.mjs
 ```
 
@@ -115,6 +120,7 @@ Ensure you install the correct version of TNA Frontend for the version of the te
 
 | TNA Frontend Jinja | Compatible TNA Frontend version(s) |
 | ------------------ | ---------------------------------- |
+| `0.16.0`           | `0.16.x`                           |
 | `0.15.0`           | `0.15.x`                           |
 | `0.14.0`           | `0.14.x`                           |
 | `0.13.0`           | `0.13.x`                           |

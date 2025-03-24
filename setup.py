@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="tna-frontend-jinja",
-    version="0.15.0",
+    version="0.16.0",
     author="Andrew Hosgood",
     author_email="andrew.hosgood@nationalarchives.gov.uk",
     description="TNA Frontend Jinja templates",
@@ -29,6 +29,6 @@ setuptools.setup(
     package_data={
         "": ["**/*.html"],
     },
-    python_requires=">=3.8",
-    install_requires=["flask>=2"],
+    python_requires=">=3.9",
+    install_requires=["Jinja2>=3"],
 )
