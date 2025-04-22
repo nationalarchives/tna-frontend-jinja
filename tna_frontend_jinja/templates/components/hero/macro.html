@@ -17,6 +17,9 @@
 {%- if params.narrow -%}
   {%- set containerClasses = containerClasses + ['tna-hero--narrow'] -%}
 {%- endif -%}
+{%- if params.leftBorder -%}
+  {%- set containerClasses = containerClasses + ['tna-hero--left-border'] -%}
+{%- endif -%}
 {% set hasContent = params.title or params.body or params.text %}
 <{{ 'header' if hasContent else 'div' }} class="tna-hero {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <figure class="tna-hero__figure">
