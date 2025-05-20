@@ -5,8 +5,8 @@
   },
   "dependencies": {
     "@nationalarchives/frontend": "0.18.0",
-    "diff": "^7.0.0",
-    "glob": "^10.2.7",
+    "diff": "^8.0.0",
+    "glob": "^11.0.2",
     "js-beautify": "^1.14.8",
     "node-fetch": "^3.3.1"
   }

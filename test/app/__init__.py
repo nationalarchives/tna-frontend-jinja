@@ -6,7 +6,7 @@ from .templates import bp as templates_bp
 app = Flask(__name__, template_folder="/home/app/tna_frontend_jinja/templates")
 
 
-@app.route("/ready/")
+@app.route("/healthcheck/live/")
 def ready():
     return "ok"
 
