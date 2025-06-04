@@ -1,12 +1,10 @@
 services:
   app:
     build:
-      dockerfile: test/Dockerfile
+      dockerfile: flask.Dockerfile
     environment:
-      - ENVIRONMENT=develop
-      - CONFIG=config.Develop
+      - RUNTIME=develop
       - SECRET_KEY=abc123
-      - ALLOW_INSECURE=true
     ports:
       - 5001:8080
     volumes:

@@ -1,5 +1,5 @@
 import json
-from test.templates import bp
+from test.flask.templates import bp
 
 from flask import render_template, request
 

@@ -1,13 +1,14 @@
 import json
-from test.components import bp
+from test.flask.components import bp
 
 from flask import render_template, request
 
 
 def render_component(template):
-    params_str = request.args.get("params")
-    params = json.loads(params_str) if params_str else {}
-    return render_template(template, params=params)
+    params = request.args.get("params")
+    return render_template(
+        template, params=json.loads(params) if params else {}
+    )
 
 
 @bp.route("/accordion")
@@ -125,14 +126,14 @@ def radios():
     return render_component("components/radios.html")
 
 
-@bp.route("/records-list")
-def records_list():
-    return render_component("components/records-list.html")
-
-
 @bp.route("/search-field")
 def search_field():
     return render_component("components/search-field.html")
+
+
+@bp.route("/secondary-navigation")
+def secondary_navigation():
+    return render_component("components/secondary-navigation.html")
 
 
 @bp.route("/select")

@@ -1,6 +1,3 @@
-from test.forms import bp
-
-from flask import redirect, render_template, url_for
 from flask_wtf import FlaskForm
 from tna_frontend_jinja.wtforms.widgets import (
     TnaCheckboxesInput,
@@ -26,7 +23,7 @@ from wtforms import (
 from wtforms.validators import InputRequired, Length
 
 
-class ExampleForm(FlaskForm):
+class KitchenSinkForm(FlaskForm):
     username = StringField(
         "Username",
         widget=TnaTextInput(),
@@ -94,11 +91,3 @@ class ExampleForm(FlaskForm):
     )
 
     submit = SubmitField("Continue", widget=TnaSubmitInput())
-
-
-@bp.route("/", methods=["GET", "POST"])
-def index():
-    form = ExampleForm()
-    if form.validate_on_submit():
-        return redirect(url_for("forms.index", status="Success"))
-    return render_template("example-form.html", form=form)

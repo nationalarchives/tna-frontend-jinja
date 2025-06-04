@@ -15,7 +15,7 @@ app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 
 app.jinja_loader = ChoiceLoader(
     [
-        PackageLoader("test"),
+        PackageLoader("test.flask"),
         PackageLoader("tna_frontend_jinja"),
     ]
 )

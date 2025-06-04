@@ -25,7 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Upgraded to [TNA Frontend `v0.18.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.18.0)
 
-
 ## [0.17.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.16.0...v0.17.0) - 2025-04-22
 
 ### Changed
@@ -99,7 +98,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Upgraded TNA Frontend to `v0.8.0`
-
 
 ## [0.7.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.6.0...v0.7.0) - 2025-01-13
 

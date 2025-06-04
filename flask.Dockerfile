@@ -4,4 +4,4 @@ COPY --chown=app . .
 
 RUN tna-build
 
-CMD ["tna-run", "test:app"]
+CMD ["tna-run", "test.flask:app"]
