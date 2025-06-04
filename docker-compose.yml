@@ -1,11 +1,12 @@
 services:
   app:
     build:
-      context: .
+      dockerfile: test/Dockerfile
     environment:
       - ENVIRONMENT=develop
       - CONFIG=config.Develop
       - SECRET_KEY=abc123
+      - ALLOW_INSECURE=true
     ports:
       - 5001:8080
     volumes:

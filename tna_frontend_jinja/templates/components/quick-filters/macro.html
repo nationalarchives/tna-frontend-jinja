@@ -2,8 +2,9 @@
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
 <ul class="tna-quick-filters{% if params.stack %} tna-quick-filters--stacked{% endif %} {% if params.fill %} tna-quick-filters--filled{% endif %} {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   {%- for item in params['items'] -%}
+  {%- set itemClasses = ([item.classes] if item.classes else []) | join(' ') -%}
   <li class="tna-quick-filters__item{%- if item.selected %} tna-quick-filters__item--selected{% endif %}">
-    <a href="{{ item.href }}" {%- if item.title %} title="{{ item.title }}"{% endif %} class="tna-quick-filters__link">{{ item.label }}</a>
+    <a href="{{ item.href }}" {%- if item.title %} aria-label="{{ item.title }}" title="{{ item.title }}"{% endif %} class="tna-quick-filters__link{% if itemClasses %} {{ itemClasses }}{% endif %}" {%- if item.attributes %}{% for attribute, value in item.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>{{ item.label }}</a>
   </li>
   {%- endfor -%}
 </ul>

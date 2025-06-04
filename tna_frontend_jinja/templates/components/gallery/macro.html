@@ -2,6 +2,9 @@
 {% from "components/button/macro.html" import tnaButton %}
 
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
+{%- if params.bounded -%}
+  {%- set containerClasses = containerClasses + ['tna-gallery--bounded'] -%}
+{%- endif -%}
 {%- set classes = containerClasses | join(' ') -%}
 <section class="tna-gallery{% if classes %} {{ classes }}{% endif %}" data-module="tna-gallery" {%- if params.showGrid %} data-showgrid="true"{% endif %} {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <div class="tna-gallery__header">
@@ -19,8 +22,8 @@
     </div>
     <div class="tna-gallery__options tna-button-group tna-button-group--small" hidden>
       {{ tnaButton({
-        'text': 'Full screen',
-        'iconSvg': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M32 32C14.3 32 0 46.3 0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V352z"/></svg>',
+        'html': '<span class="tna-visually-hidden">View the ' + (params.title or '') + ' gallery in </span>Full screen',
+        'iconSvg': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="24" aria-hidden="true" focusable="false"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M32 32C14.3 32 0 46.3 0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V352z"/></svg>',
         'iconOnlyOnMobile': True,
         'buttonElement': True,
         'attributes': {
@@ -30,7 +33,7 @@
       }) | indent(6) }}
       {{ tnaButton({
         'text': 'Exit full screen',
-        'iconSvg': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M160 64c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V64zM32 320c-17.7 0-32 14.3-32 32s14.3 32 32 32H96v64c0 17.7 14.3 32 32 32s32-14.3 32-32V352c0-17.7-14.3-32-32-32H32zM352 64c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H352V64zM320 320c-17.7 0-32 14.3-32 32v96c0 17.7 14.3 32 32 32s32-14.3 32-32V384h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H320z"/></svg>',
+        'iconSvg': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="24" aria-hidden="true" focusable="false"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M160 64c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V64zM32 320c-17.7 0-32 14.3-32 32s14.3 32 32 32H96v64c0 17.7 14.3 32 32 32s32-14.3 32-32V352c0-17.7-14.3-32-32-32H32zM352 64c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H352V64zM320 320c-17.7 0-32 14.3-32 32v96c0 17.7 14.3 32 32 32s32-14.3 32-32V384h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H320z"/></svg>',
         'iconOnlyOnMobile': True,
         'buttonElement': True,
         'attributes': {
@@ -40,7 +43,7 @@
       }) | indent(6) }}
       {{ tnaButton({
         'text': 'See all images',
-        'iconSvg': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M128 136c0-22.1-17.9-40-40-40L40 96C17.9 96 0 113.9 0 136l0 48c0 22.1 17.9 40 40 40H88c22.1 0 40-17.9 40-40l0-48zm0 192c0-22.1-17.9-40-40-40H40c-22.1 0-40 17.9-40 40l0 48c0 22.1 17.9 40 40 40H88c22.1 0 40-17.9 40-40V328zm32-192v48c0 22.1 17.9 40 40 40h48c22.1 0 40-17.9 40-40V136c0-22.1-17.9-40-40-40l-48 0c-22.1 0-40 17.9-40 40zM288 328c0-22.1-17.9-40-40-40H200c-22.1 0-40 17.9-40 40l0 48c0 22.1 17.9 40 40 40h48c22.1 0 40-17.9 40-40V328zm32-192v48c0 22.1 17.9 40 40 40h48c22.1 0 40-17.9 40-40V136c0-22.1-17.9-40-40-40l-48 0c-22.1 0-40 17.9-40 40zM448 328c0-22.1-17.9-40-40-40H360c-22.1 0-40 17.9-40 40v48c0 22.1 17.9 40 40 40h48c22.1 0 40-17.9 40-40V328z"/></svg>',
+        'iconSvg': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="24" aria-hidden="true" focusable="false"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M128 136c0-22.1-17.9-40-40-40L40 96C17.9 96 0 113.9 0 136l0 48c0 22.1 17.9 40 40 40H88c22.1 0 40-17.9 40-40l0-48zm0 192c0-22.1-17.9-40-40-40H40c-22.1 0-40 17.9-40 40l0 48c0 22.1 17.9 40 40 40H88c22.1 0 40-17.9 40-40V328zm32-192v48c0 22.1 17.9 40 40 40h48c22.1 0 40-17.9 40-40V136c0-22.1-17.9-40-40-40l-48 0c-22.1 0-40 17.9-40 40zM288 328c0-22.1-17.9-40-40-40H200c-22.1 0-40 17.9-40 40l0 48c0 22.1 17.9 40 40 40h48c22.1 0 40-17.9 40-40V328zm32-192v48c0 22.1 17.9 40 40 40h48c22.1 0 40-17.9 40-40V136c0-22.1-17.9-40-40-40l-48 0c-22.1 0-40 17.9-40 40zM448 328c0-22.1-17.9-40-40-40H360c-22.1 0-40 17.9-40 40v48c0 22.1 17.9 40 40 40h48c22.1 0 40-17.9 40-40V328z"/></svg>',
         'iconOnlyOnMobile': True,
         'buttonElement': True,
         'attributes': {
@@ -52,7 +55,7 @@
   </div>
   <div class="tna-gallery__items">
     {%- for item in params['items'] %}
-    <div class="tna-gallery__item" id="{{ params.id }}-item-{{ loop.index }}" aria-labelledby="{{ params.id }}-item-{{ loop.index }}-tab" role="tabpanel">
+    <div class="tna-gallery__item" id="{{ params.id }}-item-{{ loop.index }}">
       <p class="tna-gallery__item-header">Image {{ loop.index }} of {{ params['items'] | length }}</p>
       <figure class="tna-gallery__item-figure">
         <div class="tna-gallery__item-figure-inner">
@@ -68,22 +71,22 @@
     {%- endfor %}
   </div>
   <div class="tna-gallery__navigation-buttons" hidden>
-    <button type="button" class="tna-gallery__navigation-button tna-gallery__navigation-prev" aria-label="Previous image">
+    <button type="button" class="tna-gallery__navigation-button tna-gallery__navigation-prev" aria-label="{% if params.title %}Show previous image in '{{ params.title }}' gallery{% else %}Show previous gallery image{% endif %}">
       <span class="tna-gallery__navigation-button-label">
         <span class="tna-gallery__navigation-button-icon"></span>
         Previous
       </span>
     </button>
-    <button type="button" class="tna-gallery__navigation-button tna-gallery__navigation-next" aria-label="Next image">
+    <button type="button" class="tna-gallery__navigation-button tna-gallery__navigation-next" aria-label="{% if params.title %}Show next image in '{{ params.title }}' gallery{% else %}Show next gallery image{% endif %}">
       <span class="tna-gallery__navigation-button-label">
         Next
         <span class="tna-gallery__navigation-button-icon"></span>
       </span>
     </button>
   </div>
-  <div class="tna-gallery__navigation" role="tablist" hidden>
+  <div class="tna-gallery__navigation" hidden>
     {%- for item in params['items'] -%}
-    <button type="button" class="tna-gallery__navigation-item" role="tab" id="{{ params.id }}-item-{{ loop.index }}-tab" aria-label="Photo {{ loop.index }} of {{ params['items'] | length }}" aria-controls="{{ params.id }}-item-{{ loop.index }}">
+    <button type="button" class="tna-gallery__navigation-item" aria-label="{% if params.title %}Show image {{ loop.index }} of {{ params['items'] | length }} of '{{ params.title }}' gallery{% else %}Show gallery image {{ loop.index }} of {{ params['items'] | length }}{% endif %}" aria-controls="{{ params.id }}-item-{{ loop.index }}">
       <img src="{{ item.src }}" class="tna-gallery__navigation-item-image" alt="" width="{{ item.width }}" height="{{ item.height }}" loading="lazy">
       <span class="tna-visually-hidden">Image</span>
       <span class="tna-gallery__navigation-item-label">{{ loop.index }}</span>

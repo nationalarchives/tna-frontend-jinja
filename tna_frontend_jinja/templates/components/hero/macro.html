@@ -17,29 +17,12 @@
 {%- if params.narrow -%}
   {%- set containerClasses = containerClasses + ['tna-hero--narrow'] -%}
 {%- endif -%}
+{%- if params.leftBorder -%}
+  {%- set containerClasses = containerClasses + ['tna-hero--left-border'] -%}
+{%- endif -%}
 {% set hasContent = params.title or params.body or params.text %}
 <{{ 'header' if hasContent else 'div' }} class="tna-hero {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <figure class="tna-hero__figure">
-    {%- if params.imageCaption -%}
-    <figcaption class="tna-hero__caption">
-      <details class="tna-hero__details">
-        <summary class="tna-hero__details-summary">
-          About this <span class="tna-hero__details-summary-icon">i</span>mage
-        </summary>
-        <div class="tna-hero__information">
-          {{ params.imageCaption | safe }}
-        </div>
-      </details>
-    </figcaption>
-    {%- endif -%}
-    <picture class="tna-hero__image">
-      {%- if params.imageSources -%}
-      {%- for source in params.imageSources %}
-      <source srcset="{{ source.src }}" type="{{ source.type }}" width="{{ source.width if source.width else params.imageWidth }}" height="{{ source.height if source.height else params.imageHeight }}"{% if source.media %} media="{{ source.media }}"{% endif %}>
-      {%- endfor %}
-      {%- endif -%}
-      <img src="{{ params.imageSrc }}" alt="{{ params.imageAlt }}" width="{{ params.imageWidth }}" height="{{ params.imageHeight }}">
-    </picture>
     {%- if hasContent -%}
     <div class="tna-container tna-hero__inner">
       <div class="tna-column tna-column--width-2-3 tna-column--full-small tna-column--full-tiny tna-hero__content">
@@ -81,6 +64,27 @@
         </div>
       </div>
     </div>
+    {%- endif -%}
+    <picture class="tna-hero__image">
+      {%- if params.imageSources -%}
+      {%- for source in params.imageSources %}
+      <source srcset="{{ source.src }}" type="{{ source.type }}" width="{{ source.width if source.width else params.imageWidth }}" height="{{ source.height if source.height else params.imageHeight }}"{% if source.media %} media="{{ source.media }}"{% endif %}>
+      {%- endfor %}
+      {%- endif -%}
+      <img src="{{ params.imageSrc }}" alt="{{ params.imageAlt }}" width="{{ params.imageWidth }}" height="{{ params.imageHeight }}">
+    </picture>
+    {%- if params.imageCaption -%}
+    <figcaption class="tna-hero__caption">
+      <details class="tna-hero__details">
+        <summary class="tna-hero__details-summary" aria-label="Additional information
+        about the featured image">
+          About this <span class="tna-hero__details-summary-icon">i</span>mage
+        </summary>
+        <div class="tna-hero__information">
+          {{ params.imageCaption | safe }}
+        </div>
+      </details>
+    </figcaption>
     {%- endif -%}
   </figure>
 </{{ 'header' if hasContent else 'div' }}>

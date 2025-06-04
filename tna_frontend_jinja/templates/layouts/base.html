@@ -37,6 +37,7 @@
   </head>
     <body class="tna-template__body{% if bodyClasses %} {{ bodyClasses }}{% endif %}" {%- if bodyAttributes %}{% for attribute, value in bodyAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
     {% block bodyStart %}
+      <a id="top"></a>
       {% block cookies %}
         {{ tnaCookieBanner({
           'cookiesUrl': '#/cookies'

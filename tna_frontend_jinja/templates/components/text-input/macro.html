@@ -3,7 +3,7 @@
 {%- if params.inline -%}
   {%- set containerClasses = containerClasses + ['tna-form__group--inline'] -%}
 {%- endif -%}
-<div class="tna-form__group{% if params.error %} tna-form__group--error{% endif %} {{ ' '.join(containerClasses) }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+<div class="tna-form__group{% if params.error %} tna-form__group--error{% endif %} {{ ' '.join(containerClasses) }}" data-module="tna-text-input" {%- if params.formGroupAttributes %}{% for attribute, value in params.formGroupAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <div class="tna-form__group-contents">
     <h{{ params.headingLevel }} class="tna-form__heading tna-form__heading--{{ params.headingSize or 'm' }}">
       <label class="tna-form__label" for="{{ params.id }}">
@@ -27,10 +27,12 @@
 
 {% macro tnaTextInputElement(params, extraAttributes) %}
 {%- set inputClasses = [params.classes] if params.classes else [] -%}
-<input type="text" id="{{ params.id }}" class="tna-text-input{% if params.size %} tna-text-input--{{ params.size }}{% endif %} {{ inputClasses | join(' ') }}" name="{{ params.name }}" value="{{ params.value }}" spellcheck="{{ 'true' if params.spellcheck else 'false' }}"
+<input id="{{ params.id }}" class="tna-text-input{% if params.size %} tna-text-input--{{ params.size }}{% endif %} {{ inputClasses | join(' ') }}" name="{{ params.name }}" value="{{ params.value }}"
 {%- if params.hint or params.error %} aria-describedby="{%- if params.hint -%}{{ params.id }}-hint{%- endif %} {% if params.error -%}{{ params.id }}-error{%- endif -%}"{%- endif %}
 {%- if params.maxLength %} maxlength="{{ params.maxLength }}"{% endif %}
-{%- if params.autofill %} autofill="{{ params.autofill }}"{% endif %}
+{%- if params.password %} type="password" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false"{%- else %} type="text" spellcheck="{{ params.spellcheck if params.spellcheck else 'false' }}"
+    {%- if params.autofill %} autofill="{{ params.autofill }}"{% endif %}
+{%- endif %}
 {%- if params.inputmode %} inputmode="{{ params.inputmode }}"{% endif %}
 {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}
 {%- if extraAttributes %}{% for attribute, value in extraAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>

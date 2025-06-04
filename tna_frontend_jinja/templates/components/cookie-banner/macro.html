@@ -2,7 +2,9 @@
 {% from "components/button/macro.html" import tnaButton %}
 
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
-<section class="tna-cookie-banner {{ ' '.join(containerClasses) }}" data-module="tna-cookie-banner" data-policies="{{ params.policies if params.policies }}" data-preferenceskey="{{ params.preferencesSetKey if params.preferencesSetKey }}" data-policieskey="{{ params.policiesKey if params.policiesKey }}" data-domain="{{ params.cookiesDomain if params.cookiesDomain }}" data-path="{{ params.cookiesPath if params.cookiesPath }}" data-insecure="{{ 'true' if params.allowInsecure else 'false' }}" aria-label="Cookies on {{ params.serviceName }}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %} hidden>
+<section class="tna-cookie-banner {{ ' '.join(containerClasses) }}" data-module="tna-cookie-banner" aria-label="Cookies on {{ params.serviceName }}"
+{%- if params.preferencesSetKey %} data-preferences-key="{{ params.preferencesSetKey }}"{% endif %}
+{%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %} hidden>
   <div class="tna-container">
     <div class="tna-column tna-column--full tna-cookie-banner__message tna-cookie-banner__message--prompt">
       <h2 class="tna-heading-m">{{ params.title or "This website uses cookies" }}</h2>
@@ -42,7 +44,7 @@
       {% endif %}
       <div class="tna-button-group">
         {{ tnaButton({
-          "text": "Close this message",
+          "text": "Hide cookies message",
           "buttonElement": true,
           "attributes": {
             "value": "close"
@@ -58,7 +60,7 @@
       {% endif %}
       <div class="tna-button-group">
         {{ tnaButton({
-          "text": "Close this message",
+          "text": "Hide cookies message",
           "buttonElement": true,
           "attributes": {
             "value": "close"
