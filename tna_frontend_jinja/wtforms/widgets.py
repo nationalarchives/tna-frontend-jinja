@@ -88,9 +88,7 @@ class TnaIterableBase(TnaFormBase):
     def __call__(self, field, **kwargs):
         kwargs.setdefault("id", field.id)
 
-        if "required" not in kwargs and "required" in getattr(
-            field, "flags", []
-        ):
+        if "required" not in kwargs and "required" in getattr(field, "flags", []):
             kwargs["required"] = True
 
         kwargs["items"] = []
@@ -157,9 +155,7 @@ class TnaInput(TnaFormBase, Input):
         kwargs.setdefault("type", self.input_type)
         if "value" not in kwargs:
             kwargs["value"] = field._value()
-        if "required" not in kwargs and "required" in getattr(
-            field, "flags", []
-        ):
+        if "required" not in kwargs and "required" in getattr(field, "flags", []):
             kwargs["required"] = True
 
         return super().__call__(field, **kwargs)
@@ -272,9 +268,7 @@ class TnaDateInput(TnaFormBase):
         kwargs.setdefault("id", field.id)
         if "value" not in kwargs:
             kwargs["value"] = field._value()
-        if "required" not in kwargs and "required" in getattr(
-            field, "flags", []
-        ):
+        if "required" not in kwargs and "required" in getattr(field, "flags", []):
             kwargs["required"] = True
         return super().__call__(field, **kwargs)
 
@@ -332,9 +326,7 @@ class TnaTextArea(TnaFormBase, TextArea):
         kwargs.setdefault("id", field.id)
         if "value" not in kwargs:
             kwargs["value"] = field._value()
-        if "required" not in kwargs and "required" in getattr(
-            field, "flags", []
-        ):
+        if "required" not in kwargs and "required" in getattr(field, "flags", []):
             kwargs["required"] = True
         return super().__call__(field, **kwargs)
 
@@ -362,9 +354,7 @@ class TnaSelect(TnaFormBase, Select):
 
         kwargs.setdefault("id", field.id)
 
-        if "required" not in kwargs and "required" in getattr(
-            field, "flags", []
-        ):
+        if "required" not in kwargs and "required" in getattr(field, "flags", []):
             kwargs["required"] = True
 
         kwargs["items"] = []

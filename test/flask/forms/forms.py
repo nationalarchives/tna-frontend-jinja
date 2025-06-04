@@ -29,9 +29,7 @@ class KitchenSinkForm(FlaskForm):
         widget=TnaTextInput(),
         validators=[
             InputRequired(message="Enter an email address"),
-            Length(
-                max=256, message="Email address must be 256 characters or fewer"
-            ),
+            Length(max=256, message="Email address must be 256 characters or fewer"),
         ],
         description="We’ll only use this to send you a receipt",
     )

@@ -22,22 +22,14 @@ def flatten_errors(errors, prefix="", id_map={}):
             # Recurse to handle subforms.
             if key in id_map:
                 key = id_map[key]
-            error_list += flatten_errors(
-                value, prefix=f"{prefix}{key}-", id_map=id_map
-            )
+            error_list += flatten_errors(value, prefix=f"{prefix}{key}-", id_map=id_map)
     elif isinstance(errors, list) and isinstance(errors[0], dict):
         for idx, error in enumerate(errors):
-            error_list += flatten_errors(
-                error, prefix=f"{prefix}{idx}-", id_map=id_map
-            )
+            error_list += flatten_errors(error, prefix=f"{prefix}{idx}-", id_map=id_map)
     elif isinstance(errors, list):
-        error_list.append(
-            {"text": errors[0], "href": "#{}".format(prefix.rstrip("-"))}
-        )
+        error_list.append({"text": errors[0], "href": "#{}".format(prefix.rstrip("-"))})
     else:
-        error_list.append(
-            {"text": errors, "href": "#{}".format(prefix.rstrip("-"))}
-        )
+        error_list.append({"text": errors, "href": "#{}".format(prefix.rstrip("-"))})
     return error_list
 
 

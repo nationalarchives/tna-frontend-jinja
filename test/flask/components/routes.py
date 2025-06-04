@@ -6,9 +6,7 @@ from flask import render_template, request
 
 def render_component(template):
     params = request.args.get("params")
-    return render_template(
-        template, params=json.loads(params) if params else {}
-    )
+    return render_template(template, params=json.loads(params) if params else {})
 
 
 @bp.route("/accordion")

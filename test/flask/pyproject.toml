@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tna-frontend-jinja"
-version = "0.2.8"
+version = "0.0.1"
 description = "TNA Frontend Jinja templates"
 authors = ["Andrew Hosgood <andrew.hosgood@nationalarchives.gov.uk>"]
 license = "MIT"
