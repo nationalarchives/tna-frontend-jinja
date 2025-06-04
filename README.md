@@ -103,7 +103,7 @@ docker compose up -d
 npm install
 
 # Run the fixture tests
-node test-fixtures.mjs
+node test/test-fixtures.mjs
 ```
 
 ## Styles and JavaScript

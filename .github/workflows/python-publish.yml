@@ -22,7 +22,7 @@ jobs:
         with:
           url: http://localhost:5001/healthcheck/live/
       - name: Run the tests
-        run: node test-fixtures.mjs || exit 1
+        run: node test/test-fixtures.mjs || exit 1
 
   deploy:
     runs-on: ubuntu-latest

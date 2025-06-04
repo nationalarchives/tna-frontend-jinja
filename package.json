@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "node test-fixtures.mjs"
+    "test": "node test/test-fixtures.mjs"
   },
   "dependencies": {
     "@nationalarchives/frontend": "0.18.0",
