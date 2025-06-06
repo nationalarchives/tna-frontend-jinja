@@ -16,12 +16,17 @@
 <div class="tna-container tna-section">
   <div class="tna-column tna-column--width-2-3 tna-column--width-5-6-medium tna-column--full-small tna-column--full-tiny">
     {% if form.errors %}
-      {{ tnaErrorSummary(wtforms_errors(form)) }}
+      {% for error in form.errors %}
+        {{ error }}
+      {% endfor %}
+      {{ form.username.errors }}
+      {{ form.non_field_errors() }}
     {% endif %}
     <h1 class="tna-heading-xl">Example form</h1>
     <form action="" method="post" novalidate>
-      {{ csrf_token }}
-      {{ form }}
+      {{ csrf_input }}
+
+      {{ form.username }}
       <input type="submit" value="Submit">
     </form>
   </div>
