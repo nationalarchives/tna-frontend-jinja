@@ -16,17 +16,25 @@
 <div class="tna-container tna-section">
   <div class="tna-column tna-column--width-2-3 tna-column--width-5-6-medium tna-column--full-small tna-column--full-tiny">
     {% if form.errors %}
-      {% for error in form.errors %}
-        {{ error }}
-      {% endfor %}
       {{ form.username.errors }}
+      {{ form.password.errors }}
       {{ form.non_field_errors() }}
     {% endif %}
     <h1 class="tna-heading-xl">Example form</h1>
     <form action="" method="post" novalidate>
       {{ csrf_input }}
 
+      <!-- {{ form.username.label }}
+      {{ form.username.label_tag() }} -->
       {{ form.username }}
+      
+      <!-- {{ form.password.label }}
+      {{ form.password.label_tag() }} -->
+      {{ form.password }}
+
+      {{ form.email }}
+
+      {{ form }}
       <input type="submit" value="Submit">
     </form>
   </div>

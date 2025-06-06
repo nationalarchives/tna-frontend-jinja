@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from sysconfig import get_path
+# from sysconfig import get_path
 
 from django.conf import settings
 from django.forms.renderers import BaseRenderer
@@ -18,7 +18,7 @@ class Jinja2(BaseRenderer):
 
     def render(self, template_name, context, request=None):
         template = self.get_template(template_name)
-        return template.render(context={"params": context}, request=request).strip()
+        return template.render(context=context, request=request).strip()
 
     @cached_property
     def engine(self):
@@ -33,7 +33,8 @@ class Jinja2(BaseRenderer):
                 "DIRS": jinja_config.get("DIRS", [])
                 + [
                     os.path.join(Path(__file__).parent.parent, "templates"),
-                    os.path.join(get_path("platlib"), "django/forms/templates"),
+                    os.path.join(Path(__file__).parent, "templates"),
+                    # os.path.join(get_path("platlib"), "django/forms/jinja2"),
                 ],
                 "NAME": "jinja2",
                 "OPTIONS": {},

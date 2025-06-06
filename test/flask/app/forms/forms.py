@@ -20,7 +20,7 @@ from wtforms import (
     SubmitField,
     TextAreaField,
 )
-from wtforms.validators import InputRequired, Length
+from wtforms.validators import Email, InputRequired, Length
 
 
 class KitchenSinkForm(FlaskForm):
@@ -28,10 +28,9 @@ class KitchenSinkForm(FlaskForm):
         "Username",
         widget=TnaTextInput(),
         validators=[
-            InputRequired(message="Enter an email address"),
-            Length(max=256, message="Email address must be 256 characters or fewer"),
+            InputRequired(message="Enter a username"),
+            Length(max=256, message="Usernames must be 256 characters or fewer"),
         ],
-        description="We’ll only use this to send you a receipt",
     )
     password = StringField(
         "Password",
@@ -39,6 +38,16 @@ class KitchenSinkForm(FlaskForm):
             InputRequired(message="Enter a password"),
         ],
         widget=TnaPasswordInput(),
+    )
+    email = StringField(
+        "Email address",
+        validators=[
+            InputRequired(message="Enter an email address"),
+            Length(max=256, message="Email address must be 256 characters or fewer"),
+            Email(message="Enter a valid email address"),
+        ],
+        description="We’ll only use this to send you a receipt",
+        widget=TnaTextInput(),
     )
     remember = BooleanField(
         "Remember me",

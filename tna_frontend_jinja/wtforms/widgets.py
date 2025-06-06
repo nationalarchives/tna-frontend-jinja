@@ -148,7 +148,7 @@ class TnaInput(TnaFormBase, Input):
     to provide the ``value=`` HTML attribute.
     """
 
-    template = "components/text-input.html"
+    template = "widgets/text-input.html"
 
     def __call__(self, field, **kwargs):
         kwargs.setdefault("id", field.id)
@@ -183,7 +183,7 @@ class TnaCheckboxesInput(TnaIterableBase):
     construct of their own.
     """
 
-    template = "components/checkboxes.html"
+    template = "widgets/checkboxes.html"
     input_type = "checkbox"
 
     def map_tna_params(self, field, **kwargs):
@@ -241,7 +241,7 @@ class TnaRadioInput(TnaIterableBase):
     Uses the field label as the fieldset legend.
     """
 
-    template = "components/radios.html"
+    template = "widgets/radios.html"
     input_type = "radio"
 
     def map_tna_params(self, field, **kwargs):
@@ -262,7 +262,7 @@ class TnaDateInput(TnaFormBase):
     The field names MUST all be the same for this widget to work.
     """
 
-    template = "components/date-input.html"
+    template = "widgets/date-input.html"
 
     def __call__(self, field, **kwargs):
         kwargs.setdefault("id", field.id)
@@ -299,7 +299,7 @@ class TnaSubmitInput(TnaInput, SubmitInput):
     data on the field.
     """
 
-    template = "components/button.html"
+    template = "widgets/button.html"
 
     def __call__(self, field, **kwargs):
         return super().__call__(field, **kwargs)
@@ -320,7 +320,7 @@ class TnaTextArea(TnaFormBase, TextArea):
     `rows` and `cols` ought to be passed as keyword args when rendering.
     """
 
-    template = "components/textarea.html"
+    template = "widgets/textarea.html"
 
     def __call__(self, field, **kwargs):
         kwargs.setdefault("id", field.id)
@@ -342,7 +342,7 @@ class TnaSelect(TnaFormBase, Select):
     `(value, label, selected)`.
     """
 
-    template = "components/select.html"
+    template = "widgets/select.html"
 
     def __call__(self, field, **kwargs):
         if self.multiple:
