@@ -1,11 +1,17 @@
 {
   "scripts": {
-    "test": "node test/test-fixtures.mjs"
+    "test": "node test/test-fixtures.mjs",
+    "lint:fix": "npx prettier --write .",
+    "test:playwright": "npx playwright install && playwright test",
+    "test:playwright:update": "npx playwright install && playwright test --update-snapshots"
   },
   "dependencies": {
+    "@estruyf/github-actions-reporter": "^1.10.0",
     "@nationalarchives/frontend": "0.18.0",
+    "@playwright/test": "^1.52.0",
     "diff": "^8.0.0",
     "glob": "^11.0.2",
+    "html-validate": "^9.5.5",
     "js-beautify": "^1.14.8",
     "node-fetch": "^3.3.1"
   }
