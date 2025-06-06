@@ -1,5 +1,4 @@
-from test.django.forms import NameForm
-
+from app.forms import NameForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 

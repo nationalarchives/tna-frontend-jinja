@@ -1,6 +1,5 @@
-from test.flask.forms import bp
-from test.flask.forms.forms import KitchenSinkForm
-
+from app.forms import bp
+from app.forms.forms import KitchenSinkForm
 from flask import redirect, render_template, url_for
 
 

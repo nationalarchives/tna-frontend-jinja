@@ -1,7 +1,7 @@
 FROM ghcr.io/nationalarchives/tna-python-django:latest
 
-COPY --chown=app ./test/django/pyproject.toml /app/pyproject.toml
-COPY --chown=app ./test/django/poetry.lock /app/poetry.lock
+COPY --chown=app ./pyproject.toml /app/pyproject.toml
+COPY --chown=app ./poetry.lock /app/poetry.lock
 
 RUN tna-build
 

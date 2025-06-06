@@ -1,5 +1,4 @@
 import os
-from sysconfig import get_path
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
@@ -25,18 +24,18 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "test.django.urls"
+ROOT_URLCONF = "app.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.jinja2.Jinja2",
         "DIRS": [
-            os.path.join(BASE_DIR, "test/django/templates"),
-            os.path.join(BASE_DIR, "tna_frontend_jinja/templates"),
+            os.path.join(BASE_DIR, "app/app/templates"),
+            os.path.join(BASE_DIR, "app/tna_frontend_jinja/templates"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
-            "environment": "test.django.jinja2.environment",
+            "environment": "app.jinja2.environment",
         },
     },
     {
@@ -54,13 +53,13 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "test.django.wsgi.application"
-# ASGI_APPLICATION = "test.django.asgi.application"
+WSGI_APPLICATION = "app.wsgi.application"
+# ASGI_APPLICATION = "app.asgi.application"
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "NAME": "/home/app/db.sqlite3",
     }
 }
 
@@ -89,7 +88,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "test/django/static")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "app/static")]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
