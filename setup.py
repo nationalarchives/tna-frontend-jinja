@@ -27,7 +27,7 @@ setuptools.setup(
     ],
     packages=["tna_frontend_jinja"],
     package_data={
-        "": ["**/*.html"],
+        "": ["**/*.py", "**/*.html"],
     },
     python_requires=">=3.9",
     install_requires=["Jinja2>=3"],
