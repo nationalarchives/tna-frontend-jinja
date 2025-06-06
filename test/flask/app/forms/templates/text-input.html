@@ -1,0 +1,38 @@
+{% extends "layouts/base.html" %}
+
+{%- from 'components/error-summary/macro.html' import tnaErrorSummary -%}
+
+{% block pageTitle %}{%- if form and form.errors %}Error: {% endif -%}Example form – GOV.UK Frontend WTForms Demo{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="https://use.typekit.net/kaq6qqh.css">
+  <link href="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.2.8/nationalarchives/all.css" rel="stylesheet" integrity="sha384-GFKsKURhzcIk6FnRgNbpibhx4qgCtEI8HV1kJ/4NkO0t3FFIWKnP7UlantvRj6FP" crossorigin="anonymous">
+{% endblock %}
+
+{% block cookies %}
+{% endblock %}
+
+{% block content %}
+<div class="tna-container tna-section">
+  <div class="tna-column tna-column--width-2-3 tna-column--width-5-6-medium tna-column--full-small tna-column--full-tiny">
+    {% if form.errors %}
+      {{ tnaErrorSummary(wtforms_errors(form)) }}
+    {% endif %}
+    <h1 class="tna-heading-xl">Example form</h1>
+    <form action="" method="post" novalidate>
+      {{ form.csrf_token }}
+
+      {{ form.username }}
+      
+      <div class="tna-button-group">
+        {{ form.submit }}
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block bodyEnd %}
+  <script src="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.2.8/nationalarchives/all.js" integrity="sha384-s768ALHSnzGU2X2ENYTrlF+CfnKaa3Us1eU78VrZ4eTKwLjWob1Wbb9tIT2xfmBq" crossorigin="anonymous"></script>
+  <script>window.TNAFrontend.initAll();</script>
+{% endblock %}

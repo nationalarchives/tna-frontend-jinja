@@ -13,6 +13,9 @@ export default defineConfig({
         ["json", { outputFile: "./test/results.json" }],
       ]
     : "line",
+  use: {
+    baseURL: process.env.TEST_DOMAIN || "http://127.0.0.1:5001",
+  },
   snapshotPathTemplate:
     "{testDir}/{testFilePath}-snapshots/{arg}-{projectName}{ext}",
   expect: {

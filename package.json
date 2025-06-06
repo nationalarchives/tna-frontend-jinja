@@ -2,7 +2,7 @@
   "scripts": {
     "test": "node test/test-fixtures.mjs",
     "lint:fix": "npx prettier --write .",
-    "test:playwright": "npx playwright install && playwright test",
+    "test:playwright": "npx playwright install && playwright test --ui",
     "test:playwright:update": "npx playwright install && playwright test --update-snapshots"
   },
   "dependencies": {

@@ -23,6 +23,19 @@ from wtforms import (
 from wtforms.validators import Email, InputRequired, Length
 
 
+class TextInputForm(FlaskForm):
+    username = StringField(
+        "Username",
+        widget=TnaTextInput(),
+        validators=[
+            InputRequired(message="Enter a username"),
+            Length(max=256, message="Usernames must be 256 characters or fewer"),
+        ],
+    )
+
+    submit = SubmitField("Continue", widget=TnaSubmitInput())
+
+
 class KitchenSinkForm(FlaskForm):
     username = StringField(
         "Username",
@@ -32,6 +45,7 @@ class KitchenSinkForm(FlaskForm):
             Length(max=256, message="Usernames must be 256 characters or fewer"),
         ],
     )
+
     password = StringField(
         "Password",
         validators=[
@@ -39,6 +53,7 @@ class KitchenSinkForm(FlaskForm):
         ],
         widget=TnaPasswordInput(),
     )
+
     email = StringField(
         "Email address",
         validators=[
@@ -49,10 +64,12 @@ class KitchenSinkForm(FlaskForm):
         description="We’ll only use this to send you a receipt",
         widget=TnaTextInput(),
     )
+
     remember = BooleanField(
         "Remember me",
         widget=TnaCheckboxInput(),
     )
+
     shopping = SelectMultipleField(
         "Shopping list",
         validators=[
@@ -61,6 +78,7 @@ class KitchenSinkForm(FlaskForm):
         choices=[("cpp", "C++"), ("py", "Python"), ("text", "Plain Text")],
         widget=TnaCheckboxesInput(),
     )
+
     day_of_week = RadioField(
         "Day",
         choices=[("mon", "Monday"), ("tue", "Tuesday"), ("wed", "Wednesday")],
@@ -69,6 +87,7 @@ class KitchenSinkForm(FlaskForm):
         ],
         widget=TnaRadioInput(),
     )
+
     birthday = DateField(
         "Birthday",
         validators=[
@@ -76,6 +95,7 @@ class KitchenSinkForm(FlaskForm):
         ],
         widget=TnaDateInput(),
     )
+
     message = TextAreaField(
         "Message",
         validators=[
@@ -83,6 +103,7 @@ class KitchenSinkForm(FlaskForm):
         ],
         widget=TnaTextArea(),
     )
+
     order = SelectField(
         "Order",
         choices=[
