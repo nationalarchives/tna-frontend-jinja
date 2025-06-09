@@ -6,8 +6,10 @@
     "test:playwright:update": "npx playwright install && playwright test --update-snapshots"
   },
   "dependencies": {
+    "@nationalarchives/frontend": "0.19.0"
+  },
+  "devDependencies": {
     "@estruyf/github-actions-reporter": "^1.10.0",
-    "@nationalarchives/frontend": "0.18.0",
     "@playwright/test": "^1.52.0",
     "diff": "^8.0.0",
     "glob": "^11.0.2",

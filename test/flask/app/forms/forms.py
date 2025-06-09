@@ -1,18 +1,21 @@
 from flask_wtf import FlaskForm
-from tna_frontend_jinja.wtforms.widgets import (
+from tna_frontend_jinja.wtforms import (
+    FutureDate,
     TnaCheckboxesInput,
     TnaCheckboxInput,
-    TnaDateInput,
+    TnaDateField,
+    TnaMonthField,
     TnaPasswordInput,
+    TnaProgressiveDateField,
     TnaRadioInput,
     TnaSelect,
     TnaSubmitInput,
     TnaTextArea,
     TnaTextInput,
+    TnaYearField,
 )
 from wtforms import (
     BooleanField,
-    DateField,
     RadioField,
     SelectField,
     SelectMultipleField,
@@ -88,12 +91,11 @@ class KitchenSinkForm(FlaskForm):
         widget=TnaRadioInput(),
     )
 
-    birthday = DateField(
+    birthday = TnaDateField(
         "Birthday",
         validators=[
             InputRequired(message="Enter a date"),
         ],
-        widget=TnaDateInput(),
     )
 
     message = TextAreaField(
@@ -116,6 +118,41 @@ class KitchenSinkForm(FlaskForm):
             InputRequired(message="Select an order"),
         ],
         widget=TnaSelect(),
+    )
+
+    submit = SubmitField("Continue", widget=TnaSubmitInput())
+
+
+class DateInputsForm(FlaskForm):
+    date = TnaDateField(
+        "Date",
+        validators=[
+            InputRequired(message="Enter a date"),
+            FutureDate(message="Date must be in the future"),
+        ],
+    )
+
+    month = TnaMonthField(
+        "Month",
+        invalid_date_error_message="Enter a valid month and year",
+        validators=[
+            InputRequired(message="Enter a date"),
+        ],
+    )
+
+    year = TnaYearField(
+        "Year",
+        invalid_date_error_message="Enter a valid year",
+        validators=[
+            InputRequired(message="Enter a date"),
+        ],
+    )
+
+    progressive_date = TnaProgressiveDateField(
+        "Progressive date",
+        validators=[
+            InputRequired(message="Enter a date"),
+        ],
     )
 
     submit = SubmitField("Continue", widget=TnaSubmitInput())

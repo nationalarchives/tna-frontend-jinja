@@ -1,0 +1,121 @@
+import datetime
+import itertools
+
+from wtforms.fields.datetime import DateField
+from wtforms.utils import clean_datetime_format_for_strptime, unset_value
+
+from .widgets import TnaDateInput
+
+
+class TnaDateField(DateField):
+    """
+    A text field which stores a :class:`datetime.datetime` matching one or
+    several formats. If ``format`` is a list, any input value matching any
+    format will be accepted, and the first format in the list will be used
+    to produce HTML values.
+    """
+
+    widget = TnaDateInput()
+
+    def __init__(
+        self, label=None, validators=None, invalid_date_error_message="", **kwargs
+    ):
+        super().__init__(label, validators, **kwargs)
+        self.format = ["%d %m %Y", "%d %m %y"]
+        self.strptime_format = clean_datetime_format_for_strptime(self.format)
+        if invalid_date_error_message:
+            self.invalid_date_error_message = invalid_date_error_message
+        else:
+            self.invalid_date_error_message = self.gettext(
+                f"{self.name.replace("_", " ").capitalize()} must be a real date"
+            )
+
+    def process(self, formdata, data=unset_value, extra_filters=None):
+        """
+        Process incoming data, calling process_data, process_formdata as needed,
+        and run filters.
+
+        If `data` is not provided, process_data will be called on the field's
+        default.
+
+        Field subclasses usually won't override this, instead overriding the
+        process_formdata and process_data methods. Only override this for
+        special advanced processing, such as when a field encapsulates many
+        inputs.
+
+        :param extra_filters: A sequence of extra filters to run.
+        """
+        self.process_errors = []
+        if data is unset_value:
+            try:
+                data = self.default()
+            except TypeError:
+                data = self.default
+
+        self.object_data = data
+
+        try:
+            self.process_data(data)
+        except ValueError as e:
+            self.process_errors.append(e.args[0])
+
+        if formdata is not None:
+            format_parts_map = {
+                "d": "day",
+                "m": "month",
+                "y": "year",
+            }
+            self.raw_data = [
+                formdata.get(
+                    f"{self.name}-{format_parts_map.get(part.replace("%", "").lower())}",
+                    "",
+                )
+                for part in self.format[0].split(" ")
+            ]
+
+            try:
+                self.process_formdata(self.raw_data)
+            except ValueError as e:
+                self.process_errors.append(e.args[0])
+
+        try:
+            for filter in itertools.chain(self.filters, extra_filters or []):
+                self.data = filter(self.data)
+        except ValueError as e:
+            self.process_errors.append(e.args[0])
+
+    def process_formdata(self, valuelist):
+        if not valuelist:
+            return
+
+        date_str = " ".join(valuelist)
+        for format in self.strptime_format:
+            try:
+                self.data = datetime.datetime.strptime(date_str, format).date()
+                return
+            except ValueError:
+                self.data = None
+
+        raise ValueError(self.gettext(self.invalid_date_error_message))
+
+
+class TnaProgressiveDateField(TnaDateField):
+    def __init__(self, label=None, validators=None, **kwargs):
+        super().__init__(label, validators, **kwargs)
+        self.format = ["%Y %m %d", "%y %m %d"]
+        kwargs["progressive"] = True
+        self.strptime_format = clean_datetime_format_for_strptime(self.format)
+
+
+class TnaMonthField(TnaDateField):
+    def __init__(self, label=None, validators=None, **kwargs):
+        super().__init__(label, validators, **kwargs)
+        self.format = ["%m %Y", "%m %y"]
+        self.strptime_format = clean_datetime_format_for_strptime(self.format)
+
+
+class TnaYearField(TnaDateField):
+    def __init__(self, label=None, validators=None, **kwargs):
+        super().__init__(label, validators, **kwargs)
+        self.format = ["%Y", "%y"]
+        self.strptime_format = clean_datetime_format_for_strptime(self.format)

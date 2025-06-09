@@ -26,10 +26,10 @@ class TnaFormBase(object):
         return self.render(self.map_tna_params(field, **kwargs))
 
     def map_tna_params(self, field, **kwargs):
-        """Map WTForms' html params to govuk macros
+        """Map WTForms' html params to TNA macros
 
         Taking WTForms' output, we need to map it to a params dict
-        which matches the structure that the govuk macros are expecting
+        which matches the structure that the TNA macros are expecting
         """
         params = {
             "id": kwargs["id"],
@@ -38,10 +38,6 @@ class TnaFormBase(object):
             "attributes": {},
             "hint": field.description or None,
         }
-
-        if "value" in kwargs:
-            params["value"] = kwargs["value"]
-            del kwargs["value"]
 
         # Not all form elements have a type so guard against it not existing
         if "type" in kwargs:
@@ -160,6 +156,15 @@ class TnaInput(TnaFormBase, Input):
 
         return super().__call__(field, **kwargs)
 
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
+
+        if "value" in kwargs:
+            params["value"] = kwargs["value"]
+            del kwargs["value"]
+
+        return params
+
 
 class TnaTextInput(TnaInput, TextInput):
     """Render a single-line text input."""
@@ -171,6 +176,13 @@ class TnaPasswordInput(TnaInput, PasswordInput):
     """Render a password input."""
 
     input_type = "password"
+
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
+
+        params["password"] = True
+
+        return params
 
 
 class TnaCheckboxesInput(TnaIterableBase):
@@ -274,12 +286,30 @@ class TnaDateInput(TnaFormBase):
 
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-        day, month, year = [None] * 3
-        # if field.raw_data is not None:
-        #     day, month, year = field.raw_data
-        # elif field.data:
-        #     day, month, year = field.data.strftime("%d %m %Y").split(" ")
+        day, month, year = [""] * 3
 
+        if field.raw_data:
+            for format_part_index, format_part in enumerate(field.format[0].split(" ")):
+                if format_part.replace("%", "").lower() == "d":
+                    day = field.raw_data[format_part_index]
+                elif format_part.replace("%", "").lower() == "m":
+                    month = field.raw_data[format_part_index]
+                elif format_part.replace("%", "").lower() == "y":
+                    year = field.raw_data[format_part_index]
+
+        print("data", field.data)
+        print("raw_data", field.raw_data)
+        print("day", day, "month", month, "year", year)
+
+        format_parts_map = {
+            "d": "day",
+            "m": "month",
+            "y": "year",
+        }
+        params["fields"] = [
+            format_parts_map.get(data_part.replace("%", "").lower())
+            for data_part in field.format[0].split(" ")
+        ]
         params.setdefault("label", field.label.text)
         params.setdefault(
             "value",
@@ -300,9 +330,6 @@ class TnaSubmitInput(TnaInput, SubmitInput):
     """
 
     template = "widgets/button.html"
-
-    def __call__(self, field, **kwargs):
-        return super().__call__(field, **kwargs)
 
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
@@ -329,6 +356,15 @@ class TnaTextArea(TnaFormBase, TextArea):
         if "required" not in kwargs and "required" in getattr(field, "flags", []):
             kwargs["required"] = True
         return super().__call__(field, **kwargs)
+
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
+
+        if "value" in kwargs:
+            params["value"] = kwargs["value"]
+            del kwargs["value"]
+
+        return params
 
 
 class TnaSelect(TnaFormBase, Select):
@@ -359,11 +395,13 @@ class TnaSelect(TnaFormBase, Select):
 
         kwargs["items"] = []
 
-        # Construct select box choices
         for val, label, selected, render_kw in field.iter_choices():
             item = {"text": label, "value": val, "selected": selected}
 
             kwargs["items"].append(item)
+
+            if selected:
+                kwargs["selected"] = val
 
         return super().__call__(field, **kwargs)
 
@@ -371,5 +409,9 @@ class TnaSelect(TnaFormBase, Select):
         params = super().map_tna_params(field, **kwargs)
 
         params["items"] = kwargs["items"]
+
+        if "selected" in kwargs:
+            params["selected"] = kwargs["selected"]
+            del kwargs["selected"]
 
         return params

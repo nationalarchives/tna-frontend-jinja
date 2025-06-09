@@ -5,8 +5,12 @@
 {% block pageTitle %}{%- if form and form.errors %}Error: {% endif -%}Example form – GOV.UK Frontend WTForms Demo{% endblock %}
 
 {% block stylesheets %}
+  <link rel="preconnect" href="https://use.typekit.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://use.typekit.net/kaq6qqh.css">
-  <link href="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.2.8/nationalarchives/all.css" rel="stylesheet" integrity="sha384-GFKsKURhzcIk6FnRgNbpibhx4qgCtEI8HV1kJ/4NkO0t3FFIWKnP7UlantvRj6FP" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400..700&family=Roboto+Mono:wght@400..500&display=swap">
+  <link href="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.19.0/nationalarchives/all.css" rel="stylesheet" crossorigin="anonymous">
 {% endblock %}
 
 {% block cookies %}
@@ -22,6 +26,6 @@
 {% endblock %}
 
 {% block bodyEnd %}
-  <script src="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.2.8/nationalarchives/all.js" integrity="sha384-s768ALHSnzGU2X2ENYTrlF+CfnKaa3Us1eU78VrZ4eTKwLjWob1Wbb9tIT2xfmBq" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.19.0/nationalarchives/all.js" crossorigin="anonymous"></script>
   <script>window.TNAFrontend.initAll();</script>
 {% endblock %}

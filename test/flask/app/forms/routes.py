@@ -1,5 +1,5 @@
 from app.forms import bp
-from app.forms.forms import TextInputForm, KitchenSinkForm
+from app.forms.forms import DateInputsForm, KitchenSinkForm, TextInputForm
 from flask import redirect, render_template, url_for
 
 
@@ -9,6 +9,14 @@ def text_input():
     if form.validate_on_submit():
         return redirect(url_for("forms.success"))
     return render_template("text-input.html", form=form)
+
+
+@bp.route("/date-input/", methods=["GET", "POST"])
+def date_input():
+    form = DateInputsForm()
+    if form.validate_on_submit():
+        return redirect(url_for("forms.success"))
+    return render_template("date-input.html", form=form)
 
 
 @bp.route("/kitchen-sink/", methods=["GET", "POST"])

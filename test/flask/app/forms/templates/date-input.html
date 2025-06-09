@@ -26,42 +26,19 @@
     <form action="" method="post" novalidate>
       {{ form.csrf_token }}
 
-      {{ form.username(params={
-        'headingLevel': 2,
-        'spellcheck': False
-      }) }}
-
-      {{ form.password(params={
-        'headingLevel': 2,
-        'spellcheck': False
-      }) }}
-
-      {{ form.email(params={
-        'headingLevel': 2,
-        'spellcheck': False
-      }) }}
-
-      {{ form.remember(params={
+      {{ form.date(params={
         'headingLevel': 2
       }) }}
 
-      {{ form.shopping(params={
+      {{ form.month(params={
         'headingLevel': 2
       }) }}
 
-      {{ form.day_of_week(params={
+      {{ form.year(params={
         'headingLevel': 2
       }) }}
-
-      {{ form.birthday(params={
-        'headingLevel': 2
-      }) }}
-
-      {{ form.message(params={
-        'headingLevel': 2
-      }) }}
-
-      {{ form.order(params={
+      
+      {{ form.progressive_date(params={
         'headingLevel': 2
       }) }}
       
