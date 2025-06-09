@@ -40,7 +40,21 @@ def wtforms_errors(form, params={}):
     for field_name in form._fields.keys():
         field = getattr(form, field_name, None)
         if field and hasattr(field, "id"):
-            id_map[field_name] = field.id
+            if field.type in ["SelectMultipleField", "RadioField"] and hasattr(
+                field, "choices"
+            ):
+                id_map[field_name] = f"{field.id}-{field.choices[0][0]}"
+            elif field.type in [
+                "TnaDateField",
+                "TnaMonthField",
+                "TnaYearField",
+                "TnaProgressiveDateField",
+            ]:
+                id_map[field_name] = f"{field.id}-{field.field_codes()[0]}"
+            elif field.type in ["BooleanField"]:
+                id_map[field_name] = f"{field.id}-y"
+            else:
+                id_map[field_name] = field.id
 
     wtforms_params["items"] = flatten_errors(form.errors, id_map=id_map)
 

@@ -294,19 +294,7 @@ class TnaDateInput(TnaFormBase):
                 elif format_part.replace("%", "").lower() == "y":
                     year = field.raw_data[format_part_index]
 
-        print("data", field.data)
-        print("raw_data", field.raw_data)
-        print("day", day, "month", month, "year", year)
-
-        format_parts_map = {
-            "d": "day",
-            "m": "month",
-            "y": "year",
-        }
-        params["fields"] = [
-            format_parts_map.get(data_part.replace("%", "").lower())
-            for data_part in field.format[0].split(" ")
-        ]
+        params["fields"] = field.field_codes()
         params.setdefault("label", field.label.text)
         params.setdefault(
             "value",

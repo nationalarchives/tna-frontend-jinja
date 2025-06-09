@@ -30,6 +30,21 @@ class TnaDateField(DateField):
                 f"{self.label.text} must be a real date"
             )
 
+    def field_codes(self):
+        """
+        Return a list of field names that this field encapsulates.
+        This is used by the TnaDateInput widget to render the date inputs.
+        """
+        format_parts_map = {
+            "d": "day",
+            "m": "month",
+            "y": "year",
+        }
+        return [
+            format_parts_map.get(part.replace("%", "").lower())
+            for part in self.format[0].split(" ")
+        ]
+
     def process(self, formdata, data=unset_value, extra_filters=None):
         """
         Process incoming data, calling process_data, process_formdata as needed,
@@ -60,17 +75,12 @@ class TnaDateField(DateField):
             self.process_errors.append(e.args[0])
 
         if formdata is not None:
-            format_parts_map = {
-                "d": "day",
-                "m": "month",
-                "y": "year",
-            }
             self.raw_data = [
                 formdata.get(
-                    f"{self.name}-{format_parts_map.get(part.replace("%", "").lower())}",
+                    f"{self.name}-{part}",
                     "",
                 )
-                for part in self.format[0].split(" ")
+                for part in self.field_codes()
             ]
 
             try:
