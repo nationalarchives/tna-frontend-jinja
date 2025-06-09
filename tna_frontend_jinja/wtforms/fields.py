@@ -27,7 +27,7 @@ class TnaDateField(DateField):
             self.invalid_date_error_message = invalid_date_error_message
         else:
             self.invalid_date_error_message = self.gettext(
-                f"{self.name.replace("_", " ").capitalize()} must be a real date"
+                f"{self.label.text} must be a real date"
             )
 
     def process(self, formdata, data=unset_value, extra_filters=None):

@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
 from tna_frontend_jinja.wtforms import (
-    FutureDate,
     TnaCheckboxesInput,
     TnaCheckboxInput,
     TnaDateField,
@@ -14,6 +13,7 @@ from tna_frontend_jinja.wtforms import (
     TnaTextInput,
     TnaYearField,
 )
+from tna_frontend_jinja.wtforms.validators import FutureDate, PastDate
 from wtforms import (
     BooleanField,
     RadioField,
@@ -69,7 +69,10 @@ class KitchenSinkForm(FlaskForm):
     )
 
     remember = BooleanField(
-        "Remember me",
+        "I agree to terms and conditions",
+        validators=[
+            InputRequired(message="You must agree to the terms and conditions"),
+        ],
         widget=TnaCheckboxInput(),
     )
 
@@ -137,6 +140,7 @@ class DateInputsForm(FlaskForm):
         invalid_date_error_message="Enter a valid month and year",
         validators=[
             InputRequired(message="Enter a date"),
+            PastDate(message="Month must be in the past"),
         ],
     )
 

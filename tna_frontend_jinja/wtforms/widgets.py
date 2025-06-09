@@ -212,11 +212,6 @@ class TnaCheckboxInput(TnaCheckboxesInput):
     """Render a single checkbox (i.e. a WTForms BooleanField)."""
 
     def __call__(self, field, **kwargs):
-        # We are subclassing TnaCheckboxesInput which expects
-        # the field to be an iterable yielding each checkbox "subfield"
-        # In order to make our single BooleanField comply with this, we
-        # need to provide it with a similar construct, but which only
-        # yields a single checkbox
         class IterableField(object):
             def __init__(self, field):
                 self.field = field
@@ -244,6 +239,8 @@ class TnaCheckboxInput(TnaCheckboxesInput):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
         params.pop("label")
+        params["label"] = kwargs["params"].get("label", "")
+
         return params
 
 
