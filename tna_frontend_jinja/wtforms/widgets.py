@@ -90,7 +90,6 @@ class TnaIterableBase(TnaFormBase):
         kwargs["items"] = []
         kwargs["selected"] = None
 
-        # This field is constructed as an iterable of subfields
         for subfield in field:
             item = {"text": subfield.label.text, "value": subfield._value()}
 
@@ -103,13 +102,6 @@ class TnaIterableBase(TnaFormBase):
         return super().__call__(field, **kwargs)
 
     def map_tna_params(self, field, **kwargs):
-        """Completely override the params mapping for this input type
-
-        It bears little resemblance to that of a normal field
-        because these fields are effectively collections of
-        fields wrapped in an iterable
-        """
-
         params = {
             "id": field.id,
             "name": field.name,
@@ -118,9 +110,7 @@ class TnaIterableBase(TnaFormBase):
             "hint": field.description,
         }
 
-        # Merge in any extra params passed in from the template layer
         if "params" in kwargs:
-            # Merge items individually as otherwise the merge will append new ones
             if "items" in kwargs["params"]:
                 for index, item in enumerate(kwargs["params"]["items"]):
                     item = self.merge_params(params["items"][index], item)
@@ -136,12 +126,12 @@ class TnaIterableBase(TnaFormBase):
 
 
 class TnaInput(TnaFormBase, Input):
-    """Render a basic ``<input>`` field.
+    """Render a basic `<input>` field.
 
     This is used as the basis for most of the other input fields.
 
     By default, the `_value()` method will be called upon the associated field
-    to provide the ``value=`` HTML attribute.
+    to provide the `value=` HTML attribute.
     """
 
     template = "widgets/text-input.html"
@@ -238,7 +228,6 @@ class TnaCheckboxInput(TnaCheckboxesInput):
 
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-        params.pop("label")
         params["label"] = kwargs["params"].get("label", "")
 
         return params

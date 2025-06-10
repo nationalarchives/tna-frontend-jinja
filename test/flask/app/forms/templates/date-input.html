@@ -26,19 +26,7 @@
     <form action="" method="post" novalidate>
       {{ form.csrf_token }}
 
-      {{ form.date(params={
-        'headingLevel': 2
-      }) }}
-
-      {{ form.month(params={
-        'headingLevel': 2
-      }) }}
-
-      {{ form.year(params={
-        'headingLevel': 2
-      }) }}
-      
-      {{ form.progressive_date(params={
+      {{ form.dob(params={
         'headingLevel': 2
       }) }}
       

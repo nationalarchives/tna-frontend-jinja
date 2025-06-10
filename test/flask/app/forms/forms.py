@@ -39,6 +39,54 @@ class TextInputForm(FlaskForm):
     submit = SubmitField("Continue", widget=TnaSubmitInput())
 
 
+class DateInputForm(FlaskForm):
+    dob = TnaDateField(
+        "Date of birth",
+        validators=[
+            InputRequired(message="Enter your date of birth"),
+            PastDate(message="Date of birth must be in the past"),
+        ],
+    )
+
+    submit = SubmitField("Continue", widget=TnaSubmitInput())
+
+
+class DateInputMonthForm(FlaskForm):
+    month = TnaMonthField(
+        "Month",
+        invalid_date_error_message="Enter a valid month and year",
+        validators=[
+            InputRequired(message="Enter a month"),
+            PastDate(message="Month must be in the past"),
+        ],
+    )
+    submit = SubmitField("Continue", widget=TnaSubmitInput())
+
+
+class DateInputYearForm(FlaskForm):
+
+    year = TnaYearField(
+        "Year",
+        invalid_date_error_message="Enter a valid year",
+        validators=[
+            InputRequired(message="Enter a year"),
+        ],
+    )
+    submit = SubmitField("Continue", widget=TnaSubmitInput())
+
+
+class DateInputProgressiveForm(FlaskForm):
+
+    progressive_date = TnaProgressiveDateField(
+        "Progressive date",
+        validators=[
+            InputRequired(message="Enter a progressive date"),
+        ],
+    )
+
+    submit = SubmitField("Continue", widget=TnaSubmitInput())
+
+
 class KitchenSinkForm(FlaskForm):
     username = StringField(
         "Username",
@@ -121,42 +169,6 @@ class KitchenSinkForm(FlaskForm):
             InputRequired(message="Select an order"),
         ],
         widget=TnaSelect(),
-    )
-
-    submit = SubmitField("Continue", widget=TnaSubmitInput())
-
-
-class DateInputsForm(FlaskForm):
-    date = TnaDateField(
-        "Date",
-        validators=[
-            InputRequired(message="Enter a date"),
-            FutureDate(message="Date must be in the future"),
-        ],
-    )
-
-    month = TnaMonthField(
-        "Month",
-        invalid_date_error_message="Enter a valid month and year",
-        validators=[
-            InputRequired(message="Enter a date"),
-            PastDate(message="Month must be in the past"),
-        ],
-    )
-
-    year = TnaYearField(
-        "Year",
-        invalid_date_error_message="Enter a valid year",
-        validators=[
-            InputRequired(message="Enter a date"),
-        ],
-    )
-
-    progressive_date = TnaProgressiveDateField(
-        "Progressive date",
-        validators=[
-            InputRequired(message="Enter a date"),
-        ],
     )
 
     submit = SubmitField("Continue", widget=TnaSubmitInput())

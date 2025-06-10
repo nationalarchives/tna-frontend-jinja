@@ -20,8 +20,9 @@ class FutureDate:
         if message is None:
             message = field.gettext("Date must be in the future")
         try:
-            if (self.include_today and field.data < datetime.date.today()) or (
-                not self.include_today and field.data <= datetime.date.today()
+            if field.data and (
+                (self.include_today and field.data < datetime.date.today())
+                or (not self.include_today and field.data <= datetime.date.today())
             ):
                 raise ValueError(message)
         except ValueError as exc:
@@ -45,8 +46,9 @@ class PastDate:
         if message is None:
             message = field.gettext("Date must be in the past")
         try:
-            if (self.include_today and field.data > datetime.date.today()) or (
-                not self.include_today and field.data >= datetime.date.today()
+            if field.data and (
+                (self.include_today and field.data > datetime.date.today())
+                or (not self.include_today and field.data >= datetime.date.today())
             ):
                 raise ValueError(message)
         except ValueError as exc:
