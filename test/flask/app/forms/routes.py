@@ -1,5 +1,10 @@
 from app.forms import bp
-from app.forms.forms import DateInputForm, KitchenSinkForm, TextInputForm, DateInputMonthForm
+from app.forms.forms import (
+    DateInputForm,
+    DateInputMonthForm,
+    KitchenSinkForm,
+    TextInputForm,
+)
 from flask import redirect, render_template, url_for
 
 
