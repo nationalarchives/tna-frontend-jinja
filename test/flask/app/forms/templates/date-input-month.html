@@ -1,0 +1,44 @@
+{% extends "layouts/base.html" %}
+
+{%- from 'components/error-summary/macro.html' import tnaErrorSummary -%}
+
+{% block pageTitle %}{%- if form and form.errors %}Error: {% endif -%}Example form – GOV.UK Frontend WTForms Demo{% endblock %}
+
+{% block stylesheets %}
+  <link rel="preconnect" href="https://use.typekit.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://use.typekit.net/kaq6qqh.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400..700&family=Roboto+Mono:wght@400..500&display=swap">
+  <link href="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.19.0/nationalarchives/all.css" rel="stylesheet" crossorigin="anonymous">
+{% endblock %}
+
+{% block cookies %}
+{% endblock %}
+
+{% block content %}
+<div class="tna-container tna-section">
+  <div class="tna-column tna-column--width-2-3 tna-column--width-5-6-medium tna-column--full-small tna-column--full-tiny">
+    {% if form.errors %}
+      {{ tnaErrorSummary(wtforms_errors(form)) }}
+    {% endif %}
+    <h1 class="tna-heading-xl">Example form</h1>
+    <form action="" method="post" novalidate>
+      {{ form.csrf_token }}
+
+      {{ form.month_of_birth(params={
+        'headingLevel': 2
+      }) }}
+      
+      <div class="tna-button-group">
+        {{ form.submit }}
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block bodyEnd %}
+  <script src="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.19.0/nationalarchives/all.js" crossorigin="anonymous"></script>
+  <script>window.TNAFrontend.initAll();</script>
+{% endblock %}

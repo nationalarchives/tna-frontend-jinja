@@ -52,12 +52,12 @@ class DateInputForm(FlaskForm):
 
 
 class DateInputMonthForm(FlaskForm):
-    month = TnaMonthField(
-        "Month",
-        invalid_date_error_message="Enter a valid month and year",
+    month_of_birth = TnaMonthField(
+        "Month of birth",
+        # invalid_date_error_message="Enter a valid month and year",
         validators=[
-            InputRequired(message="Enter a month"),
-            PastDate(message="Month must be in the past"),
+            InputRequired(message="Enter your month and year of birth"),
+            PastDate(message="Date must be in the past"),
         ],
     )
     submit = SubmitField("Continue", widget=TnaSubmitInput())
