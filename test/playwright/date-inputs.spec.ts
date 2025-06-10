@@ -20,9 +20,7 @@ test("date input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(/There is a problem/);
   await expect(page.getByRole("main")).toHaveText(/Enter your date of birth/);
   await page.getByRole("link", { name: "Enter your date of birth" }).click();
-  await expect(
-    page.getByRole("group", { name: "Date of birth" }).getByLabel("Day"),
-  ).toBeFocused();
+  await expect(page.getByLabel("Day")).toBeFocused();
   await page.keyboard.type("32");
   await page.keyboard.press("Enter");
 
@@ -31,17 +29,9 @@ test("date input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Date of birth must be a real date/,
   );
-  await expect(
-    page.getByRole("group", { name: "Date of birth" }).getByLabel("Day"),
-  ).toHaveValue("32");
-  await page
-    .getByRole("group", { name: "Date of birth" })
-    .getByLabel("Month")
-    .fill("02");
-  await page
-    .getByRole("group", { name: "Date of birth" })
-    .getByLabel("Year")
-    .fill("abc");
+  await expect(page.getByLabel("Day")).toHaveValue("32");
+  await page.getByLabel("Month").fill("02");
+  await page.getByLabel("Year").fill("abc");
   await page.getByRole("button", { name: "Continue" }).click();
 
   await expect(page).not.toHaveURL(/\/forms\/success\//);
@@ -49,19 +39,10 @@ test("date input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Date of birth must be a real date/,
   );
-  await expect(
-    page.getByRole("group", { name: "Date of birth" }).getByLabel("Day"),
-  ).toHaveValue("32");
-  await expect(
-    page.getByRole("group", { name: "Date of birth" }).getByLabel("Month"),
-  ).toHaveValue("02");
-  await expect(
-    page.getByRole("group", { name: "Date of birth" }).getByLabel("Year"),
-  ).toHaveValue("abc");
-  await page
-    .getByRole("group", { name: "Date of birth" })
-    .getByLabel("Year")
-    .fill("2099");
+  await expect(page.getByLabel("Day")).toHaveValue("32");
+  await expect(page.getByLabel("Month")).toHaveValue("02");
+  await expect(page.getByLabel("Year")).toHaveValue("abc");
+  await page.getByLabel("Year").fill("2099");
   await page.getByRole("button", { name: "Continue" }).click();
 
   await expect(page).not.toHaveURL(/\/forms\/success\//);
@@ -69,10 +50,7 @@ test("date input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Date of birth must be a real date/,
   );
-  await page
-    .getByRole("group", { name: "Date of birth" })
-    .getByLabel("Day")
-    .fill("01");
+  await page.getByLabel("Day").fill("01");
   await page.getByRole("button", { name: "Continue" }).click();
 
   await expect(page).not.toHaveURL(/\/forms\/success\//);
@@ -83,10 +61,7 @@ test("date input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Date of birth must be in the past/,
   );
-  await page
-    .getByRole("group", { name: "Date of birth" })
-    .getByLabel("Year")
-    .fill("1999");
+  await page.getByLabel("Year").fill("1999");
   await page.getByRole("button", { name: "Continue" }).click();
 
   await expect(page).toHaveURL(/\/forms\/success\//);
@@ -114,9 +89,7 @@ test("month input", async ({ page }) => {
   await page
     .getByRole("link", { name: "Enter your month and year of birth" })
     .click();
-  await expect(
-    page.getByRole("group", { name: "Month of birth" }).getByLabel("Month"),
-  ).toBeFocused();
+  await expect(page.getByLabel("Month")).toBeFocused();
   await page.keyboard.type("13");
   await page.keyboard.press("Enter");
 
@@ -125,13 +98,8 @@ test("month input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Month of birth must be a real date/,
   );
-  await expect(
-    page.getByRole("group", { name: "Month of birth" }).getByLabel("Month"),
-  ).toHaveValue("13");
-  await page
-    .getByRole("group", { name: "Month of birth" })
-    .getByLabel("Year")
-    .fill("abc");
+  await expect(page.getByLabel("Month")).toHaveValue("13");
+  await page.getByLabel("Year").fill("abc");
   await page.getByRole("button", { name: "Continue" }).click();
 
   await expect(page).not.toHaveURL(/\/forms\/success\//);
@@ -139,16 +107,9 @@ test("month input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Month of birth must be a real date/,
   );
-  await expect(
-    page.getByRole("group", { name: "Month of birth" }).getByLabel("Month"),
-  ).toHaveValue("13");
-  await expect(
-    page.getByRole("group", { name: "Month of birth" }).getByLabel("Year"),
-  ).toHaveValue("abc");
-  await page
-    .getByRole("group", { name: "Month of birth" })
-    .getByLabel("Year")
-    .fill("2099");
+  await expect(page.getByLabel("Month")).toHaveValue("13");
+  await expect(page.getByLabel("Year")).toHaveValue("abc");
+  await page.getByLabel("Year").fill("2099");
   await page.getByRole("button", { name: "Continue" }).click();
 
   await expect(page).not.toHaveURL(/\/forms\/success\//);
@@ -156,10 +117,7 @@ test("month input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Month of birth must be a real date/,
   );
-  await page
-    .getByRole("group", { name: "Month of birth" })
-    .getByLabel("Month")
-    .fill("01");
+  await page.getByLabel("Month").fill("01");
   await page.getByRole("button", { name: "Continue" }).click();
 
   await expect(page).not.toHaveURL(/\/forms\/success\//);
@@ -168,10 +126,7 @@ test("month input", async ({ page }) => {
     /Month of birth must be a real date/,
   );
   await expect(page.getByRole("main")).toHaveText(/Date must be in the past/);
-  await page
-    .getByRole("group", { name: "Month of birth" })
-    .getByLabel("Year")
-    .fill("1999");
+  await page.getByLabel("Year").fill("1999");
   await page.getByRole("button", { name: "Continue" }).click();
 
   await expect(page).toHaveURL(/\/forms\/success\//);
@@ -195,11 +150,7 @@ test("year input", async ({ page }) => {
     /Enter a year for retirement/,
   );
   await page.getByRole("link", { name: "Enter a year for retirement" }).click();
-  await expect(
-    page
-      .getByRole("group", { name: "Planned year of retirement" })
-      .getByLabel("Year"),
-  ).toBeFocused();
+  await expect(page.getByLabel("Year")).toBeFocused();
   await page.keyboard.type("abc");
   await page.keyboard.press("Enter");
 
@@ -208,15 +159,8 @@ test("year input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Planned year of retirement must be a valid year/,
   );
-  await expect(
-    page
-      .getByRole("group", { name: "Planned year of retirement" })
-      .getByLabel("Year"),
-  ).toHaveValue("abc");
-  await page
-    .getByRole("group", { name: "Planned year of retirement" })
-    .getByLabel("Year")
-    .fill("1999");
+  await expect(page.getByLabel("Year")).toHaveValue("abc");
+  await page.getByLabel("Year").fill("1999");
   await page.getByRole("button", { name: "Continue" }).click();
 
   await expect(page).not.toHaveURL(/\/forms\/success\//);
@@ -227,11 +171,97 @@ test("year input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Year of retirement must be in the future/,
   );
-  await page
-    .getByRole("group", { name: "Planned year of retirement" })
-    .getByLabel("Year")
-    .fill("2099");
+  await page.getByLabel("Year").fill("2099");
   await page.getByRole("button", { name: "Continue" }).click();
 
   await expect(page).toHaveURL(/\/forms\/success\//);
+});
+
+test("progressive input", async ({ page }) => {
+  await page.goto("/forms/date-input-progressive");
+  await expect(await page.getByRole("main")).toMatchAriaSnapshot(`
+- main:
+  - heading "Example form" [level=1]
+  - group "Search for date":
+    - heading "Search for date" [level=2]
+    - text: Year
+    - textbox "Year"
+  - button "Continue"`);
+  await expect(page.getByLabel("Year")).toBeVisible();
+  await expect(page.getByLabel("Month")).not.toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.getByRole("button", { name: "Continue" }).click();
+
+  await expect(page.getByRole("main")).toHaveText(/There is a problem/);
+  await page.getByLabel("Year").fill("abc");
+  await page.getByRole("button", { name: "Continue" }).click();
+
+  await expect(page).not.toHaveURL(/\/forms\/success\//);
+  await expect(page.getByRole("main")).toHaveText(/There is a problem/);
+  await expect(page.getByRole("main")).toHaveText(
+    /Search for date must be a real date/,
+  );
+  await page
+    .getByRole("link", { name: "Search for date must be a real date" })
+    .click();
+  await expect(page.getByLabel("Year")).toBeFocused();
+  await expect(page.getByLabel("Month")).not.toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.getByLabel("Year").clear();
+  await page.getByLabel("Year").focus();
+  await page.keyboard.type("2003");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.keyboard.type("b");
+  await expect(page.getByLabel("Month")).not.toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.keyboard.press("Backspace");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.getByRole("button", { name: "Continue" }).click();
+
+  await expect(page.getByRole("main")).not.toHaveText(/There is a problem/);
+  await expect(await page.getByRole("main")).toMatchAriaSnapshot(`
+- main:
+  - heading "Example form" [level=1]
+  - group "Search for date":
+    - heading "Search for date" [level=2]
+    - text: Year
+    - textbox "Year"
+    - text: Month
+    - textbox "Month"
+  - button "Continue"`);
+
+  await page.goto("/forms/date-input-progressive");
+  await expect(page.getByLabel("Month")).not.toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.getByLabel("Year").focus();
+  await page.keyboard.type("2003");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.getByLabel("Month").focus();
+  await page.keyboard.type("2");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Day")).toBeVisible();
+  await page.keyboard.type("b");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.keyboard.press("Backspace");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Day")).toBeVisible();
+  await page.getByRole("button", { name: "Continue" }).click();
+
+  await expect(page.getByRole("main")).not.toHaveText(/There is a problem/);
+  await expect(await page.getByRole("main")).toMatchAriaSnapshot(`
+- main:
+  - heading "Example form" [level=1]
+  - group "Search for date":
+    - heading "Search for date" [level=2]
+    - text: Year
+    - textbox "Year"
+    - text: Month
+    - textbox "Month"
+    - text: Day
+    - textbox "Day"
+  - button "Continue"`);
 });

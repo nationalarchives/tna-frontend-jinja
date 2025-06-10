@@ -275,7 +275,9 @@ class TnaDateInput(TnaFormBase):
         day, month, year = [""] * 3
 
         if field.raw_data:
-            for format_part_index, format_part in enumerate(field.format[0].split(" ")):
+            for format_part_index, format_part in enumerate(
+                field.format[len(field.format) - 1].split(" ")
+            ):
                 if format_part.replace("%", "").lower() == "d":
                     day = field.raw_data[format_part_index]
                 elif format_part.replace("%", "").lower() == "m":
@@ -293,6 +295,7 @@ class TnaDateInput(TnaFormBase):
                 "year": year,
             },
         )
+        params.setdefault("progressive", field.progressive)
         return params
 
 

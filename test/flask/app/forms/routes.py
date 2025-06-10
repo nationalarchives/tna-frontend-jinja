@@ -2,6 +2,7 @@ from app.forms import bp
 from app.forms.forms import (
     DateInputForm,
     DateInputMonthForm,
+    DateInputProgressiveForm,
     DateInputYearForm,
     KitchenSinkForm,
     TextInputForm,
@@ -59,6 +60,15 @@ def date_input_year():
     if form.validate_on_submit():
         return redirect(url_for("forms.success"))
     return render_template("date-input-year.html", form=form)
+
+
+@bp.route("/date-input-progressive/", methods=["GET", "POST"])
+def date_input_progressive():
+    form = DateInputProgressiveForm()
+    if form.validate_on_submit():
+        print("Form data:", form.data)
+        # return redirect(url_for("forms.success"))
+    return render_template("date-input-progressive.html", form=form)
 
 
 @bp.route("/kitchen-sink/", methods=["GET", "POST"])

@@ -22,6 +22,7 @@ class TnaDateField(DateField):
     ):
         super().__init__(label, validators, **kwargs)
         self.format = ["%d %m %Y", "%d %m %y"]
+        self.progressive = False
         self.strptime_format = clean_datetime_format_for_strptime(self.format)
         if invalid_date_error_message:
             self.invalid_date_error_message = invalid_date_error_message
@@ -42,7 +43,7 @@ class TnaDateField(DateField):
         }
         return [
             format_parts_map.get(part.replace("%", "").lower())
-            for part in self.format[0].split(" ")
+            for part in self.format[len(self.format) - 1].split(" ")
         ]
 
     def process(self, formdata, data=unset_value, extra_filters=None):
@@ -98,7 +99,7 @@ class TnaDateField(DateField):
         if not valuelist:
             return
 
-        date_str = " ".join(valuelist)
+        date_str = " ".join([value for value in valuelist if value])
         for format in self.strptime_format:
             try:
                 self.data = datetime.datetime.strptime(date_str, format).date()
@@ -107,14 +108,6 @@ class TnaDateField(DateField):
                 self.data = None
 
         raise ValueError(self.gettext(self.invalid_date_error_message))
-
-
-class TnaProgressiveDateField(TnaDateField):
-    def __init__(self, label=None, validators=None, **kwargs):
-        super().__init__(label, validators, **kwargs)
-        self.format = ["%Y %m %d", "%y %m %d"]
-        kwargs["progressive"] = True
-        self.strptime_format = clean_datetime_format_for_strptime(self.format)
 
 
 class TnaMonthField(TnaDateField):
@@ -128,4 +121,12 @@ class TnaYearField(TnaDateField):
     def __init__(self, label=None, validators=None, **kwargs):
         super().__init__(label, validators, **kwargs)
         self.format = ["%Y", "%y"]
+        self.strptime_format = clean_datetime_format_for_strptime(self.format)
+
+
+class TnaProgressiveDateField(TnaDateField):
+    def __init__(self, label=None, validators=None, **kwargs):
+        super().__init__(label, validators, **kwargs)
+        self.format = ["%Y", "%y", "%Y %m", "%y %m", "%Y %m %d", "%y %m %d"]
+        self.progressive = True
         self.strptime_format = clean_datetime_format_for_strptime(self.format)

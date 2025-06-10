@@ -78,10 +78,10 @@ class DateInputYearForm(FlaskForm):
 
 
 class DateInputProgressiveForm(FlaskForm):
-    progressive_date = TnaProgressiveDateField(
-        "Progressive date",
+    date_search = TnaProgressiveDateField(
+        "Search for date",
         validators=[
-            InputRequired(message="Enter a progressive date"),
+            InputRequired(message="Enter a date"),
         ],
     )
 
