@@ -21,8 +21,12 @@ jobs:
         uses: nev7n/wait_for_response@v1
         with:
           url: http://localhost:5001/healthcheck/live/
-      - name: Run the tests
+      - name: Run the fixture tests
         run: node test/test-fixtures.mjs || exit 1
+      - name: Run Playwright tests
+        run: |
+          npx playwright install
+          playwright test
 
   deploy:
     runs-on: ubuntu-latest

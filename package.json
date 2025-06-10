@@ -1,9 +1,8 @@
 {
   "scripts": {
-    "test": "node test/test-fixtures.mjs",
+    "test:fixtures": "node test/test-fixtures.mjs",
     "lint:fix": "npx prettier --write .",
-    "test:playwright": "npx playwright install && playwright test --ui",
-    "test:playwright:update": "npx playwright install && playwright test --update-snapshots"
+    "test:playwright": "npx playwright install && playwright test --ui"
   },
   "dependencies": {
     "@nationalarchives/frontend": "0.19.0"
