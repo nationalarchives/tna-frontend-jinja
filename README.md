@@ -93,7 +93,60 @@ For example, if your application templates directory is `app/templates`, create 
 
 This way you can continue to use the same import (e.g. `{% from 'components/button/macro.html' import tnaButton %}`) but introduce your own bespoke functionality.
 
-## Testing the templates
+## WTForms support
+
+### Form construction
+
+```python
+from flask_wtf import FlaskForm
+from tna_frontend_jinja.wtforms import TnaTextInput
+from wtforms import StringField, SubmitField
+from wtforms.validators import InputRequired, Length
+
+class MyForm(FlaskForm):
+    username = StringField(
+        "Username",
+        widget=TnaTextInput(),
+        validators=[
+            InputRequired(message="Enter a username"),
+            Length(max=256, message="Usernames must be 256 characters or fewer"),
+        ],
+    )
+    submit = SubmitField("Continue", widget=TnaSubmitInput())
+```
+
+### Route
+
+```python
+@app.route("/my-form/", methods=["GET", "POST"])
+def my_form():
+    form = MyForm()
+    if form.validate_on_submit():
+        return redirect(url_for("success"))
+    return render_template("my-form.html", form=form)
+
+@app.route("/success/")
+def success():
+    return render_template("success.html")
+```
+
+### Template
+
+```jinja2
+{% if form.errors %}
+  {{ tnaErrorSummary(wtforms_errors(form)) }}
+{% endif %}
+<h1 class="tna-heading-xl">My form</h1>
+<form action="{{ url_for('my_form') }}" method="post" novalidate>
+  {{ form.csrf_token }}
+  {{ form.username }}
+  <div class="tna-button-group">
+    {{ form.submit }}
+  </div>
+</form>
+```
+
+## Running tests
 
 ```sh
 # Start the test server
@@ -104,6 +157,9 @@ npm install
 
 # Run the fixture tests
 node test/test-fixtures.mjs
+
+# Run the Playwright tests
+npm run test:playwright
 ```
 
 ## Styles and JavaScript
