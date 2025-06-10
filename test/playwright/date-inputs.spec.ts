@@ -176,3 +176,62 @@ test("month input", async ({ page }) => {
 
   await expect(page).toHaveURL(/\/forms\/success\//);
 });
+
+test("year input", async ({ page }) => {
+  await page.goto("/forms/date-input-year");
+  await expect(await page.getByRole("main")).toMatchAriaSnapshot(`
+- main:
+  - heading "Example form" [level=1]
+  - group "Planned year of retirement":
+    - heading "Planned year of retirement" [level=2]
+    - text: Year
+    - textbox "Year"
+  - button "Continue"`);
+  await page.getByRole("button", { name: "Continue" }).click();
+
+  await expect(page).not.toHaveURL(/\/forms\/success\//);
+  await expect(page.getByRole("main")).toHaveText(/There is a problem/);
+  await expect(page.getByRole("main")).toHaveText(
+    /Enter a year for retirement/,
+  );
+  await page.getByRole("link", { name: "Enter a year for retirement" }).click();
+  await expect(
+    page
+      .getByRole("group", { name: "Planned year of retirement" })
+      .getByLabel("Year"),
+  ).toBeFocused();
+  await page.keyboard.type("abc");
+  await page.keyboard.press("Enter");
+
+  await expect(page).not.toHaveURL(/\/forms\/success\//);
+  await expect(page.getByRole("main")).toHaveText(/There is a problem/);
+  await expect(page.getByRole("main")).toHaveText(
+    /Planned year of retirement must be a valid year/,
+  );
+  await expect(
+    page
+      .getByRole("group", { name: "Planned year of retirement" })
+      .getByLabel("Year"),
+  ).toHaveValue("abc");
+  await page
+    .getByRole("group", { name: "Planned year of retirement" })
+    .getByLabel("Year")
+    .fill("1999");
+  await page.getByRole("button", { name: "Continue" }).click();
+
+  await expect(page).not.toHaveURL(/\/forms\/success\//);
+  await expect(page.getByRole("main")).toHaveText(/There is a problem/);
+  await expect(page.getByRole("main")).not.toHaveText(
+    /Month of birth must be a real date/,
+  );
+  await expect(page.getByRole("main")).toHaveText(
+    /Year of retirement must be in the future/,
+  );
+  await page
+    .getByRole("group", { name: "Planned year of retirement" })
+    .getByLabel("Year")
+    .fill("2099");
+  await page.getByRole("button", { name: "Continue" }).click();
+
+  await expect(page).toHaveURL(/\/forms\/success\//);
+});

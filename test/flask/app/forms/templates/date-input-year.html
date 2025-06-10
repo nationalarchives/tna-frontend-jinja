@@ -19,8 +19,21 @@
 {% block content %}
 <div class="tna-container tna-section">
   <div class="tna-column tna-column--width-2-3 tna-column--width-5-6-medium tna-column--full-small tna-column--full-tiny">
-    <h1 class="tna-heading-xl">Success</h1>
-    <p>The form posted successfully</p>
+    {% if form.errors %}
+      {{ tnaErrorSummary(wtforms_errors(form)) }}
+    {% endif %}
+    <h1 class="tna-heading-xl">Example form</h1>
+    <form action="{{ url_for('forms.date_input_year') }}" method="post" novalidate>
+      {{ form.csrf_token }}
+
+      {{ form.year_of_retirement(params={
+        'headingLevel': 2
+      }) }}
+      
+      <div class="tna-button-group">
+        {{ form.submit }}
+      </div>
+    </form>
   </div>
 </div>
 {% endblock %}

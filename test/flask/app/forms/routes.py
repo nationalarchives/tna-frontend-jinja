@@ -2,6 +2,7 @@ from app.forms import bp
 from app.forms.forms import (
     DateInputForm,
     DateInputMonthForm,
+    DateInputYearForm,
     KitchenSinkForm,
     TextInputForm,
 )
@@ -50,6 +51,14 @@ def date_input_month():
     if form.validate_on_submit():
         return redirect(url_for("forms.success"))
     return render_template("date-input-month.html", form=form)
+
+
+@bp.route("/date-input-year/", methods=["GET", "POST"])
+def date_input_year():
+    form = DateInputYearForm()
+    if form.validate_on_submit():
+        return redirect(url_for("forms.success"))
+    return render_template("date-input-year.html", form=form)
 
 
 @bp.route("/kitchen-sink/", methods=["GET", "POST"])

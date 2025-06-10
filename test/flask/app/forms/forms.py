@@ -60,23 +60,24 @@ class DateInputMonthForm(FlaskForm):
             PastDate(message="Date must be in the past"),
         ],
     )
+
     submit = SubmitField("Continue", widget=TnaSubmitInput())
 
 
 class DateInputYearForm(FlaskForm):
-
-    year = TnaYearField(
-        "Year",
-        invalid_date_error_message="Enter a valid year",
+    year_of_retirement = TnaYearField(
+        "Planned year of retirement",
+        invalid_date_error_message="Planned year of retirement must be a valid year",
         validators=[
-            InputRequired(message="Enter a year"),
+            InputRequired(message="Enter a year for retirement"),
+            FutureDate(message="Year of retirement must be in the future"),
         ],
     )
+
     submit = SubmitField("Continue", widget=TnaSubmitInput())
 
 
 class DateInputProgressiveForm(FlaskForm):
-
     progressive_date = TnaProgressiveDateField(
         "Progressive date",
         validators=[
