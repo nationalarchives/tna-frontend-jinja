@@ -40,4 +40,4 @@ jobs:
       - name: Run the tests
         run: node test/test-fixtures.mjs || exit 1
       - name: Run Playwright tests
-        run: playwright test
+        run: npx playwright test
