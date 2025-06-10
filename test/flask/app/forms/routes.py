@@ -5,7 +5,27 @@ from app.forms.forms import (
     KitchenSinkForm,
     TextInputForm,
 )
-from flask import redirect, render_template, url_for
+from flask import current_app, redirect, render_template, url_for
+
+
+def has_no_empty_params(rule):
+    defaults = rule.defaults if rule.defaults is not None else ()
+    arguments = rule.arguments if rule.arguments is not None else ()
+    return len(defaults) >= len(arguments)
+
+
+@bp.route("/")
+def index():
+    urls = {}
+    for rule in current_app.url_map.iter_rules():
+        if (
+            "GET" in rule.methods
+            and has_no_empty_params(rule)
+            and rule.endpoint not in ["forms.index", "forms.success"]
+            and rule.endpoint.startswith("forms.")
+        ):
+            urls[rule.endpoint] = url_for(rule.endpoint, **(rule.defaults or {}))
+    return render_template("index.html", urls=urls)
 
 
 @bp.route("/text-input/", methods=["GET", "POST"])
