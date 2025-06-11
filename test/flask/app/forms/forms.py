@@ -3,6 +3,7 @@ from tna_frontend_jinja.wtforms import (
     TnaCheckboxesInput,
     TnaCheckboxInput,
     TnaDateField,
+    TnaDecimalInput,
     TnaMonthField,
     TnaPasswordInput,
     TnaProgressiveDateField,
@@ -16,6 +17,9 @@ from tna_frontend_jinja.wtforms import (
 from tna_frontend_jinja.wtforms.validators import FutureDate, PastDate
 from wtforms import (
     BooleanField,
+    DecimalField,
+    EmailField,
+    PasswordField,
     RadioField,
     SelectField,
     SelectMultipleField,
@@ -23,7 +27,7 @@ from wtforms import (
     SubmitField,
     TextAreaField,
 )
-from wtforms.validators import Email, InputRequired, Length
+from wtforms.validators import Email, InputRequired, Length, NumberRange
 
 
 class TextInputForm(FlaskForm):
@@ -98,7 +102,7 @@ class KitchenSinkForm(FlaskForm):
         ],
     )
 
-    password = StringField(
+    password = PasswordField(
         "Password",
         validators=[
             InputRequired(message="Enter a password"),
@@ -106,7 +110,7 @@ class KitchenSinkForm(FlaskForm):
         widget=TnaPasswordInput(),
     )
 
-    email = StringField(
+    email = EmailField(
         "Email address",
         validators=[
             InputRequired(message="Enter an email address"),
@@ -115,6 +119,17 @@ class KitchenSinkForm(FlaskForm):
         ],
         description="We’ll only use this to send you a receipt",
         widget=TnaTextInput(),
+    )
+
+    height = DecimalField(
+        "Height in centimetres",
+        validators=[
+            InputRequired(message="Enter a height"),
+            NumberRange(
+                min=1, max=272, message="Height must be between 1 cm and 272 cm"
+            ),
+        ],
+        widget=TnaDecimalInput(),
     )
 
     remember = BooleanField(

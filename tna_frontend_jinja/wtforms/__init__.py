@@ -2,6 +2,7 @@ from .fields import TnaDateField, TnaMonthField, TnaProgressiveDateField, TnaYea
 from .widgets import (
     TnaCheckboxesInput,
     TnaCheckboxInput,
+    TnaDecimalInput,
     TnaPasswordInput,
     TnaRadioInput,
     TnaSelect,

@@ -93,7 +93,7 @@ For example, if your application templates directory is `app/templates`, create 
 
 This way you can continue to use the same import (e.g. `{% from 'components/button/macro.html' import tnaButton %}`) but introduce your own bespoke functionality.
 
-## WTForms support
+## WTForms
 
 ### Form construction
 
@@ -145,6 +145,48 @@ def success():
   </div>
 </form>
 ```
+
+### Fields
+
+| WTForms field         | TNA Widget                                                       |
+| --------------------- | ---------------------------------------------------------------- |
+| `BooleanField`        | `TnaCheckboxInput`                                               |
+| `DateField`           | [not supported] - use `tna_frontend_jinja.wtforms.TnaDateField`  |
+| `DateTimeField`       | [not yet supported]                                              |
+| `DateTimeLocalField`  | [not yet supported]                                              |
+| `DecimalField`        | `TnaTextInput`                                                   |
+| `DecimalRangeField`   | [not yet supported]                                              |
+| `EmailField`          | `TnaTextInput`                                                   |
+| `FileField`           | [not yet supported]                                              |
+| `MultipleFileField`   | [not yet supported]                                              |
+| `FloatField`          | [not yet supported]                                              |
+| `IntegerField`        | [not yet supported]                                              |
+| `IntegerRangeField`   | [not yet supported]                                              |
+| `MonthField`          | [not supported] - use `tna_frontend_jinja.wtforms.TnaMonthField` |
+| `RadioField`          | `TnaRadioInput`                                                  |
+| `SelectField`         | `TnaSelect`                                                      |
+| `SearchField`         | [not yet supported]                                              |
+| `SelectMultipleField` | `TnaCheckboxesInput`                                             |
+| `SubmitField`         | `TnaSubmitInput`                                                 |
+| `StringField`         | `TnaTextInput`                                                   |
+| `TelField`            | `TnaTextInput`                                                   |
+| `TimeField`           | [not yet supported]                                              |
+| `URLField`            | `TnaTextInput`                                                   |
+| `HiddenField`         | [not yet supported]                                              |
+| `PasswordField`       | `TnaTextInput`                                                   |
+| `TextAreaField`       | `TnaTextArea`                                                    |
+| `ColorField`          | [not yet supported]                                              |
+| `FormField`           | [not yet supported]                                              |
+| `FieldList`           | [not yet supported]                                              |
+
+### TNA Frontend Jinja fields
+
+| TNA Frontend Jinja field  | Purpose                                                    |
+| ------------------------- | ---------------------------------------------------------- |
+| `TnaDateField`            | Day, month and year fields                                 |
+| `TnaMonthField`           | Month and year fields                                      |
+| `TnaYearField`            | Year field                                                 |
+| `TnaProgressiveDateField` | Date fields that accept year, year/month or year/month/day |
 
 ## Running tests
 

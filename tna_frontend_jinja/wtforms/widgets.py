@@ -165,8 +165,6 @@ class TnaTextInput(TnaInput, TextInput):
 class TnaPasswordInput(TnaInput, PasswordInput):
     """Render a password input."""
 
-    input_type = "password"
-
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
 
@@ -392,3 +390,7 @@ class TnaSelect(TnaFormBase, Select):
             del kwargs["selected"]
 
         return params
+
+
+class TnaDecimalInput(TnaTextInput):
+    input_type = "number"
