@@ -148,36 +148,39 @@ def success():
 
 ### Fields
 
-| WTForms field         | TNA Widget                                                       |
-| --------------------- | ---------------------------------------------------------------- |
-| `BooleanField`        | `TnaCheckboxInput`                                               |
-| `DateField`           | [not supported] - use `tna_frontend_jinja.wtforms.TnaDateField`  |
-| `DateTimeField`       | [not yet supported]                                              |
-| `DateTimeLocalField`  | [not yet supported]                                              |
-| `DecimalField`        | `TnaTextInput`                                                   |
-| `DecimalRangeField`   | [not yet supported]                                              |
-| `EmailField`          | `TnaTextInput`                                                   |
-| `FileField`           | [not yet supported]                                              |
-| `MultipleFileField`   | [not yet supported]                                              |
-| `FloatField`          | [not yet supported]                                              |
-| `IntegerField`        | [not yet supported]                                              |
-| `IntegerRangeField`   | [not yet supported]                                              |
-| `MonthField`          | [not supported] - use `tna_frontend_jinja.wtforms.TnaMonthField` |
-| `RadioField`          | `TnaRadioInput`                                                  |
-| `SelectField`         | `TnaSelect`                                                      |
-| `SearchField`         | [not yet supported]                                              |
-| `SelectMultipleField` | `TnaCheckboxesInput`                                             |
-| `SubmitField`         | `TnaSubmitInput`                                                 |
-| `StringField`         | `TnaTextInput`                                                   |
-| `TelField`            | `TnaTextInput`                                                   |
-| `TimeField`           | [not yet supported]                                              |
-| `URLField`            | `TnaTextInput`                                                   |
-| `HiddenField`         | [not yet supported]                                              |
-| `PasswordField`       | `TnaTextInput`                                                   |
-| `TextAreaField`       | `TnaTextArea`                                                    |
-| `ColorField`          | [not yet supported]                                              |
-| `FormField`           | [not yet supported]                                              |
-| `FieldList`           | [not yet supported]                                              |
+| WTForms field         | TNA Widget           | Notes                                                                         |
+| --------------------- | -------------------- | ----------------------------------------------------------------------------- |
+| `BooleanField`        | `TnaCheckboxInput`   | https://design-system.nationalarchives.gov.uk/components/checkboxes/          |
+| `DateField`           | [not supported]      | Use `tna_frontend_jinja.wtforms.fields.TnaDateField`                          |
+| `DecimalField`        | `TnaDecimalInput`    |                                                                               |
+| `EmailField`          | `TnaEmailInput`      |                                                                               |
+| `FloatField`          | `TnaFloatInput`      |                                                                               |
+| `HiddenField`         | [none needed]        |                                                                               |
+| `MonthField`          | [not supported]      | Use `tna_frontend_jinja.wtforms.fields.TnaMonthField`                         |
+| `PasswordField`       | `TnaPasswordInput`   | https://design-system.nationalarchives.gov.uk/components/text-input/#password |
+| `RadioField`          | `TnaRadioInput`      | https://design-system.nationalarchives.gov.uk/components/radios/              |
+| `SelectField`         | `TnaSelect`          | https://design-system.nationalarchives.gov.uk/components/select/              |
+| `SearchField`         | `TnaSearchInput`     | https://design-system.nationalarchives.gov.uk/components/search-field/        |
+| `SelectMultipleField` | `TnaCheckboxesInput` | https://design-system.nationalarchives.gov.uk/components/checkboxes/          |
+| `SubmitField`         | `TnaSubmitInput`     | https://design-system.nationalarchives.gov.uk/components/button/              |
+| `StringField`         | `TnaTextInput`       | https://design-system.nationalarchives.gov.uk/components/text-input/          |
+| `TelField`            | `TnaTelInput`        |                                                                               |
+| `TextAreaField`       | `TnaTextArea`        | https://design-system.nationalarchives.gov.uk/components/textarea/            |
+| `URLField`            | `TnaUrlInput`        |                                                                               |
+
+#### WTForms fields currently not supported:
+
+- `ColorField`
+- `DateTimeField`
+- `DateTimeLocalField`
+- `DecimalRangeField`
+- `FieldList`
+- `FileField`
+- `FormField`
+- `IntegerField`
+- `IntegerRangeField`
+- `MultipleFileField`
+- `TimeField`
 
 ### TNA Frontend Jinja fields
 

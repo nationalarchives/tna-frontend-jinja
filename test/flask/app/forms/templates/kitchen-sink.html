@@ -18,7 +18,7 @@
 
 {% block content %}
 <div class="tna-container tna-section">
-  <div class="tna-column tna-column--width-2-3 tna-column--width-5-6-medium tna-column--full-small tna-column--full-tiny">
+  <div class="tna-column tna-column--width-2-3 tna-column--full-small tna-column--full-tiny">
     {% if form.errors %}
       {{ tnaErrorSummary(wtforms_errors(form)) }}
     {% endif %}
@@ -26,19 +26,30 @@
     <form action="" method="post" novalidate>
       {{ form.csrf_token }}
 
+      {{ form.search(params={
+        'headingLevel': 2
+      }) }}
+
       {{ form.username(params={
         'headingLevel': 2,
-        'spellcheck': False
+        'spellcheck': False,
+        'autofill': 'username',
+        'attributes': {
+          'data-foo': 'bar',
+          'data-baz': True
+        }
       }) }}
 
       {{ form.password(params={
         'headingLevel': 2,
-        'spellcheck': False
+        'spellcheck': False,
+        'autofill': 'new-password'
       }) }}
 
       {{ form.email(params={
         'headingLevel': 2,
-        'spellcheck': False
+        'spellcheck': False,
+        'autofill': 'email'
       }) }}
 
       {{ form.height(params={
@@ -48,6 +59,11 @@
       {{ form.remember(params={
         'label': 'Terms and conditions',
         'headingLevel': 2
+      }) }}
+
+      {{ form.url(params={
+        'headingLevel': 2,
+        'autofill': 'url'
       }) }}
 
       {{ form.shopping(params={
@@ -74,6 +90,18 @@
         {{ form.submit }}
       </div>
     </form>
+  </div>
+  <div class="tna-column tna-column--width-1-3 tna-column--full-small tna-column--full-tiny">
+    <div class="tna-aside tna-aside--tight tna-background-tint">
+      <h2 class="tna-heading-m">Form data</h2>
+      <dl class="tna-dl tna-dl--plain tna-dl--stacked">
+        {% for field in form %}
+        <dt>{{ field.name }}</dt>
+        <dd>{{ field.data }}</dd>
+        <dd>{{ field.flags }}</dd>
+        {% endfor %}
+      </dl>
+    </div>
   </div>
 </div>
 {% endblock %}

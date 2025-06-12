@@ -4,7 +4,7 @@ import itertools
 from wtforms.fields.datetime import DateField
 from wtforms.utils import clean_datetime_format_for_strptime, unset_value
 
-from .widgets import TnaDateInput
+from ..widgets import TnaDateInput
 
 
 class TnaDateField(DateField):

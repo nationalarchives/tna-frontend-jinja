@@ -75,7 +75,8 @@ def date_input_progressive():
 def kitchen_sink():
     form = KitchenSinkForm()
     if form.validate_on_submit():
-        return redirect(url_for("forms.success"))
+        print("Form data:", form.data)
+        # return redirect(url_for("forms.success"))
     return render_template("kitchen-sink.html", form=form)
 
 

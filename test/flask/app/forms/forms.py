@@ -4,30 +4,35 @@ from tna_frontend_jinja.wtforms import (
     TnaCheckboxInput,
     TnaDateField,
     TnaDecimalInput,
+    TnaEmailInput,
     TnaMonthField,
     TnaPasswordInput,
     TnaProgressiveDateField,
     TnaRadioInput,
+    TnaSearchInput,
     TnaSelect,
     TnaSubmitInput,
     TnaTextArea,
     TnaTextInput,
+    TnaUrlInput,
     TnaYearField,
 )
-from tna_frontend_jinja.wtforms.validators import FutureDate, PastDate
+from tna_frontend_jinja.wtforms import validators as tna_frontend_validators
 from wtforms import (
     BooleanField,
     DecimalField,
     EmailField,
     PasswordField,
     RadioField,
+    SearchField,
     SelectField,
     SelectMultipleField,
     StringField,
     SubmitField,
     TextAreaField,
+    URLField,
+    validators,
 )
-from wtforms.validators import Email, InputRequired, Length, NumberRange
 
 
 class TextInputForm(FlaskForm):
@@ -35,8 +40,10 @@ class TextInputForm(FlaskForm):
         "Username",
         widget=TnaTextInput(),
         validators=[
-            InputRequired(message="Enter a username"),
-            Length(max=256, message="Usernames must be 256 characters or fewer"),
+            validators.InputRequired(message="Enter a username"),
+            validators.Length(
+                max=256, message="Usernames must be 256 characters or fewer"
+            ),
         ],
     )
 
@@ -47,8 +54,10 @@ class DateInputForm(FlaskForm):
     dob = TnaDateField(
         "Date of birth",
         validators=[
-            InputRequired(message="Enter your date of birth"),
-            PastDate(message="Date of birth must be in the past"),
+            validators.InputRequired(message="Enter your date of birth"),
+            tna_frontend_validators.PastDate(
+                message="Date of birth must be in the past"
+            ),
         ],
     )
 
@@ -60,8 +69,8 @@ class DateInputMonthForm(FlaskForm):
         "Month of birth",
         # invalid_date_error_message="Enter a valid month and year",
         validators=[
-            InputRequired(message="Enter your month and year of birth"),
-            PastDate(message="Date must be in the past"),
+            validators.InputRequired(message="Enter your month and year of birth"),
+            tna_frontend_validators.PastDate(message="Date must be in the past"),
         ],
     )
 
@@ -73,8 +82,10 @@ class DateInputYearForm(FlaskForm):
         "Planned year of retirement",
         invalid_date_error_message="Planned year of retirement must be a valid year",
         validators=[
-            InputRequired(message="Enter a year for retirement"),
-            FutureDate(message="Year of retirement must be in the future"),
+            validators.InputRequired(message="Enter a year for retirement"),
+            tna_frontend_validators.FutureDate(
+                message="Year of retirement must be in the future"
+            ),
         ],
     )
 
@@ -85,7 +96,7 @@ class DateInputProgressiveForm(FlaskForm):
     date_search = TnaProgressiveDateField(
         "Search for date",
         validators=[
-            InputRequired(message="Enter a date"),
+            validators.InputRequired(message="Enter a date"),
         ],
     )
 
@@ -93,19 +104,26 @@ class DateInputProgressiveForm(FlaskForm):
 
 
 class KitchenSinkForm(FlaskForm):
+    search = SearchField(
+        "Search",
+        widget=TnaSearchInput(),
+    )
+
     username = StringField(
         "Username",
         widget=TnaTextInput(),
         validators=[
-            InputRequired(message="Enter a username"),
-            Length(max=256, message="Usernames must be 256 characters or fewer"),
+            validators.InputRequired(message="Enter a username"),
+            validators.Length(
+                max=256, message="Usernames must be 256 characters or fewer"
+            ),
         ],
     )
 
     password = PasswordField(
         "Password",
         validators=[
-            InputRequired(message="Enter a password"),
+            validators.InputRequired(message="Enter a password"),
         ],
         widget=TnaPasswordInput(),
     )
@@ -113,29 +131,44 @@ class KitchenSinkForm(FlaskForm):
     email = EmailField(
         "Email address",
         validators=[
-            InputRequired(message="Enter an email address"),
-            Length(max=256, message="Email address must be 256 characters or fewer"),
-            Email(message="Enter a valid email address"),
+            validators.InputRequired(message="Enter an email address"),
+            validators.Length(
+                max=256, message="Email address must be 256 characters or fewer"
+            ),
+            validators.Email(message="Enter a valid email address"),
         ],
         description="We’ll only use this to send you a receipt",
-        widget=TnaTextInput(),
+        widget=TnaEmailInput(),
     )
 
     height = DecimalField(
         "Height in centimetres",
         validators=[
-            InputRequired(message="Enter a height"),
-            NumberRange(
+            validators.InputRequired(message="Enter a height"),
+            validators.NumberRange(
                 min=1, max=272, message="Height must be between 1 cm and 272 cm"
             ),
         ],
         widget=TnaDecimalInput(),
     )
 
+    url = URLField(
+        "Site URL",
+        validators=[
+            validators.InputRequired(message="Enter a URL"),
+            validators.URL(
+                message="Enter a valid URL",
+            ),
+        ],
+        widget=TnaUrlInput(),
+    )
+
     remember = BooleanField(
         "I agree to terms and conditions",
         validators=[
-            InputRequired(message="You must agree to the terms and conditions"),
+            validators.InputRequired(
+                message="You must agree to the terms and conditions"
+            ),
         ],
         widget=TnaCheckboxInput(),
     )
@@ -143,7 +176,7 @@ class KitchenSinkForm(FlaskForm):
     shopping = SelectMultipleField(
         "Shopping list",
         validators=[
-            InputRequired(message="Select an item"),
+            validators.InputRequired(message="Select an item"),
         ],
         choices=[("cpp", "C++"), ("py", "Python"), ("text", "Plain Text")],
         widget=TnaCheckboxesInput(),
@@ -153,7 +186,7 @@ class KitchenSinkForm(FlaskForm):
         "Day",
         choices=[("mon", "Monday"), ("tue", "Tuesday"), ("wed", "Wednesday")],
         validators=[
-            InputRequired(message="Select a day"),
+            validators.InputRequired(message="Select a day"),
         ],
         widget=TnaRadioInput(),
     )
@@ -161,14 +194,14 @@ class KitchenSinkForm(FlaskForm):
     birthday = TnaDateField(
         "Birthday",
         validators=[
-            InputRequired(message="Enter a date"),
+            validators.InputRequired(message="Enter a date"),
         ],
     )
 
     message = TextAreaField(
         "Message",
         validators=[
-            InputRequired(message="Enter a message"),
+            validators.InputRequired(message="Enter a message"),
         ],
         widget=TnaTextArea(),
     )
@@ -182,7 +215,7 @@ class KitchenSinkForm(FlaskForm):
             ("popularity", "Popularity"),
         ],
         validators=[
-            InputRequired(message="Select an order"),
+            validators.InputRequired(message="Select an order"),
         ],
         widget=TnaSelect(),
     )
