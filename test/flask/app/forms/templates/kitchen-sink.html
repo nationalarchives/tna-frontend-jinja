@@ -96,7 +96,7 @@
       <h2 class="tna-heading-m">Form data</h2>
       <dl class="tna-dl tna-dl--plain tna-dl--stacked">
         {% for field in form %}
-        {% if field.name != 'csrf_token' %}
+        {% if field.name not in ['csrf_token', 'submit'] %}
         <dt>{{ field.name }}</dt>
         <dd>{{ field.data }}</dd>
         {% endif %}

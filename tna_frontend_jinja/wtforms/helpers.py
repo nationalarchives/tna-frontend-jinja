@@ -50,7 +50,7 @@ def wtforms_errors(form, params={}):
                 "TnaYearField",
                 "TnaProgressiveDateField",
             ]:
-                id_map[field_name] = f"{field.id}-{field.field_codes()[0]}"
+                id_map[field_name] = f"{field.id}-{field.field_codes(True)[0]}"
             elif field.type in ["BooleanField"]:
                 id_map[field_name] = f"{field.id}-y"
             else:

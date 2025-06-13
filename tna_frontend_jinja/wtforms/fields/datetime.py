@@ -31,18 +31,22 @@ class TnaDateField(DateField):
                 f"{self.label.text} must be a real date"
             )
 
-    def field_codes(self):
+    def field_codes(self, full_code=False):
         """
         Return a list of field names that this field encapsulates.
         This is used by the TnaDateInput widget to render the date inputs.
         """
-        format_parts_map = {
+        format_parts_full = {
             "d": "day",
             "m": "month",
             "y": "year",
         }
         return [
-            format_parts_map.get(part.replace("%", "").lower())
+            (
+                format_parts_full.get(part.replace("%", "").lower(), "")
+                if full_code
+                else part.replace("%", "").lower()
+            )
             for part in self.format[len(self.format) - 1].split(" ")
         ]
 
@@ -81,7 +85,7 @@ class TnaDateField(DateField):
                     f"{self.name}-{part}",
                     "",
                 )
-                for part in self.field_codes()
+                for part in self.field_codes(True)
             ]
 
             try:
