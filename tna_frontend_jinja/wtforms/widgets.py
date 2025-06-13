@@ -21,10 +21,10 @@ class TnaWidget(object):
 
     def map_tna_params(self, field, **kwargs):
         params = {
-            "id": kwargs.get("id", field.id),
-            "name": kwargs.get("name", field.name),
-            "headingLevel": kwargs.get("headingLevel", 2),
-            "label": kwargs.get("label", field.label.text),
+            "id": kwargs["id"],
+            "name": kwargs["name"],
+            "headingLevel": kwargs["headingLevel"],
+            "label": kwargs["label"],
         }
 
         if "hint" in kwargs:
