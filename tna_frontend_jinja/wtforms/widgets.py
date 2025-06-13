@@ -31,7 +31,7 @@ class TnaWidget(object):
             params["hint"] = kwargs.get("hint", field.description)
 
         if "params" in kwargs:
-            params = self.merge_params(params, kwargs["params"])
+            params.update(kwargs["params"])
 
         if "type" in kwargs:
             params["type"] = kwargs["type"]
@@ -90,7 +90,7 @@ class TnaIterableWidget(TnaWidget):
 
                 del kwargs["params"]["items"]
 
-            params = self.merge_params(params, kwargs["params"])
+            params.update(kwargs["params"])
 
         if field.errors:
             params["error"] = {"text": field.errors[0]}
