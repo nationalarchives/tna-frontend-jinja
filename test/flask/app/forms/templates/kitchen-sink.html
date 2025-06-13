@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block form %}
+  {{ form.search(params={
+    'headingLevel': 2
+  }) }}
+
+  {{ form.username(params={
+    'headingLevel': 2,
+    'spellcheck': False,
+    'autofill': 'username',
+    'attributes': {
+      'data-foo': 'bar',
+      'data-baz': True
+    }
+  }) }}
+
+  {{ form.password(params={
+    'headingLevel': 2,
+    'spellcheck': False,
+    'autofill': 'new-password'
+  }) }}
+
+  {{ form.email(params={
+    'headingLevel': 2,
+    'spellcheck': False,
+    'autofill': 'email'
+  }) }}
+
+  {{ form.height(params={
+    'headingLevel': 2
+  }) }}
+
+  {{ form.remember(params={
+    'label': 'Terms and conditions',
+    'headingLevel': 2
+  }) }}
+
+  {{ form.url(params={
+    'headingLevel': 2,
+    'autofill': 'url'
+  }) }}
+
+  {{ form.shopping(params={
+    'headingLevel': 2
+  }) }}
+
+  {{ form.day_of_week(params={
+    'headingLevel': 2
+  }) }}
+
+  {{ form.birthday(params={
+    'headingLevel': 2
+  }) }}
+
+  {{ form.message(params={
+    'headingLevel': 2
+  }) }}
+
+  {{ form.order(params={
+    'headingLevel': 2
+  }) }}
+{% endblock %}

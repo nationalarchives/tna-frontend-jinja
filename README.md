@@ -93,7 +93,105 @@ For example, if your application templates directory is `app/templates`, create 
 
 This way you can continue to use the same import (e.g. `{% from 'components/button/macro.html' import tnaButton %}`) but introduce your own bespoke functionality.
 
-## Testing the templates
+## WTForms
+
+### Form construction
+
+```python
+from flask_wtf import FlaskForm
+from tna_frontend_jinja.wtforms import TnaTextInput
+from wtforms import StringField, SubmitField
+from wtforms.validators import InputRequired, Length
+
+class MyForm(FlaskForm):
+    username = StringField(
+        "Username",
+        widget=TnaTextInput(),
+        validators=[
+            InputRequired(message="Enter a username"),
+            Length(max=256, message="Usernames must be 256 characters or fewer"),
+        ],
+    )
+    submit = SubmitField("Continue", widget=TnaSubmitInput())
+```
+
+### Route
+
+```python
+@app.route("/my-form/", methods=["GET", "POST"])
+def my_form():
+    form = MyForm()
+    if form.validate_on_submit():
+        return redirect(url_for("success"))
+    return render_template("my-form.html", form=form)
+
+@app.route("/success/")
+def success():
+    return render_template("success.html")
+```
+
+### Template
+
+```jinja2
+{% if form.errors %}
+  {{ tnaErrorSummary(wtforms_errors(form)) }}
+{% endif %}
+<h1 class="tna-heading-xl">My form</h1>
+<form action="{{ url_for('my_form') }}" method="post" novalidate>
+  {{ form.csrf_token }}
+  {{ form.username }}
+  <div class="tna-button-group">
+    {{ form.submit }}
+  </div>
+</form>
+```
+
+### Fields
+
+| WTForms field         | TNA Widget           | Notes                                                                         |
+| --------------------- | -------------------- | ----------------------------------------------------------------------------- |
+| `BooleanField`        | `TnaCheckboxInput`   | https://design-system.nationalarchives.gov.uk/components/checkboxes/          |
+| `DateField`           | [not supported]      | Use `tna_frontend_jinja.wtforms.fields.TnaDateField`                          |
+| `DecimalField`        | `TnaNumberInput`     |                                                                               |
+| `EmailField`          | `TnaEmailInput`      |                                                                               |
+| `FloatField`          | `TnaNumberInput`     |                                                                               |
+| `HiddenField`         | [none needed]        |                                                                               |
+| `IntegerField`        | `TnaNumberInput`     |                                                                               |
+| `MonthField`          | [not supported]      | Use `tna_frontend_jinja.wtforms.fields.TnaMonthField`                         |
+| `PasswordField`       | `TnaPasswordInput`   | https://design-system.nationalarchives.gov.uk/components/text-input/#password |
+| `RadioField`          | `TnaRadioInput`      | https://design-system.nationalarchives.gov.uk/components/radios/              |
+| `SelectField`         | `TnaSelect`          | https://design-system.nationalarchives.gov.uk/components/select/              |
+| `SearchField`         | `TnaSearchInput`     | https://design-system.nationalarchives.gov.uk/components/search-field/        |
+| `SelectMultipleField` | `TnaCheckboxesInput` | https://design-system.nationalarchives.gov.uk/components/checkboxes/          |
+| `SubmitField`         | `TnaSubmitInput`     | https://design-system.nationalarchives.gov.uk/components/button/              |
+| `StringField`         | `TnaTextInput`       | https://design-system.nationalarchives.gov.uk/components/text-input/          |
+| `TelField`            | `TnaTelInput`        |                                                                               |
+| `TextAreaField`       | `TnaTextArea`        | https://design-system.nationalarchives.gov.uk/components/textarea/            |
+| `URLField`            | `TnaUrlInput`        |                                                                               |
+
+#### WTForms fields currently not supported:
+
+- `ColorField`
+- `DateTimeField`
+- `DateTimeLocalField`
+- `DecimalRangeField`
+- `FieldList`
+- `FileField`
+- `FormField`
+- `IntegerRangeField`
+- `MultipleFileField`
+- `TimeField`
+
+### TNA Frontend Jinja fields
+
+| TNA Frontend Jinja field  | Purpose                                                    |
+| ------------------------- | ---------------------------------------------------------- |
+| `TnaDateField`            | Day, month and year fields                                 |
+| `TnaMonthField`           | Month and year fields                                      |
+| `TnaYearField`            | Year field                                                 |
+| `TnaProgressiveDateField` | Date fields that accept year, year/month or year/month/day |
+
+## Running tests
 
 ```sh
 # Start the test server
@@ -103,7 +201,10 @@ docker compose up -d
 npm install
 
 # Run the fixture tests
-node test-fixtures.mjs
+node test/test-fixtures.mjs
+
+# Run the Playwright tests
+npm run test:playwright
 ```
 
 ## Styles and JavaScript
