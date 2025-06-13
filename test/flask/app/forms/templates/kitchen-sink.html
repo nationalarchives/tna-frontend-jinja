@@ -96,9 +96,10 @@
       <h2 class="tna-heading-m">Form data</h2>
       <dl class="tna-dl tna-dl--plain tna-dl--stacked">
         {% for field in form %}
+        {% if field.name != 'csrf_token' %}
         <dt>{{ field.name }}</dt>
         <dd>{{ field.data }}</dd>
-        <dd>{{ field.flags }}</dd>
+        {% endif %}
         {% endfor %}
       </dl>
     </div>

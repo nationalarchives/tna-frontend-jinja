@@ -115,7 +115,7 @@ class KitchenSinkForm(FlaskForm):
         validators=[
             validators.InputRequired(message="Enter a username"),
             validators.Length(
-                max=256, message="Usernames must be 256 characters or fewer"
+                max=16, message="Usernames must be 16 characters or fewer"
             ),
         ],
     )
