@@ -175,8 +175,12 @@ class KitchenSinkForm(FlaskForm):
 
     shopping = SelectMultipleField(
         "Shopping list",
+        description="Select up to two items",
         validators=[
-            validators.InputRequired(message="Select an item"),
+            validators.InputRequired(message="Select at least one item"),
+            tna_frontend_validators.MaxOptions(
+                max=2, message="You must select no more than 2 items"
+            ),
         ],
         choices=[("cpp", "C++"), ("py", "Python"), ("text", "Plain Text")],
         widget=TnaCheckboxesInput(),
