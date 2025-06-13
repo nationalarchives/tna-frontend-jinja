@@ -7,8 +7,8 @@ from .fields.datetime import (
 from .widgets import (
     TnaCheckboxesInput,
     TnaCheckboxInput,
-    TnaDecimalInput,
     TnaEmailInput,
+    TnaNumberInput,
     TnaPasswordInput,
     TnaRadioInput,
     TnaSearchInput,

@@ -1,11 +1,13 @@
+import decimal
+
 from flask_wtf import FlaskForm
 from tna_frontend_jinja.wtforms import (
     TnaCheckboxesInput,
     TnaCheckboxInput,
     TnaDateField,
-    TnaDecimalInput,
     TnaEmailInput,
     TnaMonthField,
+    TnaNumberInput,
     TnaPasswordInput,
     TnaProgressiveDateField,
     TnaRadioInput,
@@ -21,6 +23,8 @@ from wtforms import (
     BooleanField,
     DecimalField,
     EmailField,
+    FloatField,
+    IntegerField,
     PasswordField,
     RadioField,
     SearchField,
@@ -71,16 +75,44 @@ class TextInputPasswordForm(FlaskForm):
     )
 
 
-class TextInputNumberForm(FlaskForm):
-    input = DecimalField(
-        "Number",
+class TextInputIntegerForm(FlaskForm):
+    input = IntegerField(
+        "Integer",
         validators=[
-            validators.InputRequired(message="Enter a number"),
+            validators.InputRequired(message="Enter a whole number between 1 and 99"),
             validators.NumberRange(
                 min=1, max=99, message="Number must be between 1 and 99"
             ),
         ],
-        widget=TnaDecimalInput(),
+        widget=TnaNumberInput(),
+    )
+
+
+class TextInputDecimalForm(FlaskForm):
+    input = DecimalField(
+        "Decimal",
+        places=2,
+        rounding=decimal.ROUND_UP,
+        validators=[
+            validators.InputRequired(message="Enter a decimal between 1 and 10"),
+            validators.NumberRange(
+                min=1, max=10, message="Number must be between 1 and 10"
+            ),
+        ],
+        widget=TnaNumberInput(),
+    )
+
+
+class TextInputFloatForm(FlaskForm):
+    input = FloatField(
+        "Float",
+        validators=[
+            validators.InputRequired(message="Enter a float value between 1 and 10"),
+            validators.NumberRange(
+                min=1, max=10, message="Number must be between 1 and 10"
+            ),
+        ],
+        widget=TnaNumberInput(),
     )
 
 
@@ -188,7 +220,7 @@ class KitchenSinkForm(FlaskForm):
                 min=1, max=272, message="Height must be between 1 cm and 272 cm"
             ),
         ],
-        widget=TnaDecimalInput(),
+        widget=TnaNumberInput(),
     )
 
     url = URLField(

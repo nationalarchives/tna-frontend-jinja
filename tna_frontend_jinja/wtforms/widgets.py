@@ -276,16 +276,7 @@ class TnaPasswordInput(TnaTextInput):
         return params
 
 
-class TnaDecimalInput(TnaTextInput):
-    def map_tna_params(self, field, **kwargs):
-        params = super().map_tna_params(field, **kwargs)
-
-        # params["inputmode"] = "decimal"
-
-        return params
-
-
-class TnaFloatInput(TnaTextInput):
+class TnaNumberInput(TnaTextInput):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
 

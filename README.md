@@ -152,10 +152,11 @@ def success():
 | --------------------- | -------------------- | ----------------------------------------------------------------------------- |
 | `BooleanField`        | `TnaCheckboxInput`   | https://design-system.nationalarchives.gov.uk/components/checkboxes/          |
 | `DateField`           | [not supported]      | Use `tna_frontend_jinja.wtforms.fields.TnaDateField`                          |
-| `DecimalField`        | `TnaDecimalInput`    |                                                                               |
+| `DecimalField`        | `TnaNumberInput`     |                                                                               |
 | `EmailField`          | `TnaEmailInput`      |                                                                               |
-| `FloatField`          | `TnaFloatInput`      |                                                                               |
+| `FloatField`          | `TnaNumberInput`     |                                                                               |
 | `HiddenField`         | [none needed]        |                                                                               |
+| `IntegerField`        | `TnaNumberInput`     |                                                                               |
 | `MonthField`          | [not supported]      | Use `tna_frontend_jinja.wtforms.fields.TnaMonthField`                         |
 | `PasswordField`       | `TnaPasswordInput`   | https://design-system.nationalarchives.gov.uk/components/text-input/#password |
 | `RadioField`          | `TnaRadioInput`      | https://design-system.nationalarchives.gov.uk/components/radios/              |
@@ -177,7 +178,6 @@ def success():
 - `FieldList`
 - `FileField`
 - `FormField`
-- `IntegerField`
 - `IntegerRangeField`
 - `MultipleFileField`
 - `TimeField`

@@ -5,13 +5,15 @@ from app.forms.forms import (
     DateInputProgressiveForm,
     DateInputYearForm,
     KitchenSinkForm,
+    TextInputDecimalForm,
     TextInputEmailForm,
+    TextInputFloatForm,
     TextInputForm,
-    TextInputNumberForm,
+    TextInputIntegerForm,
     TextInputPasswordForm,
     TextInputURLForm,
 )
-from flask import current_app, redirect, render_template, url_for
+from flask import current_app, render_template, url_for
 
 
 def has_no_empty_params(rule):
@@ -55,9 +57,23 @@ def text_input_password():
     return render_template("single-input.html", form=form, success=success)
 
 
-@bp.route("/text-input-number/", methods=["GET", "POST"])
-def text_input_number():
-    form = TextInputNumberForm()
+@bp.route("/text-input-integer/", methods=["GET", "POST"])
+def text_input_integer():
+    form = TextInputIntegerForm()
+    success = form.validate_on_submit()
+    return render_template("single-input.html", form=form, success=success)
+
+
+@bp.route("/text-input-decimal/", methods=["GET", "POST"])
+def text_input_decimal():
+    form = TextInputDecimalForm()
+    success = form.validate_on_submit()
+    return render_template("single-input.html", form=form, success=success)
+
+
+@bp.route("/text-input-float/", methods=["GET", "POST"])
+def text_input_float():
+    form = TextInputFloatForm()
     success = form.validate_on_submit()
     return render_template("single-input.html", form=form, success=success)
 
