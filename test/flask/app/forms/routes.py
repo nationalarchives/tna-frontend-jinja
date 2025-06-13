@@ -40,77 +40,77 @@ def index():
 def text_input():
     form = TextInputForm()
     success = form.validate_on_submit()
-    return render_template("single-input.html", form=form, success=success)
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/text-input-email/", methods=["GET", "POST"])
 def text_input_email():
     form = TextInputEmailForm()
     success = form.validate_on_submit()
-    return render_template("single-input.html", form=form, success=success)
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/text-input-password/", methods=["GET", "POST"])
 def text_input_password():
     form = TextInputPasswordForm()
     success = form.validate_on_submit()
-    return render_template("single-input.html", form=form, success=success)
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/text-input-integer/", methods=["GET", "POST"])
 def text_input_integer():
     form = TextInputIntegerForm()
     success = form.validate_on_submit()
-    return render_template("single-input.html", form=form, success=success)
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/text-input-decimal/", methods=["GET", "POST"])
 def text_input_decimal():
     form = TextInputDecimalForm()
     success = form.validate_on_submit()
-    return render_template("single-input.html", form=form, success=success)
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/text-input-float/", methods=["GET", "POST"])
 def text_input_float():
     form = TextInputFloatForm()
     success = form.validate_on_submit()
-    return render_template("single-input.html", form=form, success=success)
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/text-input-url/", methods=["GET", "POST"])
 def text_input_url():
     form = TextInputURLForm()
     success = form.validate_on_submit()
-    return render_template("single-input.html", form=form, success=success)
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/date-input/", methods=["GET", "POST"])
 def date_input():
     form = DateInputForm()
     success = form.validate_on_submit()
-    return render_template("date-input.html", form=form, success=success)
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/date-input-month/", methods=["GET", "POST"])
 def date_input_month():
     form = DateInputMonthForm()
     success = form.validate_on_submit()
-    return render_template("date-input-month.html", form=form, success=success)
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/date-input-year/", methods=["GET", "POST"])
 def date_input_year():
     form = DateInputYearForm()
     success = form.validate_on_submit()
-    return render_template("date-input-year.html", form=form, success=success)
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/date-input-progressive/", methods=["GET", "POST"])
 def date_input_progressive():
     form = DateInputProgressiveForm()
     success = form.validate_on_submit()
-    return render_template("date-input-progressive.html", form=form, success=success)
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/kitchen-sink/", methods=["GET", "POST"])

@@ -38,7 +38,7 @@ from wtforms import (
 
 
 class TextInputForm(FlaskForm):
-    input = StringField(
+    field = StringField(
         "Username",
         description="This will be used to log in",
         widget=TnaTextInput(),
@@ -52,7 +52,7 @@ class TextInputForm(FlaskForm):
 
 
 class TextInputEmailForm(FlaskForm):
-    input = EmailField(
+    field = EmailField(
         "Email address",
         widget=TnaEmailInput(),
         validators=[
@@ -63,7 +63,7 @@ class TextInputEmailForm(FlaskForm):
 
 
 class TextInputPasswordForm(FlaskForm):
-    input = PasswordField(
+    field = PasswordField(
         "Password",
         widget=TnaPasswordInput(),
         validators=[
@@ -76,7 +76,7 @@ class TextInputPasswordForm(FlaskForm):
 
 
 class TextInputIntegerForm(FlaskForm):
-    input = IntegerField(
+    field = IntegerField(
         "Integer",
         validators=[
             validators.InputRequired(message="Enter a whole number between 1 and 99"),
@@ -89,7 +89,7 @@ class TextInputIntegerForm(FlaskForm):
 
 
 class TextInputDecimalForm(FlaskForm):
-    input = DecimalField(
+    field = DecimalField(
         "Decimal",
         places=2,
         rounding=decimal.ROUND_UP,
@@ -104,7 +104,7 @@ class TextInputDecimalForm(FlaskForm):
 
 
 class TextInputFloatForm(FlaskForm):
-    input = FloatField(
+    field = FloatField(
         "Float",
         validators=[
             validators.InputRequired(message="Enter a float value between 1 and 10"),
@@ -117,7 +117,7 @@ class TextInputFloatForm(FlaskForm):
 
 
 class TextInputURLForm(FlaskForm):
-    input = URLField(
+    field = URLField(
         "Site URL",
         validators=[
             validators.InputRequired(message="Enter a URL"),
@@ -130,7 +130,7 @@ class TextInputURLForm(FlaskForm):
 
 
 class DateInputForm(FlaskForm):
-    dob = TnaDateField(
+    field = TnaDateField(
         "Date of birth",
         validators=[
             validators.InputRequired(message="Enter your date of birth"),
@@ -142,7 +142,7 @@ class DateInputForm(FlaskForm):
 
 
 class DateInputMonthForm(FlaskForm):
-    month_of_birth = TnaMonthField(
+    field = TnaMonthField(
         "Month of birth",
         # invalid_date_error_message="Enter a valid month and year",
         validators=[
@@ -153,7 +153,7 @@ class DateInputMonthForm(FlaskForm):
 
 
 class DateInputYearForm(FlaskForm):
-    year_of_retirement = TnaYearField(
+    field = TnaYearField(
         "Planned year of retirement",
         invalid_date_error_message="Planned year of retirement must be a valid year",
         validators=[
@@ -166,7 +166,7 @@ class DateInputYearForm(FlaskForm):
 
 
 class DateInputProgressiveForm(FlaskForm):
-    date_search = TnaProgressiveDateField(
+    field = TnaProgressiveDateField(
         "Search for date",
         validators=[
             validators.InputRequired(message="Enter a date"),
