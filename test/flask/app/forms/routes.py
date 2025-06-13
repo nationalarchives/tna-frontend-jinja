@@ -1,10 +1,15 @@
 from app.forms import bp
 from app.forms.forms import (
+    CheckboxesForm,
+    CheckboxForm,
     DateInputForm,
     DateInputMonthForm,
     DateInputProgressiveForm,
     DateInputYearForm,
     KitchenSinkForm,
+    RadiosForm,
+    SelectForm,
+    TextareaForm,
     TextInputDecimalForm,
     TextInputEmailForm,
     TextInputFloatForm,
@@ -109,6 +114,41 @@ def date_input_year():
 @bp.route("/date-input-progressive/", methods=["GET", "POST"])
 def date_input_progressive():
     form = DateInputProgressiveForm()
+    success = form.validate_on_submit()
+    return render_template("single-field.html", form=form, success=success)
+
+
+@bp.route("/checkbox/", methods=["GET", "POST"])
+def checkbox():
+    form = CheckboxForm()
+    success = form.validate_on_submit()
+    return render_template("checkbox.html", form=form, success=success)
+
+
+@bp.route("/checkboxes/", methods=["GET", "POST"])
+def checkboxes():
+    form = CheckboxesForm()
+    success = form.validate_on_submit()
+    return render_template("single-field.html", form=form, success=success)
+
+
+@bp.route("/radios/", methods=["GET", "POST"])
+def radios():
+    form = RadiosForm()
+    success = form.validate_on_submit()
+    return render_template("single-field.html", form=form, success=success)
+
+
+@bp.route("/select/", methods=["GET", "POST"])
+def select():
+    form = SelectForm()
+    success = form.validate_on_submit()
+    return render_template("single-field.html", form=form, success=success)
+
+
+@bp.route("/textarea/", methods=["GET", "POST"])
+def textarea():
+    form = TextareaForm()
     success = form.validate_on_submit()
     return render_template("single-field.html", form=form, success=success)
 

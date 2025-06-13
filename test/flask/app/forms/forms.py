@@ -174,6 +174,77 @@ class DateInputProgressiveForm(FlaskForm):
     )
 
 
+class CheckboxForm(FlaskForm):
+    field = BooleanField(
+        "I agree to terms and conditions",
+        validators=[
+            validators.InputRequired(
+                message="You must agree to the terms and conditions"
+            ),
+        ],
+        widget=TnaCheckboxInput(),
+    )
+
+
+class CheckboxesForm(FlaskForm):
+    field = SelectMultipleField(
+        "Languages",
+        description="Select up to two programming languages",
+        validators=[
+            validators.InputRequired(message="Select at least one item"),
+            tna_frontend_validators.MaxOptions(
+                max=2, message="You must select no more than 2 items"
+            ),
+        ],
+        choices=[("cpp", "C++"), ("py", "Python"), ("php", "PHP")],
+        widget=TnaCheckboxesInput(),
+    )
+
+
+class RadiosForm(FlaskForm):
+    field = RadioField(
+        "Level",
+        choices=[
+            ("1", "Apprentice"),
+            ("2", "Junior"),
+            ("3", "Mid-level"),
+            ("4", "Senior"),
+            ("5", "Lead"),
+            ("6", "Principal"),
+        ],
+        validators=[
+            validators.InputRequired(message="Select a level"),
+        ],
+        widget=TnaRadioInput(),
+    )
+
+
+class SelectForm(FlaskForm):
+    field = SelectField(
+        "Order",
+        choices=[
+            ("", "None"),
+            ("date", "Date"),
+            ("relevance", "Relevance"),
+            ("popularity", "Popularity"),
+        ],
+        validators=[
+            validators.InputRequired(message="Select an order"),
+        ],
+        widget=TnaSelect(),
+    )
+
+
+class TextareaForm(FlaskForm):
+    field = TextAreaField(
+        "Message",
+        validators=[
+            validators.InputRequired(message="Enter a message"),
+        ],
+        widget=TnaTextArea(),
+    )
+
+
 class KitchenSinkForm(FlaskForm):
     search = SearchField(
         "Search",

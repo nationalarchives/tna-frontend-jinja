@@ -12,8 +12,11 @@ from .helpers import merger
 
 class TnaWidget(object):
     def __call__(self, field, **kwargs):
+        kwargs.setdefault("id", kwargs["id"] if "id" in kwargs else field.id)
         kwargs.setdefault("name", field.name)
         kwargs.setdefault("headingLevel", 2)
+        kwargs.setdefault("label", field.label.text)
+        kwargs.setdefault("hint", field.description or None)
         return self.render(self.map_tna_params(field, **kwargs))
 
     def map_tna_params(self, field, **kwargs):
@@ -150,12 +153,6 @@ class TnaCheckboxInput(TnaCheckboxesInput):
         field_group = IterableField(field)
 
         return super().__call__(field_group, **kwargs)
-
-    def map_tna_params(self, field, **kwargs):
-        params = super().map_tna_params(field, **kwargs)
-        params["label"] = kwargs["params"].get("label", "")
-
-        return params
 
 
 class TnaRadioInput(TnaIterableWidget):
