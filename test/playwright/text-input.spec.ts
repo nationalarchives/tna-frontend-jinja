@@ -102,6 +102,14 @@ test("text input - tel", async ({ page }) => {
   await expect(page.getByRole("textbox", { name: "Phone number" })).toHaveValue(
     "abc",
   );
+  await page.getByLabel("Phone number").fill("012345");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormFailure(page);
+  await expect(page.getByRole("main")).toHaveText(/Enter a valid phone number/);
+  await expect(page.getByRole("textbox", { name: "Phone number" })).toHaveValue(
+    "012345",
+  );
   await page.getByLabel("Phone number").fill("+44 1234 567890");
   await page.getByRole("button", { name: "Submit" }).click();
 

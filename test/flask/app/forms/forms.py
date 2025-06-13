@@ -137,7 +137,7 @@ class TextInputTelForm(FlaskForm):
         validators=[
             validators.InputRequired(message="Enter a phone number"),
             validators.Regexp(
-                regex="^[\d \(\)\-\+]+$", message="Enter a valid phone number"
+                regex="^[0-9 ()-+]{11,}$", message="Enter a valid phone number"
             ),
         ],
         widget=TnaTelInput(),
@@ -159,7 +159,6 @@ class DateInputForm(FlaskForm):
 class DateInputMonthForm(FlaskForm):
     field = TnaMonthField(
         "Month of birth",
-        # invalid_date_error_message="Enter a valid month and year",
         validators=[
             validators.InputRequired(message="Enter your month and year of birth"),
             tna_frontend_validators.PastDate(message="Date must be in the past"),
