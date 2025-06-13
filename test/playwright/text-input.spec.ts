@@ -88,6 +88,26 @@ test("text input - password", async ({ page }) => {
   await expectFormSuccess(page);
 });
 
+test("text input - tel", async ({ page }) => {
+  await page.goto("/forms/text-input-tel");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormFailure(page);
+  await expect(page.getByRole("main")).toHaveText(/Enter a phone number/);
+  await page.getByLabel("Phone number").fill("abc");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormFailure(page);
+  await expect(page.getByRole("main")).toHaveText(/Enter a valid phone number/);
+  await expect(page.getByRole("textbox", { name: "Phone number" })).toHaveValue(
+    "abc",
+  );
+  await page.getByLabel("Phone number").fill("+44 1234 567890");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormSuccess(page);
+});
+
 test("text input - integer", async ({ page }) => {
   await page.goto("/forms/text-input-integer");
   await page.getByRole("button", { name: "Submit" }).click();

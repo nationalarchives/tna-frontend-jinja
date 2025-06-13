@@ -13,6 +13,7 @@ from tna_frontend_jinja.wtforms import (
     TnaRadioInput,
     TnaSearchInput,
     TnaSelect,
+    TnaTelInput,
     TnaTextArea,
     TnaTextInput,
     TnaUrlInput,
@@ -31,6 +32,7 @@ from wtforms import (
     SelectField,
     SelectMultipleField,
     StringField,
+    TelField,
     TextAreaField,
     URLField,
     validators,
@@ -126,6 +128,19 @@ class TextInputURLForm(FlaskForm):
             ),
         ],
         widget=TnaUrlInput(),
+    )
+
+
+class TextInputTelForm(FlaskForm):
+    field = TelField(
+        "Phone number",
+        validators=[
+            validators.InputRequired(message="Enter a phone number"),
+            validators.Regexp(
+                regex="^[\d \(\)\-\+]+$", message="Enter a valid phone number"
+            ),
+        ],
+        widget=TnaTelInput(),
     )
 
 

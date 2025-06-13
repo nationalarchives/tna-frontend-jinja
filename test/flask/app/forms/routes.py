@@ -16,6 +16,7 @@ from app.forms.forms import (
     TextInputForm,
     TextInputIntegerForm,
     TextInputPasswordForm,
+    TextInputTelForm,
     TextInputURLForm,
 )
 from flask import current_app, render_template, url_for
@@ -86,6 +87,13 @@ def text_input_float():
 @bp.route("/text-input-url/", methods=["GET", "POST"])
 def text_input_url():
     form = TextInputURLForm()
+    success = form.validate_on_submit()
+    return render_template("single-field.html", form=form, success=success)
+
+
+@bp.route("/text-input-tel/", methods=["GET", "POST"])
+def text_input_tel():
+    form = TextInputTelForm()
     success = form.validate_on_submit()
     return render_template("single-field.html", form=form, success=success)
 
