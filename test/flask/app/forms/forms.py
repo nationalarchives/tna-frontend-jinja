@@ -11,7 +11,6 @@ from tna_frontend_jinja.wtforms import (
     TnaRadioInput,
     TnaSearchInput,
     TnaSelect,
-    TnaSubmitInput,
     TnaTextArea,
     TnaTextInput,
     TnaUrlInput,
@@ -28,7 +27,6 @@ from wtforms import (
     SelectField,
     SelectMultipleField,
     StringField,
-    SubmitField,
     TextAreaField,
     URLField,
     validators,
@@ -36,8 +34,9 @@ from wtforms import (
 
 
 class TextInputForm(FlaskForm):
-    username = StringField(
+    input = StringField(
         "Username",
+        description="This will be used to log in",
         widget=TnaTextInput(),
         validators=[
             validators.InputRequired(message="Enter a username"),
@@ -47,7 +46,55 @@ class TextInputForm(FlaskForm):
         ],
     )
 
-    submit = SubmitField("Continue", widget=TnaSubmitInput())
+
+class TextInputEmailForm(FlaskForm):
+    input = EmailField(
+        "Email address",
+        widget=TnaEmailInput(),
+        validators=[
+            validators.InputRequired(message="Enter an email address"),
+            validators.Email(message="Enter a valid email address"),
+        ],
+    )
+
+
+class TextInputPasswordForm(FlaskForm):
+    input = PasswordField(
+        "Password",
+        widget=TnaPasswordInput(),
+        validators=[
+            validators.InputRequired(message="Enter a password"),
+            validators.Length(
+                min=8, message="Password must be at least 8 characters long"
+            ),
+        ],
+    )
+
+
+class TextInputNumberForm(FlaskForm):
+    input = DecimalField(
+        "Number",
+        validators=[
+            validators.InputRequired(message="Enter a number"),
+            validators.NumberRange(
+                min=1, max=99, message="Number must be between 1 and 99"
+            ),
+        ],
+        widget=TnaDecimalInput(),
+    )
+
+
+class TextInputURLForm(FlaskForm):
+    input = URLField(
+        "Site URL",
+        validators=[
+            validators.InputRequired(message="Enter a URL"),
+            validators.URL(
+                message="Enter a valid URL",
+            ),
+        ],
+        widget=TnaUrlInput(),
+    )
 
 
 class DateInputForm(FlaskForm):
@@ -61,8 +108,6 @@ class DateInputForm(FlaskForm):
         ],
     )
 
-    submit = SubmitField("Continue", widget=TnaSubmitInput())
-
 
 class DateInputMonthForm(FlaskForm):
     month_of_birth = TnaMonthField(
@@ -73,8 +118,6 @@ class DateInputMonthForm(FlaskForm):
             tna_frontend_validators.PastDate(message="Date must be in the past"),
         ],
     )
-
-    submit = SubmitField("Continue", widget=TnaSubmitInput())
 
 
 class DateInputYearForm(FlaskForm):
@@ -89,8 +132,6 @@ class DateInputYearForm(FlaskForm):
         ],
     )
 
-    submit = SubmitField("Continue", widget=TnaSubmitInput())
-
 
 class DateInputProgressiveForm(FlaskForm):
     date_search = TnaProgressiveDateField(
@@ -99,8 +140,6 @@ class DateInputProgressiveForm(FlaskForm):
             validators.InputRequired(message="Enter a date"),
         ],
     )
-
-    submit = SubmitField("Continue", widget=TnaSubmitInput())
 
 
 class KitchenSinkForm(FlaskForm):
@@ -223,5 +262,3 @@ class KitchenSinkForm(FlaskForm):
         ],
         widget=TnaSelect(),
     )
-
-    submit = SubmitField("Continue", widget=TnaSubmitInput())

@@ -1,8 +1,9 @@
 {% extends "layouts/base.html" %}
 
+{%- from 'components/button/macro.html' import tnaButton -%}
 {%- from 'components/error-summary/macro.html' import tnaErrorSummary -%}
 
-{% block pageTitle %}{%- if form and form.errors %}Error: {% endif -%}Example form – GOV.UK Frontend WTForms Demo{% endblock %}
+{% block pageTitle %}{%- if form and form.errors %}Error: {% endif -%}Form – TNA Frontend WTForms{% endblock %}
 
 {% block stylesheets %}
   <link rel="preconnect" href="https://use.typekit.net">
@@ -22,16 +23,43 @@
     {% if form.errors %}
       {{ tnaErrorSummary(wtforms_errors(form)) }}
     {% endif %}
-    <h1 class="tna-heading-xl">Example form</h1>
-    <form action="{{ url_for('forms.text_input') }}" method="post" novalidate>
+    <h1 class="tna-heading-xl">Form</h1>
+    <form action="{{ request.url }}" method="post" novalidate>
       {{ form.csrf_token }}
-
-      {{ form.username }}
-      
+      {% block form %}{% endblock %}
       <div class="tna-button-group">
-        {{ form.submit }}
+        {{ tnaButton({
+          'text': 'Submit',
+          'buttonElement': True,
+          'buttonType': 'submit',
+        }) }}
       </div>
     </form>
+  </div>
+  <div class="tna-column tna-column--width-1-3 tna-column--full-small tna-column--full-tiny">
+    <div class="tna-aside tna-aside--tight tna-background-tint">
+      <h2 class="tna-heading-m">Status</h2>
+      <p class="tna-!--margin-top-xs">
+        <strong>
+        {% if success %}
+          ✅ Form submitted successfully
+        {% elif form.errors %}
+          ❌ Form contains errors
+        {% else %}
+          Form not submitted
+        {% endif %}
+        </strong>
+      </p>
+      <h2 class="tna-heading-m tna-!--no-padding-top">Form data</h2>
+      <dl class="tna-dl tna-dl--plain tna-dl--stacked tna-!--margin-top-xs">
+        {% for field in form %}
+        {% if field.name not in ['csrf_token', 'submit'] %}
+        <dt>{{ field.name }}</dt>
+        <dd>{{ field.data }}</dd>
+        {% endif %}
+        {% endfor %}
+      </dl>
+    </div>
   </div>
 </div>
 {% endblock %}

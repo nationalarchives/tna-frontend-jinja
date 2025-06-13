@@ -7,7 +7,7 @@ test("kitchen sink form", async ({ page }) => {
   // );
   //   await expect(await page.getByRole("main")).toMatchAriaSnapshot(`
   // - main:
-  //   - heading "Example form" [level=1]
+  //   - heading "Form" [level=1]
   //   - heading "Username" [level=2]
   //   - paragraph: We’ll only use this to send you a receipt
   //   - textbox "Username"
@@ -43,5 +43,5 @@ test("kitchen sink form", async ({ page }) => {
   //     - option "Date"
   //     - option "Relevance"
   //     - option "Popularity"
-  //   - button "Continue"`);
+  //   - button "Submit"`);
 });

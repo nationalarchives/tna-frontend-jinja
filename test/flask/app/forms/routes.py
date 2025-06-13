@@ -5,7 +5,11 @@ from app.forms.forms import (
     DateInputProgressiveForm,
     DateInputYearForm,
     KitchenSinkForm,
+    TextInputEmailForm,
     TextInputForm,
+    TextInputNumberForm,
+    TextInputPasswordForm,
+    TextInputURLForm,
 )
 from flask import current_app, redirect, render_template, url_for
 
@@ -33,53 +37,68 @@ def index():
 @bp.route("/text-input/", methods=["GET", "POST"])
 def text_input():
     form = TextInputForm()
-    if form.validate_on_submit():
-        return redirect(url_for("forms.success"))
-    return render_template("text-input.html", form=form)
+    success = form.validate_on_submit()
+    return render_template("single-input.html", form=form, success=success)
+
+
+@bp.route("/text-input-email/", methods=["GET", "POST"])
+def text_input_email():
+    form = TextInputEmailForm()
+    success = form.validate_on_submit()
+    return render_template("single-input.html", form=form, success=success)
+
+
+@bp.route("/text-input-password/", methods=["GET", "POST"])
+def text_input_password():
+    form = TextInputPasswordForm()
+    success = form.validate_on_submit()
+    return render_template("single-input.html", form=form, success=success)
+
+
+@bp.route("/text-input-number/", methods=["GET", "POST"])
+def text_input_number():
+    form = TextInputNumberForm()
+    success = form.validate_on_submit()
+    return render_template("single-input.html", form=form, success=success)
+
+
+@bp.route("/text-input-url/", methods=["GET", "POST"])
+def text_input_url():
+    form = TextInputURLForm()
+    success = form.validate_on_submit()
+    return render_template("single-input.html", form=form, success=success)
 
 
 @bp.route("/date-input/", methods=["GET", "POST"])
 def date_input():
     form = DateInputForm()
-    if form.validate_on_submit():
-        return redirect(url_for("forms.success"))
-    return render_template("date-input.html", form=form)
+    success = form.validate_on_submit()
+    return render_template("date-input.html", form=form, success=success)
 
 
 @bp.route("/date-input-month/", methods=["GET", "POST"])
 def date_input_month():
     form = DateInputMonthForm()
-    if form.validate_on_submit():
-        return redirect(url_for("forms.success"))
-    return render_template("date-input-month.html", form=form)
+    success = form.validate_on_submit()
+    return render_template("date-input-month.html", form=form, success=success)
 
 
 @bp.route("/date-input-year/", methods=["GET", "POST"])
 def date_input_year():
     form = DateInputYearForm()
-    if form.validate_on_submit():
-        return redirect(url_for("forms.success"))
-    return render_template("date-input-year.html", form=form)
+    success = form.validate_on_submit()
+    return render_template("date-input-year.html", form=form, success=success)
 
 
 @bp.route("/date-input-progressive/", methods=["GET", "POST"])
 def date_input_progressive():
     form = DateInputProgressiveForm()
-    if form.validate_on_submit():
-        print("Form data:", form.data)
-        # return redirect(url_for("forms.success"))
-    return render_template("date-input-progressive.html", form=form)
+    success = form.validate_on_submit()
+    return render_template("date-input-progressive.html", form=form, success=success)
 
 
 @bp.route("/kitchen-sink/", methods=["GET", "POST"])
 def kitchen_sink():
     form = KitchenSinkForm()
-    if form.validate_on_submit():
-        print("Form data:", form.data)
-        # return redirect(url_for("forms.success"))
-    return render_template("kitchen-sink.html", form=form)
-
-
-@bp.route("/success/")
-def success():
-    return render_template("success.html")
+    success = form.validate_on_submit()
+    return render_template("kitchen-sink.html", form=form, success=success)
