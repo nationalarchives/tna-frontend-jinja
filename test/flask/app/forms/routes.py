@@ -8,6 +8,7 @@ from app.forms.forms import (
     DateInputYearForm,
     KitchenSinkForm,
     RadiosForm,
+    SearchForm,
     SelectForm,
     TextareaForm,
     TextInputDecimalForm,
@@ -157,6 +158,13 @@ def select():
 @bp.route("/textarea/", methods=["GET", "POST"])
 def textarea():
     form = TextareaForm()
+    success = form.validate_on_submit()
+    return render_template("single-field.html", form=form, success=success)
+
+
+@bp.route("/search/", methods=["GET", "POST"])
+def search():
+    form = SearchForm()
     success = form.validate_on_submit()
     return render_template("single-field.html", form=form, success=success)
 

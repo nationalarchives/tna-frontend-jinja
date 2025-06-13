@@ -21,11 +21,15 @@ class TnaWidget(object):
 
     def map_tna_params(self, field, **kwargs):
         params = {
-            "id": kwargs["id"] if "id" in kwargs else field.id,
-            "name": field.name,
-            "label": field.label.text,
-            "hint": field.description or None,
+            "id": kwargs.get("id", field.id),
+            "name": kwargs.get("name", field.name),
+            "headingLevel": kwargs.get("headingLevel", 2),
+            "label": kwargs.get("label", field.label.text),
         }
+
+        if "hint" in kwargs:
+            params["hint"] = kwargs.get("hint", field.description)
+
         if "params" in kwargs:
             params = self.merge_params(params, kwargs["params"])
 
@@ -36,11 +40,10 @@ class TnaWidget(object):
             params["error"] = {"text": field.errors[0]}
 
         if "attributes" in kwargs:
-            params["attributes"] = kwargs["attributes"]
+            params["attributes"].update(kwargs["attributes"])
 
         if "attributes" in params:
             for key, value in params["attributes"].items():
-                print(f"key: {key}, value: {value}")
                 if value is True:
                     params["attributes"][key] = ""
 
@@ -312,7 +315,8 @@ class TnaUrlInput(TnaTextInput):
 class TnaSearchInput(TnaTextInput):
     template = "widgets/search-field.html"
 
-    # def map_tna_params(self, field, **kwargs):
-    #     params = super().map_tna_params(field, **kwargs)
-
-    #     return params
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
+        print(f"params: {params}")
+        print(f"kwargs: {kwargs}")
+        return params

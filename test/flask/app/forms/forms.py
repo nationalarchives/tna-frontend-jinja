@@ -260,6 +260,13 @@ class TextareaForm(FlaskForm):
     )
 
 
+class SearchForm(FlaskForm):
+    field = SearchField(
+        "Search",
+        widget=TnaSearchInput(),
+    )
+
+
 class KitchenSinkForm(FlaskForm):
     search = SearchField(
         "Search",
