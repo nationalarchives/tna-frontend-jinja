@@ -1,14 +1,18 @@
 services:
-  app:
+  flask:
     build:
-      dockerfile: test/Dockerfile
+      context: test/flask
     environment:
-      - ENVIRONMENT=develop
-      - CONFIG=config.Develop
+      - RUNTIME=develop
       - SECRET_KEY=abc123
-      - ALLOW_INSECURE=true
     ports:
       - 5001:8080
     volumes:
-      - ./test:/app
-      - ./tna_frontend_jinja:/home/app/tna_frontend_jinja
+      - ./test/flask/app:/app/app
+      - ./tna_frontend_jinja:/app/tna_frontend_jinja
+      - ./test/flask/pyproject.toml:/app/pyproject.toml
+      - ./test/flask/poetry.lock:/app/poetry.lock
+  dev:
+    image: ghcr.io/nationalarchives/tna-python-dev:preview
+    volumes:
+      - ./:/app

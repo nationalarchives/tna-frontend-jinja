@@ -1,6 +1,7 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
 
 jobs:
   test:
@@ -8,13 +9,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_ENV
+        shell: bash
+      - name: Cache playwright binaries
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
       - name: Install Node dependencies
-        run: npm install
+        run: npm ci
+      - run: npx playwright install --with-deps
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        shell: bash
+      - run: npx playwright install-deps
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        shell: bash
       - name: Start test server
-        run: docker compose up -d
+        run: docker compose up -d flask
       - name: Wait for response
         uses: nev7n/wait_for_response@v1
         with:
           url: http://localhost:5001/healthcheck/live/
-      - name: Run the tests
-        run: node test-fixtures.mjs || exit 1
+      - name: Run fixture tests
+        run: node test/test-fixtures.mjs || exit 1
+      - name: Run Playwright tests
+        run: npx playwright test
