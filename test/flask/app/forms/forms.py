@@ -2,21 +2,21 @@ import decimal
 
 from flask_wtf import FlaskForm
 from tna_frontend_jinja.wtforms import (
-    TnaCheckboxesInput,
-    TnaCheckboxInput,
+    TnaCheckboxesWidget,
+    TnaCheckboxWidget,
     TnaDateField,
-    TnaEmailInput,
+    TnaEmailInputWidget,
     TnaMonthField,
-    TnaNumberInput,
-    TnaPasswordInput,
+    TnaNumberInputWidget,
+    TnaPasswordWidget,
     TnaProgressiveDateField,
-    TnaRadioInput,
-    TnaSearchInput,
-    TnaSelect,
-    TnaTelInput,
-    TnaTextArea,
-    TnaTextInput,
-    TnaUrlInput,
+    TnaRadiosWidget,
+    TnaSearchFieldWidget,
+    TnaSelectWidget,
+    TnaTelInputWidget,
+    TnaTextAreaWidget,
+    TnaTextInputWidget,
+    TnaUrlInputWidget,
     TnaYearField,
 )
 from tna_frontend_jinja.wtforms import validators as tna_frontend_validators
@@ -43,7 +43,7 @@ class TextInputForm(FlaskForm):
     field = StringField(
         "Username",
         description="This will be used to log in",
-        widget=TnaTextInput(),
+        widget=TnaTextInputWidget(),
         validators=[
             validators.InputRequired(message="Enter a username"),
             validators.Length(
@@ -56,7 +56,7 @@ class TextInputForm(FlaskForm):
 class TextInputEmailForm(FlaskForm):
     field = EmailField(
         "Email address",
-        widget=TnaEmailInput(),
+        widget=TnaEmailInputWidget(),
         validators=[
             validators.InputRequired(message="Enter an email address"),
             validators.Email(message="Enter a valid email address"),
@@ -67,7 +67,7 @@ class TextInputEmailForm(FlaskForm):
 class TextInputPasswordForm(FlaskForm):
     field = PasswordField(
         "Password",
-        widget=TnaPasswordInput(),
+        widget=TnaPasswordWidget(),
         validators=[
             validators.InputRequired(message="Enter a password"),
             validators.Length(
@@ -86,7 +86,7 @@ class TextInputIntegerForm(FlaskForm):
                 min=1, max=99, message="Number must be between 1 and 99"
             ),
         ],
-        widget=TnaNumberInput(),
+        widget=TnaNumberInputWidget(),
     )
 
 
@@ -101,7 +101,7 @@ class TextInputDecimalForm(FlaskForm):
                 min=1, max=10, message="Number must be between 1 and 10"
             ),
         ],
-        widget=TnaNumberInput(),
+        widget=TnaNumberInputWidget(),
     )
 
 
@@ -114,7 +114,7 @@ class TextInputFloatForm(FlaskForm):
                 min=1, max=10, message="Number must be between 1 and 10"
             ),
         ],
-        widget=TnaNumberInput(),
+        widget=TnaNumberInputWidget(),
     )
 
 
@@ -127,7 +127,7 @@ class TextInputURLForm(FlaskForm):
                 message="Enter a valid URL",
             ),
         ],
-        widget=TnaUrlInput(),
+        widget=TnaUrlInputWidget(),
     )
 
 
@@ -140,7 +140,7 @@ class TextInputTelForm(FlaskForm):
                 regex="^[0-9 ()-+]{11,}$", message="Enter a valid phone number"
             ),
         ],
-        widget=TnaTelInput(),
+        widget=TnaTelInputWidget(),
     )
 
 
@@ -196,7 +196,7 @@ class CheckboxForm(FlaskForm):
                 message="You must agree to the terms and conditions"
             ),
         ],
-        widget=TnaCheckboxInput(),
+        widget=TnaCheckboxWidget(),
     )
 
 
@@ -211,7 +211,7 @@ class CheckboxesForm(FlaskForm):
             ),
         ],
         choices=[("cpp", "C++"), ("py", "Python"), ("php", "PHP")],
-        widget=TnaCheckboxesInput(),
+        widget=TnaCheckboxesWidget(),
     )
 
 
@@ -229,7 +229,7 @@ class RadiosForm(FlaskForm):
         validators=[
             validators.InputRequired(message="Select a level"),
         ],
-        widget=TnaRadioInput(),
+        widget=TnaRadiosWidget(),
     )
 
 
@@ -245,7 +245,7 @@ class SelectForm(FlaskForm):
         validators=[
             validators.InputRequired(message="Select an order"),
         ],
-        widget=TnaSelect(),
+        widget=TnaSelectWidget(),
     )
 
 
@@ -255,26 +255,26 @@ class TextareaForm(FlaskForm):
         validators=[
             validators.InputRequired(message="Enter a message"),
         ],
-        widget=TnaTextArea(),
+        widget=TnaTextAreaWidget(),
     )
 
 
 class SearchForm(FlaskForm):
     field = SearchField(
         "Search",
-        widget=TnaSearchInput(),
+        widget=TnaSearchFieldWidget(),
     )
 
 
 class KitchenSinkForm(FlaskForm):
     search = SearchField(
         "Search",
-        widget=TnaSearchInput(),
+        widget=TnaSearchFieldWidget(),
     )
 
     username = StringField(
         "Username",
-        widget=TnaTextInput(),
+        widget=TnaTextInputWidget(),
         validators=[
             validators.InputRequired(message="Enter a username"),
             validators.Length(
@@ -288,7 +288,7 @@ class KitchenSinkForm(FlaskForm):
         validators=[
             validators.InputRequired(message="Enter a password"),
         ],
-        widget=TnaPasswordInput(),
+        widget=TnaPasswordWidget(),
     )
 
     email = EmailField(
@@ -301,7 +301,7 @@ class KitchenSinkForm(FlaskForm):
             validators.Email(message="Enter a valid email address"),
         ],
         description="We’ll only use this to send you a receipt",
-        widget=TnaEmailInput(),
+        widget=TnaEmailInputWidget(),
     )
 
     height = DecimalField(
@@ -312,7 +312,7 @@ class KitchenSinkForm(FlaskForm):
                 min=1, max=272, message="Height must be between 1 cm and 272 cm"
             ),
         ],
-        widget=TnaNumberInput(),
+        widget=TnaNumberInputWidget(),
     )
 
     url = URLField(
@@ -323,7 +323,7 @@ class KitchenSinkForm(FlaskForm):
                 message="Enter a valid URL",
             ),
         ],
-        widget=TnaUrlInput(),
+        widget=TnaUrlInputWidget(),
     )
 
     remember = BooleanField(
@@ -333,7 +333,7 @@ class KitchenSinkForm(FlaskForm):
                 message="You must agree to the terms and conditions"
             ),
         ],
-        widget=TnaCheckboxInput(),
+        widget=TnaCheckboxWidget(),
     )
 
     shopping = SelectMultipleField(
@@ -346,7 +346,7 @@ class KitchenSinkForm(FlaskForm):
             ),
         ],
         choices=[("cpp", "C++"), ("py", "Python"), ("text", "Plain Text")],
-        widget=TnaCheckboxesInput(),
+        widget=TnaCheckboxesWidget(),
     )
 
     day_of_week = RadioField(
@@ -355,7 +355,7 @@ class KitchenSinkForm(FlaskForm):
         validators=[
             validators.InputRequired(message="Select a day"),
         ],
-        widget=TnaRadioInput(),
+        widget=TnaRadiosWidget(),
     )
 
     birthday = TnaDateField(
@@ -370,7 +370,7 @@ class KitchenSinkForm(FlaskForm):
         validators=[
             validators.InputRequired(message="Enter a message"),
         ],
-        widget=TnaTextArea(),
+        widget=TnaTextAreaWidget(),
     )
 
     order = SelectField(
@@ -384,5 +384,5 @@ class KitchenSinkForm(FlaskForm):
         validators=[
             validators.InputRequired(message="Select an order"),
         ],
-        widget=TnaSelect(),
+        widget=TnaSelectWidget(),
     )

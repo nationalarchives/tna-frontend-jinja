@@ -1,4 +1,4 @@
-{% macro tnaTextInput(params) %}
+{% macro TnaTextInputWidget(params) %}
 {%- set containerClasses = [params.formGroupClasses] if params.formGroupClasses else [] -%}
 {%- if params.inline -%}
   {%- set containerClasses = containerClasses + ['tna-form__group--inline'] -%}
@@ -21,11 +21,11 @@
     </p>
     {%- endif %}
   </div>
-  {{ tnaTextInputElement(params) }}
+  {{ TnaTextInputWidgetElement(params) }}
 </div>
 {% endmacro %}
 
-{% macro tnaTextInputElement(params, extraAttributes) %}
+{% macro TnaTextInputWidgetElement(params, extraAttributes) %}
 {%- set inputClasses = [params.classes] if params.classes else [] -%}
 <input id="{{ params.id }}" class="tna-text-input{% if params.size %} tna-text-input--{{ params.size }}{% endif %} {{ inputClasses | join(' ') }}" name="{{ params.name }}" value="{{ params.value }}"
 {%- if params.hint or params.error %} aria-describedby="{%- if params.hint -%}{{ params.id }}-hint{%- endif %} {% if params.error -%}{{ params.id }}-error{%- endif -%}"{%- endif %}

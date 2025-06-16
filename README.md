@@ -99,20 +99,20 @@ This way you can continue to use the same import (e.g. `{% from 'components/butt
 
 ```python
 from flask_wtf import FlaskForm
-from tna_frontend_jinja.wtforms import TnaTextInput
+from tna_frontend_jinja.wtforms import TnaTextInputWidget
 from wtforms import StringField, SubmitField
 from wtforms.validators import InputRequired, Length
 
 class MyForm(FlaskForm):
     username = StringField(
         "Username",
-        widget=TnaTextInput(),
+        widget=TnaTextInputWidget(),
         validators=[
             InputRequired(message="Enter a username"),
             Length(max=256, message="Usernames must be 256 characters or fewer"),
         ],
     )
-    submit = SubmitField("Continue", widget=TnaSubmitInput())
+    submit = SubmitField("Continue", widget=TnaSubmitWidget())
 ```
 
 ### Route
@@ -148,26 +148,26 @@ def success():
 
 ### Fields
 
-| WTForms field         | TNA Widget           | Notes                                                                         |
-| --------------------- | -------------------- | ----------------------------------------------------------------------------- |
-| `BooleanField`        | `TnaCheckboxInput`   | https://design-system.nationalarchives.gov.uk/components/checkboxes/          |
-| `DateField`           | [not supported]      | Use `tna_frontend_jinja.wtforms.fields.TnaDateField`                          |
-| `DecimalField`        | `TnaNumberInput`     |                                                                               |
-| `EmailField`          | `TnaEmailInput`      |                                                                               |
-| `FloatField`          | `TnaNumberInput`     |                                                                               |
-| `HiddenField`         | [none needed]        |                                                                               |
-| `IntegerField`        | `TnaNumberInput`     |                                                                               |
-| `MonthField`          | [not supported]      | Use `tna_frontend_jinja.wtforms.fields.TnaMonthField`                         |
-| `PasswordField`       | `TnaPasswordInput`   | https://design-system.nationalarchives.gov.uk/components/text-input/#password |
-| `RadioField`          | `TnaRadioInput`      | https://design-system.nationalarchives.gov.uk/components/radios/              |
-| `SelectField`         | `TnaSelect`          | https://design-system.nationalarchives.gov.uk/components/select/              |
-| `SearchField`         | `TnaSearchInput`     | https://design-system.nationalarchives.gov.uk/components/search-field/        |
-| `SelectMultipleField` | `TnaCheckboxesInput` | https://design-system.nationalarchives.gov.uk/components/checkboxes/          |
-| `SubmitField`         | `TnaSubmitInput`     | https://design-system.nationalarchives.gov.uk/components/button/              |
-| `StringField`         | `TnaTextInput`       | https://design-system.nationalarchives.gov.uk/components/text-input/          |
-| `TelField`            | `TnaTelInput`        |                                                                               |
-| `TextAreaField`       | `TnaTextArea`        | https://design-system.nationalarchives.gov.uk/components/textarea/            |
-| `URLField`            | `TnaUrlInput`        |                                                                               |
+| WTForms field         | TNA Widget             | Notes                                                                         |
+| --------------------- | ---------------------- | ----------------------------------------------------------------------------- |
+| `BooleanField`        | `TnaCheckboxWidget`    | https://design-system.nationalarchives.gov.uk/components/checkboxes/          |
+| `DateField`           | [not supported]        | Use `tna_frontend_jinja.wtforms.fields.TnaDateField`                          |
+| `DecimalField`        | `TnaNumberInputWidget` |                                                                               |
+| `EmailField`          | `TnaEmailInputWidget`  |                                                                               |
+| `FloatField`          | `TnaNumberInputWidget` |                                                                               |
+| `HiddenField`         | [none needed]          |                                                                               |
+| `IntegerField`        | `TnaNumberInputWidget` |                                                                               |
+| `MonthField`          | [not supported]        | Use `tna_frontend_jinja.wtforms.fields.TnaMonthField`                         |
+| `PasswordField`       | `TnaPasswordWidget`    | https://design-system.nationalarchives.gov.uk/components/text-input/#password |
+| `RadioField`          | `TnaRadiosWidget`      | https://design-system.nationalarchives.gov.uk/components/radios/              |
+| `SelectField`         | `TnaSelectWidget`      | https://design-system.nationalarchives.gov.uk/components/select/              |
+| `SearchField`         | `TnaSearchFieldWidget` | https://design-system.nationalarchives.gov.uk/components/search-field/        |
+| `SelectMultipleField` | `TnaCheckboxesWidget`  | https://design-system.nationalarchives.gov.uk/components/checkboxes/          |
+| `SubmitField`         | `TnaSubmitWidget`      | https://design-system.nationalarchives.gov.uk/components/button/              |
+| `StringField`         | `TnaTextInputWidget`   | https://design-system.nationalarchives.gov.uk/components/text-input/          |
+| `TelField`            | `TnaTelInputWidget`    |                                                                               |
+| `TextAreaField`       | `TnaTextAreaWidget`    | https://design-system.nationalarchives.gov.uk/components/textarea/            |
+| `URLField`            | `TnaUrlInputWidget`    |                                                                               |
 
 #### WTForms fields currently not supported:
 

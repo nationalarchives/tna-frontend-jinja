@@ -32,10 +32,10 @@ class TnaInput(Input):
         return context | {"params": context["widget"]["attrs"]}
 
 
-class TnaTextInput(TextInput, TnaInput):
+class TnaTextInputWidget(TextInput, TnaInput):
     input_type = "text"
     template_name = "widgets/text-input.html"
 
 
-class TnaPasswordInput(PasswordInput, TnaTextInput):
+class TnaPasswordWidget(PasswordInput, TnaTextInputWidget):
     input_type = "password"

@@ -114,11 +114,11 @@ class TnaInput(TnaWidget, Input):
         return params
 
 
-class TnaTextInput(TnaInput, TextInput):
+class TnaTextInputWidget(TnaInput, TextInput):
     input_type = "text"
 
 
-class TnaCheckboxesInput(TnaIterableWidget):
+class TnaCheckboxesWidget(TnaIterableWidget):
     template = "widgets/checkboxes.html"
 
     def map_tna_params(self, field, **kwargs):
@@ -131,7 +131,7 @@ class TnaCheckboxesInput(TnaIterableWidget):
         return params
 
 
-class TnaCheckboxInput(TnaCheckboxesInput):
+class TnaCheckboxWidget(TnaCheckboxesWidget):
     def __call__(self, field, **kwargs):
         class IterableField(object):
             def __init__(self, field):
@@ -158,7 +158,7 @@ class TnaCheckboxInput(TnaCheckboxesInput):
         return super().__call__(field_group, **kwargs)
 
 
-class TnaRadioInput(TnaIterableWidget):
+class TnaRadiosWidget(TnaIterableWidget):
     template = "widgets/radios.html"
     input_type = "radio"
 
@@ -209,7 +209,7 @@ class TnaDateInput(TnaWidget):
         return params
 
 
-class TnaSubmitInput(TnaInput):
+class TnaSubmitWidget(TnaInput):
     template = "widgets/button.html"
 
     def map_tna_params(self, field, **kwargs):
@@ -222,7 +222,7 @@ class TnaSubmitInput(TnaInput):
         return params
 
 
-class TnaTextArea(TnaInput, TextArea):
+class TnaTextAreaWidget(TnaInput, TextArea):
     template = "widgets/textarea.html"
 
     def __call__(self, field, **kwargs):
@@ -232,7 +232,7 @@ class TnaTextArea(TnaInput, TextArea):
         return super().__call__(field, **kwargs)
 
 
-class TnaSelect(TnaWidget, Select):
+class TnaSelectWidget(TnaWidget, Select):
     template = "widgets/select.html"
 
     def __call__(self, field, **kwargs):
@@ -267,7 +267,7 @@ class TnaSelect(TnaWidget, Select):
         return params
 
 
-class TnaPasswordInput(TnaTextInput):
+class TnaPasswordWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
 
@@ -276,7 +276,7 @@ class TnaPasswordInput(TnaTextInput):
         return params
 
 
-class TnaNumberInput(TnaTextInput):
+class TnaNumberInputWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
 
@@ -285,7 +285,7 @@ class TnaNumberInput(TnaTextInput):
         return params
 
 
-class TnaEmailInput(TnaTextInput):
+class TnaEmailInputWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
 
@@ -294,7 +294,7 @@ class TnaEmailInput(TnaTextInput):
         return params
 
 
-class TnaTelInput(TnaTextInput):
+class TnaTelInputWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
 
@@ -303,7 +303,7 @@ class TnaTelInput(TnaTextInput):
         return params
 
 
-class TnaUrlInput(TnaTextInput):
+class TnaUrlInputWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
 
@@ -312,7 +312,7 @@ class TnaUrlInput(TnaTextInput):
         return params
 
 
-class TnaSearchInput(TnaTextInput):
+class TnaSearchFieldWidget(TnaTextInputWidget):
     template = "widgets/search-field.html"
 
     def map_tna_params(self, field, **kwargs):
