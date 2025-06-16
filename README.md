@@ -166,7 +166,7 @@ def success():
 | `SubmitField`         | `TnaSubmitWidget`      | https://design-system.nationalarchives.gov.uk/components/button/              |
 | `StringField`         | `TnaTextInputWidget`   | https://design-system.nationalarchives.gov.uk/components/text-input/          |
 | `TelField`            | `TnaTelInputWidget`    |                                                                               |
-| `TextAreaField`       | `TnaTextAreaWidget`    | https://design-system.nationalarchives.gov.uk/components/textarea/            |
+| `TextAreaField`       | `TnaTextareaWidget`    | https://design-system.nationalarchives.gov.uk/components/textarea/            |
 | `URLField`            | `TnaUrlInputWidget`    |                                                                               |
 
 #### WTForms fields currently not supported:

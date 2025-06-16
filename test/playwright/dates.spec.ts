@@ -1,5 +1,9 @@
 import { test, expect } from "@playwright/test";
-import { expectFormFailure, expectFormSuccess } from "./lib";
+import {
+  expectFormFailure,
+  expectFormSuccess,
+  expectSingleFieldValue,
+} from "./lib";
 
 test("date input", async ({ page }) => {
   await page.goto("/forms/date-input");
@@ -17,6 +21,7 @@ test("date input", async ({ page }) => {
 
   await expectFormFailure(page);
   await expect(page.getByRole("main")).toHaveText(/Enter your date of birth/);
+  await expectSingleFieldValue(page, null);
   await page.getByRole("link", { name: "Enter your date of birth" }).click();
   await expect(page.getByLabel("Day")).toBeFocused();
   await page.keyboard.type("32");
@@ -26,6 +31,7 @@ test("date input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Date of birth must be a real date/,
   );
+  await expectSingleFieldValue(page, null);
   await expect(page.getByLabel("Day")).toHaveValue("32");
   await page.getByLabel("Month").fill("02");
   await page.getByLabel("Year").fill("abc");
@@ -35,6 +41,7 @@ test("date input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Date of birth must be a real date/,
   );
+  await expectSingleFieldValue(page, null);
   await expect(page.getByLabel("Day")).toHaveValue("32");
   await expect(page.getByLabel("Month")).toHaveValue("02");
   await expect(page.getByLabel("Year")).toHaveValue("abc");
@@ -45,6 +52,7 @@ test("date input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Date of birth must be a real date/,
   );
+  await expectSingleFieldValue(page, null);
   await page.getByLabel("Day").fill("01");
   await page.getByRole("button", { name: "Submit" }).click();
 
@@ -55,6 +63,7 @@ test("date input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Date of birth must be in the past/,
   );
+  await expectSingleFieldValue(page, "Sun, 01 Feb 2099 00:00:00 GMT");
   await page.getByLabel("Year").fill("1999");
   await page.getByRole("button", { name: "Submit" }).click();
 
@@ -66,17 +75,20 @@ test("date input", async ({ page }) => {
   await expect(page.getByRole("main")).toHaveText(
     /Date of birth must be a real date/,
   );
+  await expectSingleFieldValue(page, null);
   await expect(page.getByLabel("Month")).toHaveValue("abc");
   await page.getByLabel("Month").fill("jan");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await expectSingleFieldValue(page, "Fri, 01 Jan 1999 00:00:00 GMT");
   await expect(page.getByLabel("Month")).toHaveValue("jan");
   await page.getByLabel("Month").fill("january");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
   await expect(page.getByLabel("Month")).toHaveValue("january");
+  await expectSingleFieldValue(page, "Fri, 01 Jan 1999 00:00:00 GMT");
 });
 
 test("month input", async ({ page }) => {
@@ -188,6 +200,7 @@ test("progressive input", async ({ page }) => {
   await expect(page.getByLabel("Year")).toBeVisible();
   await expect(page.getByLabel("Month")).not.toBeVisible();
   await expect(page.getByLabel("Day")).not.toBeVisible();
+  await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await page.getByLabel("Year").fill("abc");
@@ -200,6 +213,7 @@ test("progressive input", async ({ page }) => {
   await page
     .getByRole("link", { name: "Search for date must be a real date" })
     .click();
+  await expectSingleFieldValue(page, null);
   await expect(page.getByLabel("Year")).toBeFocused();
   await expect(page.getByLabel("Month")).not.toBeVisible();
   await expect(page.getByLabel("Day")).not.toBeVisible();
@@ -225,6 +239,7 @@ test("progressive input", async ({ page }) => {
     - text: Month
     - textbox "Month"
   - button "Submit"`);
+  await expectSingleFieldValue(page, "Wed, 01 Jan 2003 00:00:00 GMT");
 
   await page.goto("/forms/date-input-progressive");
   await expect(page.getByLabel("Month")).not.toBeVisible();
@@ -246,6 +261,7 @@ test("progressive input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expect(page.getByRole("main")).not.toHaveText(/There is a problem/);
+  await expectSingleFieldValue(page, "Sat, 01 Feb 2003 00:00:00 GMT");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Search for date":
     - heading "Search for date" [level=2]
