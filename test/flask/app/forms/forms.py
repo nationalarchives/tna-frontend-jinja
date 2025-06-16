@@ -183,7 +183,7 @@ class DateInputProgressiveForm(FlaskForm):
     field = TnaProgressiveDateField(
         "Search for date",
         validators=[
-            validators.InputRequired(message="Enter a date"),
+            validators.Optional(),
         ],
     )
 

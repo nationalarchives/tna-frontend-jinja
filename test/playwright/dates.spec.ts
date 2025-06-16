@@ -61,6 +61,21 @@ test("date input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await page.getByLabel("Month").fill("abc");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormFailure(page);
+  await expect(page.getByRole("main")).toHaveText(
+    /Date of birth must be a real date/,
+  );
+  await page.getByLabel("Month").fill("jan");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormSuccess(page);
+  await page.getByLabel("Month").fill("january");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormSuccess(page);
 });
 
 test("month input", async ({ page }) => {
