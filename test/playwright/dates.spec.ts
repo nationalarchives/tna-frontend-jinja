@@ -3,18 +3,16 @@ import { expectFormFailure, expectFormSuccess } from "./lib";
 
 test("date input", async ({ page }) => {
   await page.goto("/forms/date-input");
-  //   await expect(await page.getByRole("form")).toMatchAriaSnapshot(`
-  // - main:
-  //   - heading "Form" [level=1]
-  //   - group "Date of birth":
-  //     - heading "Date of birth" [level=2]
-  //     - text: Day
-  //     - textbox "Day"
-  //     - text: Month
-  //     - textbox "Month"
-  //     - text: Year
-  //     - textbox "Year"
-  //   - button "Submit"`);
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - group "Date of birth":
+    - heading "Date of birth" [level=2]
+    - text: Day
+    - textbox "Day"
+    - text: Month
+    - textbox "Month"
+    - text: Year
+    - textbox "Year"
+  - button "Submit"`);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
@@ -83,16 +81,14 @@ test("date input", async ({ page }) => {
 
 test("month input", async ({ page }) => {
   await page.goto("/forms/date-input-month");
-  //   await expect(await page.getByRole("main")).toMatchAriaSnapshot(`
-  // - main:
-  //   - heading "Form" [level=1]
-  //   - group "Month of birth":
-  //     - heading "Month of birth" [level=2]
-  //     - text: Month
-  //     - textbox "Month"
-  //     - text: Year
-  //     - textbox "Year"
-  //   - button "Submit"`);
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - group "Month of birth":
+    - heading "Month of birth" [level=2]
+    - text: Month
+    - textbox "Month"
+    - text: Year
+    - textbox "Year"
+  - button "Submit"`);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
@@ -143,14 +139,12 @@ test("month input", async ({ page }) => {
 
 test("year input", async ({ page }) => {
   await page.goto("/forms/date-input-year");
-  //   await expect(await page.getByRole("main")).toMatchAriaSnapshot(`
-  // - main:
-  //   - heading "Form" [level=1]
-  //   - group "Planned year of retirement":
-  //     - heading "Planned year of retirement" [level=2]
-  //     - text: Year
-  //     - textbox "Year"
-  //   - button "Submit"`);
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - group "Planned year of retirement":
+    - heading "Planned year of retirement" [level=2]
+    - text: Year
+    - textbox "Year"
+  - button "Submit"`);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
@@ -185,14 +179,12 @@ test("year input", async ({ page }) => {
 
 test("progressive input", async ({ page }) => {
   await page.goto("/forms/date-input-progressive");
-  //   await expect(await page.getByRole("main")).toMatchAriaSnapshot(`
-  // - main:
-  //   - heading "Form" [level=1]
-  //   - group "Search for date":
-  //     - heading "Search for date" [level=2]
-  //     - text: Year
-  //     - textbox "Year"
-  //   - button "Submit"`);
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - group "Search for date":
+    - heading "Search for date" [level=2]
+    - text: Year
+    - textbox "Year"
+  - button "Submit"`);
   await expect(page.getByLabel("Year")).toBeVisible();
   await expect(page.getByLabel("Month")).not.toBeVisible();
   await expect(page.getByLabel("Day")).not.toBeVisible();
@@ -225,16 +217,14 @@ test("progressive input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expect(page.getByRole("main")).not.toHaveText(/There is a problem/);
-  //   await expect(await page.getByRole("main")).toMatchAriaSnapshot(`
-  // - main:
-  //   - heading "Form" [level=1]
-  //   - group "Search for date":
-  //     - heading "Search for date" [level=2]
-  //     - text: Year
-  //     - textbox "Year"
-  //     - text: Month
-  //     - textbox "Month"
-  //   - button "Submit"`);
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - group "Search for date":
+    - heading "Search for date" [level=2]
+    - text: Year
+    - textbox "Year"
+    - text: Month
+    - textbox "Month"
+  - button "Submit"`);
 
   await page.goto("/forms/date-input-progressive");
   await expect(page.getByLabel("Month")).not.toBeVisible();
@@ -256,16 +246,14 @@ test("progressive input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expect(page.getByRole("main")).not.toHaveText(/There is a problem/);
-  //   await expect(await page.getByRole("main")).toMatchAriaSnapshot(`
-  // - main:
-  //   - heading "Form" [level=1]
-  //   - group "Search for date":
-  //     - heading "Search for date" [level=2]
-  //     - text: Year
-  //     - textbox "Year"
-  //     - text: Month
-  //     - textbox "Month"
-  //     - text: Day
-  //     - textbox "Day"
-  //   - button "Submit"`);
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - group "Search for date":
+    - heading "Search for date" [level=2]
+    - text: Year
+    - textbox "Year"
+    - text: Month
+    - textbox "Month"
+    - text: Day
+    - textbox "Day"
+  - button "Submit"`);
 });

@@ -3,6 +3,10 @@ import { expectFormFailure, expectFormSuccess } from "./lib";
 
 test("textarea", async ({ page }) => {
   await page.goto("/forms/textarea");
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - heading "Message" [level=2]
+  - textbox "Message"
+  - button "Submit"`);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);

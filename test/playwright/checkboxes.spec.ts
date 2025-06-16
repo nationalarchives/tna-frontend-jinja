@@ -3,6 +3,12 @@ import { expectFormFailure, expectFormSuccess } from "./lib";
 
 test("checkbox", async ({ page }) => {
   await page.goto("/forms/checkbox");
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - group "Terms and conditions":
+    - text: Terms and conditions
+    - checkbox "I agree to terms and conditions"
+    - text: I agree to terms and conditions
+  - button "Submit"`);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
@@ -15,6 +21,17 @@ test("checkbox", async ({ page }) => {
 
 test("checkboxes", async ({ page }) => {
   await page.goto("/forms/checkboxes");
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - group "Languages":
+    - text: Languages
+    - paragraph: Select up to two programming languages
+    - checkbox "C++"
+    - text: C++
+    - checkbox "Python"
+    - text: Python
+    - checkbox "PHP"
+    - text: PHP
+  - button "Submit"`);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);

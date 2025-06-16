@@ -3,12 +3,11 @@ import { expectFormFailure, expectFormSuccess } from "./lib";
 
 test("text input", async ({ page }) => {
   await page.goto("/forms/text-input");
-  //   await expect(await page.getByRole("main")).toMatchAriaSnapshot(`
-  // - main:
-  //   - heading "Form" [level=1]
-  //   - text: Username
-  //   - textbox "Username"
-  //   - button "Submit"`);
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - heading "Username" [level=2]
+  - paragraph: This will be used to log in
+  - textbox "Username"
+  - button "Submit"`);
   const describedByLabelId = await page
     .getByLabel("Username")
     .getAttribute("aria-describedby");

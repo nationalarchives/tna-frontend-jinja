@@ -3,6 +3,14 @@ import { expectFormFailure, expectFormSuccess } from "./lib";
 
 test("select", async ({ page }) => {
   await page.goto("/forms/select");
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - heading "Order" [level=2]
+  - combobox "Order":
+    - option "None" [selected]
+    - option "Date"
+    - option "Relevance"
+    - option "Popularity"
+  - button "Submit"`);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
