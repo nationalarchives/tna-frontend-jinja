@@ -10,3 +10,8 @@ export const expectFormSuccess = async (page) => {
     /Form submitted successfully/,
   );
 };
+
+export const expectSingleFieldValue = async (page, expectedValue) => {
+  const json = JSON.parse(await page.getByTestId("form_data").textContent());
+  await expect(json.field).toEqual(expectedValue);
+};

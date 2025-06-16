@@ -222,7 +222,7 @@ class TnaSubmitWidget(TnaInput):
         return params
 
 
-class TnaTextAreaWidget(TnaInput, TextArea):
+class TnaTextareaWidget(TnaInput, TextArea):
     template = "widgets/textarea.html"
 
     def __call__(self, field, **kwargs):

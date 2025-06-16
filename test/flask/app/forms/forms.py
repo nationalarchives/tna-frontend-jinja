@@ -14,7 +14,7 @@ from tna_frontend_jinja.wtforms import (
     TnaSearchFieldWidget,
     TnaSelectWidget,
     TnaTelInputWidget,
-    TnaTextAreaWidget,
+    TnaTextareaWidget,
     TnaTextInputWidget,
     TnaUrlInputWidget,
     TnaYearField,
@@ -255,7 +255,7 @@ class TextareaForm(FlaskForm):
         validators=[
             validators.InputRequired(message="Enter a message"),
         ],
-        widget=TnaTextAreaWidget(),
+        widget=TnaTextareaWidget(),
     )
 
 
@@ -370,7 +370,7 @@ class KitchenSinkForm(FlaskForm):
         validators=[
             validators.InputRequired(message="Enter a message"),
         ],
-        widget=TnaTextAreaWidget(),
+        widget=TnaTextareaWidget(),
     )
 
     order = SelectField(

@@ -166,7 +166,9 @@ def textarea():
 def search():
     form = SearchForm()
     success = form.validate_on_submit()
-    return render_template("single-field.html", form=form, success=success)
+    return render_template(
+        "single-field.html", form=form, success=success, showSubmitButton=False
+    )
 
 
 @bp.route("/kitchen-sink/", methods=["GET", "POST"])

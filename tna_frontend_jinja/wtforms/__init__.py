@@ -15,7 +15,7 @@ from .widgets import (
     TnaSelectWidget,
     TnaSubmitWidget,
     TnaTelInputWidget,
-    TnaTextAreaWidget,
+    TnaTextareaWidget,
     TnaTextInputWidget,
     TnaUrlInputWidget,
 )
