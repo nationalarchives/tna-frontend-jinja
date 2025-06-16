@@ -12,8 +12,6 @@ export const expectFormSuccess = async (page) => {
 };
 
 export const expectSingleFieldValue = async (page, expectedValue) => {
-  console.log(await page.getByTestId("form_data"));
-  console.log(await page.getByTestId("form_data").textContent());
   const json = JSON.parse(await page.getByTestId("form_data").textContent());
   await expect(json.field).toEqual(expectedValue);
 };
