@@ -147,6 +147,7 @@ class TextInputTelForm(FlaskForm):
 class DateInputForm(FlaskForm):
     field = TnaDateField(
         "Date of birth",
+        description="Enter your date of birth in the format DD MM YYYY",
         validators=[
             validators.InputRequired(message="Enter your date of birth"),
             tna_frontend_validators.PastDate(
@@ -159,6 +160,7 @@ class DateInputForm(FlaskForm):
 class DateInputMonthForm(FlaskForm):
     field = TnaMonthField(
         "Month of birth",
+        description="Enter your month of birth in the format MM YYYY",
         validators=[
             validators.InputRequired(message="Enter your month and year of birth"),
             tna_frontend_validators.PastDate(message="Date must be in the past"),
@@ -169,6 +171,8 @@ class DateInputMonthForm(FlaskForm):
 class DateInputYearForm(FlaskForm):
     field = TnaYearField(
         "Planned year of retirement",
+        description="Enter your planned year of retirement in the format YY or YYYY",
+        allow_two_digit_year=True,
         invalid_date_error_message="Planned year of retirement must be a valid year",
         validators=[
             validators.InputRequired(message="Enter a year for retirement"),
@@ -182,6 +186,7 @@ class DateInputYearForm(FlaskForm):
 class DateInputProgressiveForm(FlaskForm):
     field = TnaProgressiveDateField(
         "Search for date",
+        description="Enter a year, year and month or a full date",
         validators=[
             validators.Optional(),
         ],
