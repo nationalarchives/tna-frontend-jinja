@@ -101,13 +101,18 @@ class TnaDateField(DateField):
             self.process_errors.append(e.args[0])
 
         if formdata is not None:
-            self.raw_data = [
+            raw_data = [
                 formdata.get(
                     f"{self.name}-{part}",
                     "",
                 )
                 for part in self.field_codes(True)
             ]
+
+            if "" in raw_data:
+                raw_data = raw_data[: raw_data.index("")]
+
+            self.raw_data = raw_data
 
             try:
                 self.process_formdata(self.raw_data)
@@ -123,6 +128,9 @@ class TnaDateField(DateField):
     def process_formdata(self, valuelist):
         if not valuelist:
             return
+
+        if "" in valuelist:
+            valuelist = valuelist[: valuelist.index("")]
 
         date_str = " ".join([value for value in valuelist if value])
         for format in self.strptime_format:

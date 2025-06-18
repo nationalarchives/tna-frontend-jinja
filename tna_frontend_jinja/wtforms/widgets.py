@@ -189,11 +189,23 @@ class TnaDateInput(TnaWidget):
                 field.format[len(field.format) - 1].split(" ")
             ):
                 if format_part.replace("%", "").lower() == "d":
-                    day = field.raw_data[format_part_index]
+                    day = (
+                        field.raw_data[format_part_index]
+                        if len(field.raw_data) > format_part_index
+                        else ""
+                    )
                 elif format_part.replace("%", "").lower() in ["m", "b"]:
-                    month = field.raw_data[format_part_index]
+                    month = (
+                        field.raw_data[format_part_index]
+                        if len(field.raw_data) > format_part_index
+                        else ""
+                    )
                 elif format_part.replace("%", "").lower() == "y":
-                    year = field.raw_data[format_part_index]
+                    year = (
+                        field.raw_data[format_part_index]
+                        if len(field.raw_data) > format_part_index
+                        else ""
+                    )
 
         params["fields"] = field.field_codes()
         params.setdefault("label", field.label.text)

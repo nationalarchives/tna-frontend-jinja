@@ -6,7 +6,7 @@ import {
 } from "./lib";
 
 test("date input", async ({ page }) => {
-  await page.goto("/forms/date-input");
+  await page.goto("/forms/date-input/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Date of birth":
     - heading "Date of birth" [level=2]
@@ -92,7 +92,7 @@ test("date input", async ({ page }) => {
 });
 
 test("month input", async ({ page }) => {
-  await page.goto("/forms/date-input-month");
+  await page.goto("/forms/date-input-month/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Month of birth":
     - heading "Month of birth" [level=2]
@@ -147,10 +147,11 @@ test("month input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await expectSingleFieldValue(page, "Fri, 01 Jan 1999 00:00:00 GMT");
 });
 
 test("year input", async ({ page }) => {
-  await page.goto("/forms/date-input-year");
+  await page.goto("/forms/date-input-year/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Planned year of retirement":
     - heading "Planned year of retirement" [level=2]
@@ -187,10 +188,11 @@ test("year input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await expectSingleFieldValue(page, "Thu, 01 Jan 2099 00:00:00 GMT");
 });
 
 test("progressive input", async ({ page }) => {
-  await page.goto("/forms/date-input-progressive");
+  await page.goto("/forms/date-input-progressive/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Search for date":
     - heading "Search for date" [level=2]
@@ -241,7 +243,7 @@ test("progressive input", async ({ page }) => {
   - button "Submit"`);
   await expectSingleFieldValue(page, "Wed, 01 Jan 2003 00:00:00 GMT");
 
-  await page.goto("/forms/date-input-progressive");
+  await page.goto("/forms/date-input-progressive/");
   await expect(page.getByLabel("Month")).not.toBeVisible();
   await expect(page.getByLabel("Day")).not.toBeVisible();
   await page.getByLabel("Year").focus();
@@ -272,4 +274,26 @@ test("progressive input", async ({ page }) => {
     - text: Day
     - textbox "Day"
   - button "Submit"`);
+  await page.getByLabel("Day").fill("15");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormSuccess(page);
+  await expectSingleFieldValue(page, "Sat, 15 Feb 2003 00:00:00 GMT");
+  await page.getByLabel("Month").clear();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await expect(page.getByLabel("Day")).toHaveValue("15");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormSuccess(page);
+  await expectSingleFieldValue(page, "Wed, 01 Jan 2003 00:00:00 GMT");
+  await expect(page.getByLabel("Year")).toBeVisible();
+  await expect(page.getByLabel("Year")).toHaveValue("2003");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Month")).toHaveValue("");
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await expect(page.getByLabel("Day")).not.toHaveValue("15");
+  await page.getByLabel("Month").focus();
+  await page.keyboard.type("9");
+  await expect(page.getByLabel("Day")).toBeVisible();
+  await expect(page.getByLabel("Day")).not.toHaveValue("15");
 });
