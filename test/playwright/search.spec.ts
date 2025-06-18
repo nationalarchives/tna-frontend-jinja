@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { expectFormSuccess, expectSingleFieldValue } from "./lib";
 
 test("search", async ({ page }) => {
-  await page.goto("/forms/search");
+  await page.goto("/forms/search/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - heading "Search" [level=2]
   - searchbox "Search"

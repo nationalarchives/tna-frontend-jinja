@@ -6,7 +6,7 @@ import {
 } from "./lib";
 
 test("textarea", async ({ page }) => {
-  await page.goto("/forms/textarea");
+  await page.goto("/forms/textarea/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - heading "Message" [level=2]
   - textbox "Message"

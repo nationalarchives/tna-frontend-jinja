@@ -6,7 +6,7 @@ import {
 } from "./lib";
 
 test("radios", async ({ page }) => {
-  await page.goto("/forms/radios");
+  await page.goto("/forms/radios/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Level":
     - text: Level

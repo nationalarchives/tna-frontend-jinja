@@ -6,7 +6,7 @@ import {
 } from "./lib";
 
 test("select", async ({ page }) => {
-  await page.goto("/forms/select");
+  await page.goto("/forms/select/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - heading "Order" [level=2]
   - combobox "Order":

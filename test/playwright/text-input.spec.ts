@@ -6,7 +6,7 @@ import {
 } from "./lib";
 
 test("text input", async ({ page }) => {
-  await page.goto("/forms/text-input");
+  await page.goto("/forms/text-input/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - heading "Username" [level=2]
   - paragraph: This will be used to log in
@@ -51,7 +51,7 @@ test("text input", async ({ page }) => {
 });
 
 test("text input - email", async ({ page }) => {
-  await page.goto("/forms/text-input-email");
+  await page.goto("/forms/text-input-email/");
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
@@ -79,7 +79,7 @@ test("text input - email", async ({ page }) => {
 });
 
 test("text input - password", async ({ page }) => {
-  await page.goto("/forms/text-input-password");
+  await page.goto("/forms/text-input-password/");
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
@@ -113,7 +113,7 @@ test("text input - password", async ({ page }) => {
 });
 
 test("text input - tel", async ({ page }) => {
-  await page.goto("/forms/text-input-tel");
+  await page.goto("/forms/text-input-tel/");
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
@@ -149,7 +149,7 @@ test("text input - tel", async ({ page }) => {
 });
 
 test("text input - integer", async ({ page }) => {
-  await page.goto("/forms/text-input-integer");
+  await page.goto("/forms/text-input-integer/");
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
@@ -187,7 +187,7 @@ test("text input - integer", async ({ page }) => {
 });
 
 test("text input - decimal", async ({ page }) => {
-  await page.goto("/forms/text-input-decimal");
+  await page.goto("/forms/text-input-decimal/");
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
@@ -229,7 +229,7 @@ test("text input - decimal", async ({ page }) => {
 });
 
 test("text input - float", async ({ page }) => {
-  await page.goto("/forms/text-input-float");
+  await page.goto("/forms/text-input-float/");
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
@@ -264,7 +264,7 @@ test("text input - float", async ({ page }) => {
 });
 
 test("text input - url", async ({ page }) => {
-  await page.goto("/forms/text-input-url");
+  await page.goto("/forms/text-input-url/");
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 

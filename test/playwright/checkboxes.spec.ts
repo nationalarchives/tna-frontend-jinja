@@ -6,7 +6,7 @@ import {
 } from "./lib";
 
 test("checkbox", async ({ page }) => {
-  await page.goto("/forms/checkbox");
+  await page.goto("/forms/checkbox/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Terms and conditions":
     - text: Terms and conditions
@@ -26,7 +26,7 @@ test("checkbox", async ({ page }) => {
 });
 
 test("checkboxes", async ({ page }) => {
-  await page.goto("/forms/checkboxes");
+  await page.goto("/forms/checkboxes/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Languages":
     - text: Languages

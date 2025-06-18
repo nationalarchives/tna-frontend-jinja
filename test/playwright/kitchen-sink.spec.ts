@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test("kitchen sink form", async ({ page }) => {
-  await page.goto("/forms/kitchen-sink");
+  await page.goto("/forms/kitchen-sink/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
 - heading "Search" [level=2]
 - searchbox "Search"
