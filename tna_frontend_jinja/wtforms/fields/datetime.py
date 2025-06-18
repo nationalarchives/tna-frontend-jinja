@@ -18,16 +18,25 @@ class TnaDateField(DateField):
     widget = TnaDateInput()
 
     def __init__(
-        self, label=None, validators=None, invalid_date_error_message="", **kwargs
+        self,
+        label=None,
+        validators=None,
+        allow_two_digit_year=False,
+        invalid_date_error_message="",
+        **kwargs,
     ):
         super().__init__(label, validators, **kwargs)
         self.format = [
-            "%d %m %Y",
-            "%d %m %y",
-            "%d %b %Y",
-            "%d %b %y",
-            "%d %B %Y",
-            "%d %B %y",
+            format
+            for format in [
+                "%d %m %Y",
+                ("%d %m %y") if allow_two_digit_year else None,
+                "%d %b %Y",
+                ("%d %b %y") if allow_two_digit_year else None,
+                "%d %B %Y",
+                ("%d %B %y") if allow_two_digit_year else None,
+            ]
+            if format is not None
         ]
         self.progressive = False
         self.strptime_format = clean_datetime_format_for_strptime(self.format)
@@ -127,37 +136,62 @@ class TnaDateField(DateField):
 
 
 class TnaMonthField(TnaDateField):
-    def __init__(self, label=None, validators=None, **kwargs):
+    def __init__(
+        self, label=None, validators=None, allow_two_digit_year=False, **kwargs
+    ):
         super().__init__(label, validators, **kwargs)
-        self.format = ["%m %Y", "%m %y", "%b %Y", "%b %y", "%B %Y", "%B %y"]
+        self.format = [
+            format
+            for format in [
+                "%m %Y",
+                ("%m %y") if allow_two_digit_year else None,
+                "%b %Y",
+                ("%b %y") if allow_two_digit_year else None,
+                "%B %Y",
+                ("%B %y") if allow_two_digit_year else None,
+            ]
+            if format is not None
+        ]
         self.strptime_format = clean_datetime_format_for_strptime(self.format)
 
 
 class TnaYearField(TnaDateField):
-    def __init__(self, label=None, validators=None, **kwargs):
+    def __init__(
+        self, label=None, validators=None, allow_two_digit_year=False, **kwargs
+    ):
         super().__init__(label, validators, **kwargs)
-        self.format = ["%Y", "%y"]
+        self.format = [
+            format
+            for format in ["%Y", ("%y") if allow_two_digit_year else None]
+            if format is not None
+        ]
         self.strptime_format = clean_datetime_format_for_strptime(self.format)
 
 
 class TnaProgressiveDateField(TnaDateField):
-    def __init__(self, label=None, validators=None, **kwargs):
+    def __init__(
+        self, label=None, validators=None, allow_two_digit_year=False, **kwargs
+    ):
         super().__init__(label, validators, **kwargs)
         self.format = [
-            "%Y",
-            "%y",
-            "%Y %m",
-            "%y %m",
-            "%Y %b",
-            "%y %b",
-            "%Y %B",
-            "%y %B",
-            "%Y %m %d",
-            "%y %m %d",
-            "%Y %b %d",
-            "%y %b %d",
-            "%Y %B %d",
-            "%y %B %d",
+            format
+            for format in [
+                "%Y",
+                ("%y") if allow_two_digit_year else None,
+                "%Y %m",
+                ("%y %m") if allow_two_digit_year else None,
+                "%Y %b",
+                ("%y %b") if allow_two_digit_year else None,
+                "%Y %B",
+                ("%y %B") if allow_two_digit_year else None,
+                "%Y %m %d",
+                ("%y %m %d") if allow_two_digit_year else None,
+                "%Y %b %d",
+                ("%y %b %d") if allow_two_digit_year else None,
+                "%Y %B %d",
+                ("%y %B %d") if allow_two_digit_year else None,
+            ]
+            if format is not None
         ]
         self.progressive = True
         self.strptime_format = clean_datetime_format_for_strptime(self.format)
