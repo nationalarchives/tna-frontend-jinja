@@ -62,14 +62,17 @@
         {% endif %}
         {% endfor %}
       </dl>
+      {% set form_data=form.data %}
+      {% set csrf_token = form_data.pop('csrf_token') %}
       {{ tnaTextarea({
         'label': 'Form data (JSON)',
         'headingLevel': 3,
         'headingSize': 's',
         'id': 'form_data',
         'name': 'form_data',
-        'value': form.data | tojson,
+        'value': form_data | tojson,
         'rows': 10,
+        'formGroupClasses': 'tna-!--margin-top-s',
         'attributes': {
           'readonly': '',
           'data-testid': 'form_data'
