@@ -169,7 +169,7 @@ def success():
 | `TextAreaField`       | `TnaTextareaWidget`    | https://design-system.nationalarchives.gov.uk/components/textarea/            |
 | `URLField`            | `TnaUrlInputWidget`    |                                                                               |
 
-#### WTForms fields currently not supported:
+#### WTForms fields currently not supported
 
 - `ColorField`
 - `DateTimeField`
@@ -221,6 +221,7 @@ Ensure you install the correct version of TNA Frontend for the version of the te
 
 | TNA Frontend Jinja | Compatible TNA Frontend version(s) |
 | ------------------ | ---------------------------------- |
+| `0.21.0`           | `0.21.0`                           |
 | `0.20.1`           | `0.20.1`                           |
 | `0.20.0`           | `0.20.0`                           |
 | `0.19.0`           | `0.19.x`                           |
