@@ -8,9 +8,9 @@ from flask import Flask
 from jinja2 import ChoiceLoader, PackageLoader
 from tna_frontend_jinja.wtforms.helpers import WTFormsHelpers
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/static", static_folder="/app/node_modules")
 
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+app.config["SECRET_KEY"] = "abc123"
 
 app.jinja_loader = ChoiceLoader(
     [

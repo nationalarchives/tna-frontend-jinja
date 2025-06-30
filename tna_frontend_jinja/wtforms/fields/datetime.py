@@ -71,7 +71,7 @@ class TnaDateField(DateField):
             for part in self.format[len(self.format) - 1].split(" ")
         ]
 
-    def process(self, formdata, data=unset_value, extra_filters=None):
+    def process(self, formdata, data=unset_value, extra_filters=None):  # noqa: C901
         """
         Process incoming data, calling process_data, process_formdata as needed,
         and run filters.

@@ -191,7 +191,7 @@ test("year input", async ({ page }) => {
   await expectSingleFieldValue(page, "Thu, 01 Jan 2099 00:00:00 GMT");
 });
 
-test("progressive input", async ({ page }) => {
+test("progressive date input", async ({ page }) => {
   await page.goto("/forms/date-input-progressive/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Search for date":

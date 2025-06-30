@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://use.typekit.net/kaq6qqh.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400..700&family=Roboto+Mono:wght@400..500&display=swap">
-  <link href="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.20.1/nationalarchives/all.css" rel="stylesheet" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='@nationalarchives/frontend/nationalarchives/all.css') }}">
 {% endblock %}
 
 {% block cookies %}
@@ -81,6 +81,6 @@
 {% endblock %}
 
 {% block bodyEnd %}
-  <script src="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.20.1/nationalarchives/all.js" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='@nationalarchives/frontend/nationalarchives/all.js') }}"></script>
   <script>window.TNAFrontend.initAll();</script>
 {% endblock %}
