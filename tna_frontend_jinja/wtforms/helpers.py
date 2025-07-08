@@ -19,7 +19,6 @@ def flatten_errors(errors, prefix="", id_map={}):
     error_list = []
     if isinstance(errors, dict):
         for key, value in errors.items():
-            # Recurse to handle subforms.
             if key in id_map:
                 key = id_map[key]
             error_list += flatten_errors(value, prefix=f"{prefix}{key}-", id_map=id_map)
@@ -27,9 +26,19 @@ def flatten_errors(errors, prefix="", id_map={}):
         for idx, error in enumerate(errors):
             error_list += flatten_errors(error, prefix=f"{prefix}{idx}-", id_map=id_map)
     elif isinstance(errors, list):
-        error_list.append({"text": errors[0], "href": "#{}".format(prefix.rstrip("-"))})
+        error_list.append(
+            {
+                "text": errors[0],
+                "href": f"#{prefix.rstrip('-')}",
+            }
+        )
     else:
-        error_list.append({"text": errors, "href": "#{}".format(prefix.rstrip("-"))})
+        error_list.append(
+            {
+                "text": errors,
+                "href": f"#{prefix.rstrip('-')}",
+            }
+        )
     return error_list
 
 
@@ -58,7 +67,15 @@ def wtforms_errors(form, params={}):
             else:
                 id_map[field_name] = field.id
 
-    wtforms_params["items"] = flatten_errors(form.errors, id_map=id_map)
+    errors = form.errors
+    csrf_errors = errors.pop("csrf_token", None)
+
+    wtforms_params["items"] = flatten_errors(errors, id_map=id_map)
+
+    if csrf_errors:
+        wtforms_params["items"].extend(
+            [{"text": "Try submitting the form again", "href": None}]
+        )
 
     return merger.merge(wtforms_params, params)
 

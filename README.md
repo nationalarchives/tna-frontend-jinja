@@ -201,7 +201,7 @@ docker compose up -d
 npm install
 
 # Run the fixture tests
-node test/test-fixtures.mjs
+npm run test:fixtures
 
 # Run the Playwright tests
 npm run test:playwright

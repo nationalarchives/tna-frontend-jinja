@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "test:fixtures": "node test/test-fixtures.mjs",
     "lint:fix": "npx prettier --write .",
+    "test:fixtures": "node test/test-fixtures.mjs",
     "test:playwright": "npx playwright install && playwright test --ui"
   },
   "dependencies": {
