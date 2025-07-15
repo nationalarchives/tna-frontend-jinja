@@ -7,7 +7,11 @@ from .fields.datetime import (  # noqa: F401
 from .widgets import (  # noqa: F401
     TnaCheckboxesWidget,
     TnaCheckboxWidget,
+    TnaDroppableFileInputWidget,
+    TnaDroppableFilesInputWidget,
     TnaEmailInputWidget,
+    TnaFileInputWidget,
+    TnaFilesInputWidget,
     TnaNumberInputWidget,
     TnaPasswordWidget,
     TnaRadiosWidget,

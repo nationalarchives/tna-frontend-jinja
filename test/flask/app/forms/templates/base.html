@@ -25,7 +25,7 @@
       {{ tnaErrorSummary(wtforms_errors(form)) }}
     {% endif %}
     <h1 class="tna-heading-xl">Form</h1>
-    <form data-testid="form" action="{{ request.url }}" method="post" novalidate>
+    <form data-testid="form" action="{{ request.url }}" method="post" enctype="{{ form_enctype or 'application/x-www-form-urlencoded' }}" novalidate>
       {{ form.csrf_token }}
       {% block form %}{% endblock %}
       {% if showSubmitButton != False %}
@@ -62,6 +62,7 @@
         {% endif %}
         {% endfor %}
       </dl>
+      {% block form_json %}
       {% set form_data=form.data %}
       {% set csrf_token = form_data.pop('csrf_token') %}
       {{ tnaTextarea({
@@ -78,6 +79,7 @@
           'data-testid': 'form_data'
         }
       }) }}
+      {% endblock %}
     </div>
   </div>
 </div>

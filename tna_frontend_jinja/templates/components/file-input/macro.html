@@ -1,0 +1,35 @@
+{% macro tnaFileInput(params) %}
+{%- set containerClasses = [params.formGroupClasses] if params.formGroupClasses else [] -%}
+{%- if params.inline -%}
+  {%- set containerClasses = containerClasses + ['tna-form__group--inline'] -%}
+{%- endif -%}
+<div class="tna-form__group{% if params.error %} tna-form__group--error{% endif %} {{ ' '.join(containerClasses) }}" {%- if params.droppable %} data-module="tna-file-input"{% endif %} {%- if params.formGroupAttributes %}{% for attribute, value in params.formGroupAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+  <div class="tna-form__group-contents">
+    <h{{ params.headingLevel }} class="tna-form__heading tna-form__heading--{{ params.headingSize or 'm' }}">
+      <label class="tna-form__label" for="{{ params.id }}">
+        {{ params.label }}
+      </label>
+    </h{{ params.headingLevel }}>
+    {%- if params.hint %}
+    <p id="{{ params.id }}-hint" class="tna-form__hint">
+      {{ params.hint }}
+    </p>
+    {%- endif %}
+    {%- if params.error %}
+    <p id="{{ params.id }}-error" class="tna-form__error-message">
+      <span class="tna-!--visually-hidden">Error:</span> {{ params.error.text }}
+    </p>
+    {%- endif %}
+  </div>
+  {{ tnaFileInputElement(params) }}
+</div>
+{% endmacro %}
+
+{% macro tnaFileInputElement(params, extraAttributes) %}
+{%- set inputClasses = [params.classes] if params.classes else [] -%}
+<input id="{{ params.id }}" class="tna-file-input{% if inputClasses %} {{ inputClasses | join(' ') }}{% endif %}" name="{{ params.name }}" type="file"
+{%- if params.hint or params.error %} aria-describedby="{%- if params.hint -%}{{ params.id }}-hint{%- endif %} {% if params.error -%}{{ params.id }}-error{%- endif -%}"{%- endif %}
+{%- if params.multiple %} multiple{% endif %}
+{%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}
+{%- if extraAttributes %}{% for attribute, value in extraAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+{% endmacro %}

@@ -64,6 +64,11 @@ def error_summary():
     return render_component("widgets/error-summary.html")
 
 
+@bp.route("/file-input")
+def file_input():
+    return render_component("widgets/file-input.html")
+
+
 @bp.route("/files-list")
 def files_list():
     return render_component("widgets/files-list.html")

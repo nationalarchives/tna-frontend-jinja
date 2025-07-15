@@ -123,11 +123,7 @@ class TnaCheckboxesWidget(TnaIterableWidget):
 
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-
-        params.setdefault(
-            "label",
-            field.label.text,
-        )
+        params.setdefault("label", field.label.text)
         return params
 
 
@@ -164,10 +160,7 @@ class TnaRadiosWidget(TnaIterableWidget):
 
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-        params.setdefault(
-            "label",
-            field.label.text,
-        )
+        params.setdefault("label", field.label.text)
         return params
 
 
@@ -226,11 +219,9 @@ class TnaSubmitWidget(TnaInput):
 
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-
         params.setdefault("text", field.label.text)
         params.setdefault("buttonElement", True)
         params.setdefault("buttonType", "submit")
-
         return params
 
 
@@ -269,66 +260,72 @@ class TnaSelectWidget(TnaWidget, Select):
 
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-
         params["items"] = kwargs["items"]
-
         if "selected" in kwargs:
             params["selected"] = kwargs["selected"]
             del kwargs["selected"]
-
         return params
 
 
 class TnaPasswordWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-
         params["password"] = True
-
         return params
 
 
 class TnaNumberInputWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-
         params["inputmode"] = "numeric"
-
         return params
 
 
 class TnaEmailInputWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-
         params["inputmode"] = "email"
-
         return params
 
 
 class TnaTelInputWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-
         params["inputmode"] = "tel"
-
         return params
 
 
 class TnaUrlInputWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-
         params["inputmode"] = "url"
-
         return params
 
 
 class TnaSearchFieldWidget(TnaTextInputWidget):
     template = "widgets/search-field.html"
 
+
+class TnaFileInputWidget(TnaInput):
+    template = "widgets/file-input.html"
+
+
+class TnaFilesInputWidget(TnaFileInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-        print(f"params: {params}")
-        print(f"kwargs: {kwargs}")
+        params["multiple"] = True
+        return params
+
+
+class TnaDroppableFileInputWidget(TnaFileInputWidget):
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
+        params["droppable"] = True
+        return params
+
+
+class TnaDroppableFilesInputWidget(TnaFilesInputWidget):
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
+        params["droppable"] = True
         return params

@@ -8,9 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.21.0...HEAD)
 
 ### Added
+
+- Added support for `FileField` and `MultipleFileField` from WTForms
+
 ### Changed
 
 - Simplified CSRF error messages
+- Upgraded to [TNA Frontend `v0.22.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.22.0)
 
 ### Deprecated
 ### Removed

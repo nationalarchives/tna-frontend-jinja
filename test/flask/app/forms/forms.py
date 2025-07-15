@@ -1,11 +1,16 @@
 import decimal
 
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed, FileRequired, FileSize
 from tna_frontend_jinja.wtforms import (
     TnaCheckboxesWidget,
     TnaCheckboxWidget,
     TnaDateField,
+    TnaDroppableFileInputWidget,
+    TnaDroppableFilesInputWidget,
     TnaEmailInputWidget,
+    TnaFileInputWidget,
+    TnaFilesInputWidget,
     TnaMonthField,
     TnaNumberInputWidget,
     TnaPasswordWidget,
@@ -24,8 +29,10 @@ from wtforms import (
     BooleanField,
     DecimalField,
     EmailField,
+    FileField,
     FloatField,
     IntegerField,
+    MultipleFileField,
     PasswordField,
     RadioField,
     SearchField,
@@ -268,6 +275,74 @@ class SearchForm(FlaskForm):
     field = SearchField(
         "Search",
         widget=TnaSearchFieldWidget(),
+    )
+
+
+class FileInputForm(FlaskForm):
+    field = FileField(
+        "File",
+        description="Upload a file",
+        validators=[
+            FileRequired(message="Select a file to upload."),
+            FileAllowed(
+                upload_set=["json"],
+                message="File type not allowed. Only JSON files are accepted.",
+            ),
+            FileSize(max_size=20 * 1024, message="File size must be less than 20 KB."),
+        ],
+        widget=TnaFileInputWidget(),
+    )
+
+
+class FilesInputForm(FlaskForm):
+    field = MultipleFileField(
+        "Files",
+        description="Upload a set of files",
+        validators=[
+            validators.InputRequired(message="Select files to upload"),
+            FileAllowed(
+                upload_set=["json"],
+                message="File type not allowed. Only JSON files are accepted.",
+            ),
+            FileSize(
+                max_size=20 * 1024, message="Each file size must be less than 20 KB."
+            ),
+        ],
+        widget=TnaFilesInputWidget(),
+    )
+
+
+class DroppableFileInputForm(FlaskForm):
+    field = FileField(
+        "File",
+        description="Upload a file",
+        validators=[
+            FileRequired(message="Select a file to upload."),
+            FileAllowed(
+                upload_set=["json"],
+                message="File type not allowed. Only JSON files are accepted.",
+            ),
+            FileSize(max_size=20 * 1024, message="File size must be less than 20 KB."),
+        ],
+        widget=TnaDroppableFileInputWidget(),
+    )
+
+
+class DroppableFilesInputForm(FlaskForm):
+    field = MultipleFileField(
+        "Files",
+        description="Upload a set of files",
+        validators=[
+            validators.InputRequired(message="Select files to upload"),
+            FileAllowed(
+                upload_set=["json"],
+                message="File type not allowed. Only JSON files are accepted.",
+            ),
+            FileSize(
+                max_size=20 * 1024, message="Each file size must be less than 20 KB."
+            ),
+        ],
+        widget=TnaDroppableFilesInputWidget(),
     )
 
 

@@ -1,3 +1,5 @@
+# import os
+
 from app.forms import bp
 from app.forms.forms import (
     CheckboxesForm,
@@ -6,6 +8,10 @@ from app.forms.forms import (
     DateInputMonthForm,
     DateInputProgressiveForm,
     DateInputYearForm,
+    DroppableFileInputForm,
+    DroppableFilesInputForm,
+    FileInputForm,
+    FilesInputForm,
     KitchenSinkForm,
     RadiosForm,
     SearchForm,
@@ -20,7 +26,9 @@ from app.forms.forms import (
     TextInputTelForm,
     TextInputURLForm,
 )
-from flask import current_app, render_template, url_for
+from flask import current_app, render_template, url_for  # , request
+
+# from werkzeug.utils import secure_filename
 
 
 def has_no_empty_params(rule):
@@ -168,6 +176,68 @@ def search():
     success = form.validate_on_submit()
     return render_template(
         "single-field.html", form=form, success=success, showSubmitButton=False
+    )
+
+
+@bp.route("/file-input/", methods=["GET", "POST"])
+def file_input():
+    form = FileInputForm()
+    success = form.validate_on_submit()
+    # if success:
+    #     if file := request.files['field']:
+    #         filename = secure_filename(file.filename)
+    #         file.save(os.path.join("/uploads", filename))
+    return render_template(
+        "single-field-multipart-form-data.html",
+        form=form,
+        success=success,
+    )
+
+
+@bp.route("/files-input/", methods=["GET", "POST"])
+def files_input():
+    form = FilesInputForm()
+    success = form.validate_on_submit()
+    # if success:
+    #     if files := request.files.getlist('field'):
+    #         for file in files:
+    #             filename = secure_filename(file.filename)
+    #             file.save(os.path.join("/uploads", filename))
+    return render_template(
+        "single-field-multipart-form-data.html",
+        form=form,
+        success=success,
+    )
+
+
+@bp.route("/file-input-droppable/", methods=["GET", "POST"])
+def dropable_file_input():
+    form = DroppableFileInputForm()
+    success = form.validate_on_submit()
+    # if success:
+    #     if file := request.files['field']:
+    #         filename = secure_filename(file.filename)
+    #         file.save(os.path.join("/uploads", filename))
+    return render_template(
+        "single-field-multipart-form-data.html",
+        form=form,
+        success=success,
+    )
+
+
+@bp.route("/files-input-droppable/", methods=["GET", "POST"])
+def dropable_files_input():
+    form = DroppableFilesInputForm()
+    success = form.validate_on_submit()
+    # if success:
+    #     if files := request.files.getlist('field'):
+    #         for file in files:
+    #             filename = secure_filename(file.filename)
+    #             file.save(os.path.join("/uploads", filename))
+    return render_template(
+        "single-field-multipart-form-data.html",
+        form=form,
+        success=success,
     )
 
 
