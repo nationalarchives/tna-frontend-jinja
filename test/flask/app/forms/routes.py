@@ -1,3 +1,4 @@
+# import io
 # import os
 
 from app.forms import bp
@@ -28,6 +29,7 @@ from app.forms.forms import (
 )
 from flask import current_app, render_template, url_for  # , request
 
+# from PIL import Image
 # from werkzeug.utils import secure_filename
 
 
@@ -187,6 +189,16 @@ def file_input():
     #     if file := request.files['field']:
     #         filename = secure_filename(file.filename)
     #         file.save(os.path.join("/uploads", filename))
+    # if success:
+    #     if file := request.files.get("field"):
+    #         filename = secure_filename(file.filename)
+    #         im = Image.open(io.BytesIO(file.read()))
+    #         rgb_im = im.convert("RGB")
+    #         rgb_im.thumbnail((2048, 2048))
+    #         rgb_im.save(
+    #             os.path.join("/uploads", ".".join(filename.split(".")[:-1]) + ".jpg"),
+    #             "JPEG",
+    #         )
     return render_template(
         "single-field-multipart-form-data.html",
         form=form,
@@ -203,6 +215,17 @@ def files_input():
     #         for file in files:
     #             filename = secure_filename(file.filename)
     #             file.save(os.path.join("/uploads", filename))
+    # if success:
+    #     if files := request.files.getlist('field'):
+    #         for file in files:
+    #             filename = secure_filename(file.filename)
+    #             im = Image.open(io.BytesIO(file.read()))
+    #             rgb_im = im.convert("RGB")
+    #             rgb_im.thumbnail((2048, 2048))
+    #             rgb_im.save(
+    #                 os.path.join("/uploads", ".".join(filename.split(".")[:-1]) + ".jpg"),
+    #                 "JPEG",
+    #             )
     return render_template(
         "single-field-multipart-form-data.html",
         form=form,

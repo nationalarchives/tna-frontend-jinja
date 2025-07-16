@@ -1,0 +1,4 @@
+site_name: TNA Frontend Jinja Docs
+repo_url: https://github.com/nationalarchives/tna-frontend-jinja
+markdown_extensions:
+  - pymdownx.superfences
