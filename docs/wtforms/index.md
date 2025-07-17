@@ -1,12 +1,12 @@
 # WTForms integration
 
-## Install WTForms
+## 1. Install WTForms
 
 ```sh
 poetry add Flask-WTF
 ```
 
-## Add the TNA Frontend Jinja WTForms helpers
+## 2. Add the TNA Frontend Jinja WTForms helpers
 
 ```py
 from flask import Flask
@@ -21,9 +21,9 @@ def create_app():
     WTFormsHelpers(app)
 ```
 
-## Form setup
+## 3. Form setup
 
-### 1. Create a form with fields
+### 3.1. Create a form with fields
 
 - [Defining a WTForms form](https://wtforms.readthedocs.io/en/3.1.x/forms/#defining-forms)
 - [WTForms fields](https://wtforms.readthedocs.io/en/3.1.x/fields/)
@@ -54,7 +54,7 @@ class TextInputForm(FlaskForm):
     )
 ```
 
-### 2. Add some validation
+### 3.2. Add some validation
 
 - [WTForms validators](https://wtforms.readthedocs.io/en/3.1.x/validators/)
 - [Custom TNA validators](./tna-validators.md)
@@ -94,7 +94,7 @@ class TextInputForm(FlaskForm):
     )
 ```
 
-### 3. Use the TNA widgets
+### 3.3. Use the TNA widgets
 
 - [TNA WTForms field widgets](./field-widgets.md)
 
@@ -139,7 +139,7 @@ class TextInputForm(FlaskForm):
     )
 ```
 
-## Routing
+## 4. Routing
 
 Create a route to display your form and accept `POST` requests and another route to handle the success state.
 
@@ -158,7 +158,7 @@ def success():
     return render_template("success.html")
 ```
 
-## Templates
+## 5. Templates
 
 ```jinja2
 {# my-form.html #}

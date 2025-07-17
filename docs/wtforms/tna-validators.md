@@ -47,6 +47,12 @@ year_birth = TnaYearField(
 )
 ```
 
+## Checkbox validators
+
+Compatible with:
+
+- [`SelectMultipleField`](https://wtforms.readthedocs.io/en/3.1.x/fields/#wtforms.fields.SelectMultipleField)
+
 ### `MaxOptions`
 
 Import: **`tna_frontend_jinja.wtforms.validators.MaxOptions`**
