@@ -1,4 +1,4 @@
-# Custom TNA Frontend Jinja fields
+# TNA WTForms fields
 
 TNA Frontend Jinja comes with some custom WTForms fields.
 

@@ -1,4 +1,6 @@
-# Custom TNA WTForms validators
+# TNA WTForms validators
+
+TNA Frontend Jinja comes with some custom WTForms validators.
 
 ## Date validators
 
