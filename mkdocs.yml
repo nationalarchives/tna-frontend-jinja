@@ -6,7 +6,7 @@ theme:
   features:
     - navigation.indexes
 extra_css:
-  - https://raw.githubusercontent.com/nationalarchives/tna-frontend-docs/refs/heads/main/docs/stylesheets/extra.css
+  - https://nationalarchives.github.io/tna-frontend-docs/stylesheets/extra.css
 plugins:
   - search
 markdown_extensions:
