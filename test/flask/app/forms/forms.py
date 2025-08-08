@@ -200,6 +200,17 @@ class DateInputProgressiveForm(FlaskForm):
     )
 
 
+class DateInputProgressiveLastDateForm(FlaskForm):
+    field = TnaProgressiveDateField(
+        "Search for date",
+        description="Enter a year, year and month or a full date",
+        validators=[
+            validators.Optional(),
+        ],
+        end_of_partial_date_range=True,
+    )
+
+
 class CheckboxForm(FlaskForm):
     field = BooleanField(
         "I agree to terms and conditions",

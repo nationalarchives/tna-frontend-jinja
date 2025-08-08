@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.23.0...HEAD)
 
 ### Added
+
+- Partial date fields (`TnaProgressiveDateField`, `TnaMonthField`, `TnaYearField`) can no be coersed to the end of the date range with `end_of_partial_date_range`
+
 ### Changed
 ### Deprecated
 ### Removed

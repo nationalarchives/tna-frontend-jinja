@@ -297,3 +297,110 @@ test("progressive date input", async ({ page }) => {
   await expect(page.getByLabel("Day")).toBeVisible();
   await expect(page.getByLabel("Day")).not.toHaveValue("15");
 });
+
+test("progressive date input end", async ({ page }) => {
+  await page.goto("/forms/date-input-progressive-end/");
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - group "Search for date":
+    - heading "Search for date" [level=2]
+    - text: Year
+    - textbox "Year"
+  - button "Submit"`);
+  await expect(page.getByLabel("Year")).toBeVisible();
+  await expect(page.getByLabel("Month")).not.toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await expectSingleFieldValue(page, null);
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await page.getByLabel("Year").fill("abc");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormFailure(page);
+  await expect(page.getByRole("main")).toHaveText(
+    /Search for date must be a real date/,
+  );
+  await page
+    .getByRole("link", { name: "Search for date must be a real date" })
+    .click();
+  await expectSingleFieldValue(page, null);
+  await expect(page.getByLabel("Year")).toBeFocused();
+  await expect(page.getByLabel("Month")).not.toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.getByLabel("Year").clear();
+  await page.getByLabel("Year").focus();
+  await page.keyboard.type("2003");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.keyboard.type("b");
+  await expect(page.getByLabel("Month")).not.toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.keyboard.press("Backspace");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expect(page.getByRole("main")).not.toHaveText(/There is a problem/);
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - group "Search for date":
+    - heading "Search for date" [level=2]
+    - text: Year
+    - textbox "Year"
+    - text: Month
+    - textbox "Month"
+  - button "Submit"`);
+  await expectSingleFieldValue(page, "Wed, 31 Dec 2003 23:59:59 GMT");
+
+  await page.goto("/forms/date-input-progressive-end/");
+  await expect(page.getByLabel("Month")).not.toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.getByLabel("Year").focus();
+  await page.keyboard.type("2003");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.getByLabel("Month").focus();
+  await page.keyboard.type("2");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Day")).toBeVisible();
+  await page.keyboard.type("b");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await page.keyboard.press("Backspace");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Day")).toBeVisible();
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expect(page.getByRole("main")).not.toHaveText(/There is a problem/);
+  await expectSingleFieldValue(page, "Fri, 28 Feb 2003 23:59:59 GMT");
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - group "Search for date":
+    - heading "Search for date" [level=2]
+    - text: Year
+    - textbox "Year"
+    - text: Month
+    - textbox "Month"
+    - text: Day
+    - textbox "Day"
+  - button "Submit"`);
+  await page.getByLabel("Day").fill("15");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormSuccess(page);
+  await expectSingleFieldValue(page, "Sat, 15 Feb 2003 23:59:59 GMT");
+  await page.getByLabel("Month").clear();
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await expect(page.getByLabel("Day")).toHaveValue("15");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormSuccess(page);
+  await expectSingleFieldValue(page, "Wed, 31 Dec 2003 23:59:59 GMT");
+  await expect(page.getByLabel("Year")).toBeVisible();
+  await expect(page.getByLabel("Year")).toHaveValue("2003");
+  await expect(page.getByLabel("Month")).toBeVisible();
+  await expect(page.getByLabel("Month")).toHaveValue("");
+  await expect(page.getByLabel("Day")).not.toBeVisible();
+  await expect(page.getByLabel("Day")).not.toHaveValue("15");
+  await page.getByLabel("Month").focus();
+  await page.keyboard.type("9");
+  await expect(page.getByLabel("Day")).toBeVisible();
+  await expect(page.getByLabel("Day")).not.toHaveValue("15");
+});

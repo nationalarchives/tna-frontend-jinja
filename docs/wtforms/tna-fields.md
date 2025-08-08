@@ -8,7 +8,9 @@ These exist mostly because we handle the date field with three inputs for day, m
 
 All fields support an optional `invalid_date_error_message` parameter to set the error message when an invalid date is entered. This defaults to "[field name] must be a real date".
 
-## `TnaDateField`
+## Absolute date fields
+
+### `TnaDateField`
 
 Import: **`tna_frontend_jinja.wtforms.fields.TnaDateField`**
 
@@ -21,7 +23,9 @@ date_of_birth = TnaDateField(
 )
 ```
 
-## `TnaMonthField`
+## Partial date fields
+
+### `TnaMonthField`
 
 Import: **`tna_frontend_jinja.wtforms.fields.TnaMonthField`**
 
@@ -34,7 +38,7 @@ month_of_birth = TnaMonthField(
 )
 ```
 
-## `TnaYearField`
+### `TnaYearField`
 
 Import: **`tna_frontend_jinja.wtforms.fields.TnaYearField`**
 
@@ -47,19 +51,7 @@ year_of_birth = TnaYearField(
 )
 ```
 
-### Optional two digit year support
-
-Pass the `allow_two_digit_year` parameter to allow support for two digit years.
-
-```py
-year_of_birth = TnaYearField(
-    "Year of birth",
-    allow_two_digit_year=True,
-    description="Enter your year of birth in the format YY or YYYY",
-)
-```
-
-## `TnaProgressiveDateField`
+### `TnaProgressiveDateField`
 
 Import: **`tna_frontend_jinja.wtforms.fields.TnaProgressiveDateField`**
 
@@ -69,5 +61,44 @@ Date fields that accept year, year/month or year/month/day
 approx_date_of_death = TnaProgressiveDateField(
     "Date of death",
     description="Enter as much of the date as you know; either the year, year and month or the full date",
+)
+```
+
+### Options
+
+#### Two digit year support
+
+Pass `allow_two_digit_year=True` parameter to enable support for two digit years in partial date fields.
+
+```py
+year_of_birth = TnaYearField(
+    "Year of birth",
+    description="Enter your year of birth in the format YY or YYYY",
+    allow_two_digit_year=True,
+)
+```
+
+#### Coerce partial date to the end of its range
+
+Pass `end_of_partial_date_range=True` parameter to coerse a partial date to the end of its range.
+
+| Inputs           | `end_of_partial_date_range=False` | `end_of_partial_date_range=True` |
+| ---------------- | --------------------------------- | -------------------------------- |
+| `2003`           | `Wed, 01 Jan 2003 00:00:00 GMT`   | `Wed, 31 Dec 2003 23:59:59 GMT`  |
+| `2003`, `9`      | `Mon, 01 Sep 2003 00:00:00 GMT`   | `Tue, 30 Sep 2003 23:59:59 GMT`  |
+| `2003`, `9`, `2` | `Tue, 02 Sep 2003 00:00:00 GMT`   | `Tue, 02 Sep 2003 23:59:59 GMT`  |
+
+```py
+# Will result in 1 Jan for the given year
+start = TnaYearField(
+    "Record start year",
+    description="Enter the starting year",
+)
+
+# Will result in 31 Dec for the given year
+end = TnaYearField(
+    "Record end year",
+    description="Enter the ending year",
+    end_of_partial_date_range=True,
 )
 ```

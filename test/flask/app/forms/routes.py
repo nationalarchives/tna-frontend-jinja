@@ -8,6 +8,7 @@ from app.forms.forms import (
     DateInputForm,
     DateInputMonthForm,
     DateInputProgressiveForm,
+    DateInputProgressiveLastDateForm,
     DateInputYearForm,
     DroppableFileInputForm,
     DroppableFilesInputForm,
@@ -133,6 +134,13 @@ def date_input_year():
 @bp.route("/date-input-progressive/", methods=["GET", "POST"])
 def date_input_progressive():
     form = DateInputProgressiveForm()
+    success = form.validate_on_submit()
+    return render_template("single-field.html", form=form, success=success)
+
+
+@bp.route("/date-input-progressive-end/", methods=["GET", "POST"])
+def date_input_progressive_end():
+    form = DateInputProgressiveLastDateForm()
     success = form.validate_on_submit()
     return render_template("single-field.html", form=form, success=success)
 

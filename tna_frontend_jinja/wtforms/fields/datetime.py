@@ -1,3 +1,4 @@
+import calendar
 import datetime
 import itertools
 
@@ -143,11 +144,77 @@ class TnaDateField(DateField):
         raise ValueError(self.gettext(self.invalid_date_error_message))
 
 
-class TnaMonthField(TnaDateField):
+class TnaPartialDateField(TnaDateField):
     def __init__(
-        self, label=None, validators=None, allow_two_digit_year=False, **kwargs
+        self,
+        label=None,
+        validators=None,
+        end_of_partial_date_range=False,
+        **kwargs,
     ):
-        super().__init__(label, validators, **kwargs)
+        super().__init__(label, validators, end_of_partial_date_range, **kwargs)
+        self.end_of_partial_date_range = end_of_partial_date_range
+
+    def process_formdata(self, valuelist):
+        if not valuelist:
+            return
+
+        if "" in valuelist:
+            valuelist = valuelist[: valuelist.index("")]
+
+        has_year = len(valuelist) >= 1
+        has_month = len(valuelist) >= 2
+        has_day = len(valuelist) >= 3
+
+        date_str = " ".join([value for value in valuelist if value])
+
+        for format in self.strptime_format:
+            try:
+                parsed_date = datetime.datetime.strptime(date_str, format)
+
+                if self.end_of_partial_date_range:
+                    if has_day:
+                        self.data = parsed_date.replace(hour=23, minute=59, second=59)
+                    elif has_month:
+                        self.data = parsed_date.replace(
+                            day=calendar.monthrange(
+                                parsed_date.year, parsed_date.month
+                            )[1],
+                            hour=23,
+                            minute=59,
+                            second=59,
+                        )
+                    elif has_year:
+                        self.data = parsed_date.replace(
+                            month=12,
+                            day=calendar.monthrange(
+                                parsed_date.year, parsed_date.month
+                            )[1],
+                            hour=23,
+                            minute=59,
+                            second=59,
+                        )
+                    else:
+                        self.data = parsed_date.replace(hour=23, minute=59, second=59)
+                else:
+                    self.data = parsed_date
+                return
+            except ValueError:
+                self.data = None
+
+        raise ValueError(self.gettext(self.invalid_date_error_message))
+
+
+class TnaMonthField(TnaPartialDateField):
+    def __init__(
+        self,
+        label=None,
+        validators=None,
+        allow_two_digit_year=False,
+        end_of_partial_date_range=False,
+        **kwargs,
+    ):
+        super().__init__(label, validators, end_of_partial_date_range, **kwargs)
         self.format = [
             format
             for format in [
@@ -163,11 +230,16 @@ class TnaMonthField(TnaDateField):
         self.strptime_format = clean_datetime_format_for_strptime(self.format)
 
 
-class TnaYearField(TnaDateField):
+class TnaYearField(TnaPartialDateField):
     def __init__(
-        self, label=None, validators=None, allow_two_digit_year=False, **kwargs
+        self,
+        label=None,
+        validators=None,
+        allow_two_digit_year=False,
+        end_of_partial_date_range=False,
+        **kwargs,
     ):
-        super().__init__(label, validators, **kwargs)
+        super().__init__(label, validators, end_of_partial_date_range, **kwargs)
         self.format = [
             format
             for format in ["%Y", ("%y") if allow_two_digit_year else None]
@@ -176,11 +248,16 @@ class TnaYearField(TnaDateField):
         self.strptime_format = clean_datetime_format_for_strptime(self.format)
 
 
-class TnaProgressiveDateField(TnaDateField):
+class TnaProgressiveDateField(TnaPartialDateField):
     def __init__(
-        self, label=None, validators=None, allow_two_digit_year=False, **kwargs
+        self,
+        label=None,
+        validators=None,
+        allow_two_digit_year=False,
+        end_of_partial_date_range=False,
+        **kwargs,
     ):
-        super().__init__(label, validators, **kwargs)
+        super().__init__(label, validators, end_of_partial_date_range, **kwargs)
         self.format = [
             format
             for format in [
