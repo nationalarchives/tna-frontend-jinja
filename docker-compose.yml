@@ -10,10 +10,12 @@ services:
     volumes:
       - ./test/flask/app:/app/app
       - ./tna_frontend_jinja:/app/tna_frontend_jinja
+
   dev:
     image: ghcr.io/nationalarchives/tna-python-dev:preview
     volumes:
       - ./:/app
+
   docs:
     image: squidfunk/mkdocs-material
     volumes:
