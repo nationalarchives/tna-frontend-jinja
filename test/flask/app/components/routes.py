@@ -64,6 +64,11 @@ def error_summary():
     return render_component("widgets/error-summary.html")
 
 
+@bp.route("/fieldset")
+def fieldset():
+    return render_component("widgets/fieldset.html")
+
+
 @bp.route("/file-input")
 def file_input():
     return render_component("widgets/file-input.html")
@@ -107,6 +112,11 @@ def index_grid():
 @bp.route("/pagination")
 def pagination():
     return render_component("widgets/pagination.html")
+
+
+@bp.route("/panel")
+def panel():
+    return render_component("widgets/panel.html")
 
 
 @bp.route("/phase-banner")

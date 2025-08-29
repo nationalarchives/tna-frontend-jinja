@@ -9,6 +9,7 @@ from tna_frontend_jinja.wtforms import (
     TnaDroppableFileInputWidget,
     TnaDroppableFilesInputWidget,
     TnaEmailInputWidget,
+    TnaFieldsetWidget,
     TnaFileInputWidget,
     TnaFilesInputWidget,
     TnaMonthField,
@@ -31,6 +32,7 @@ from wtforms import (
     EmailField,
     FileField,
     FloatField,
+    FormField,
     IntegerField,
     MultipleFileField,
     PasswordField,
@@ -354,6 +356,40 @@ class DroppableFilesInputForm(FlaskForm):
             ),
         ],
         widget=TnaDroppableFilesInputWidget(),
+    )
+
+
+class AddressForm(FlaskForm):
+    address_1 = StringField(
+        "Address line 1",
+        widget=TnaTextInputWidget(),
+        validators=[
+            validators.InputRequired(message="Enter the first line of your address"),
+        ],
+    )
+
+    address_2 = StringField(
+        "Address line 2",
+        widget=TnaTextInputWidget(),
+    )
+
+    postcode = StringField(
+        "Postcode",
+        widget=TnaTextInputWidget(),
+        validators=[
+            validators.InputRequired(message="Enter your postcode"),
+            tna_frontend_validators.UKPostcode(message="Enter a valid UK postcode"),
+        ],
+        render_kw={"size": "s"},
+    )
+
+
+class FieldsetForm(FlaskForm):
+    field = FormField(
+        AddressForm,
+        label="Address",
+        description="Enter your address to recieve pizza.",
+        widget=TnaFieldsetWidget(),
     )
 
 

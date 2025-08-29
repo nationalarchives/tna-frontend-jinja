@@ -1,5 +1,5 @@
 {% macro tnaGallery(params) %}
-{% from "components/button/macro.html" import tnaButton %}
+{%- from 'components/button/macro.html' import tnaButton -%}
 
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
 {%- if params.bounded -%}

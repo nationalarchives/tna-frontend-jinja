@@ -12,6 +12,7 @@ from app.forms.forms import (
     DateInputYearForm,
     DroppableFileInputForm,
     DroppableFilesInputForm,
+    FieldsetForm,
     FileInputForm,
     FilesInputForm,
     KitchenSinkForm,
@@ -270,6 +271,13 @@ def dropable_files_input():
         form=form,
         success=success,
     )
+
+
+@bp.route("/fieldset/", methods=["GET", "POST"])
+def fieldset():
+    form = FieldsetForm()
+    success = form.validate_on_submit()
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/kitchen-sink/", methods=["GET", "POST"])

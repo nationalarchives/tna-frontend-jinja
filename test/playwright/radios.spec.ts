@@ -9,7 +9,7 @@ test("radios", async ({ page }) => {
   await page.goto("/forms/radios/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Level":
-    - text: Level
+    - heading "Level" [level=1]
     - radio "Apprentice"
     - text: Apprentice
     - radio "Junior"

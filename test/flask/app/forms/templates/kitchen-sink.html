@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
 {% block form %}
+  <h1 class="tna-heading-xl">Form</h1>
+  
   {{ form.search(params={
-    'headingLevel': 2
+    'headingLevel': 2,
+    'headingSize': 'm'
   }) }}
 
   {{ form.username(params={
     'headingLevel': 2,
+    'headingSize': 'm',
     'spellcheck': False,
-    'autofill': 'username',
-    'attributes': {
-      'data-foo': 'bar',
-      'data-baz': True
-    }
+    'autofill': 'username'
   }) }}
 
   {{ form.password(params={
@@ -33,7 +33,8 @@
 
   {{ form.remember(params={
     'label': 'Terms and conditions',
-    'headingLevel': 2
+    'headingLevel': 2,
+    'small': True
   }) }}
 
   {{ form.url(params={

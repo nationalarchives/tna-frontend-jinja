@@ -8,7 +8,7 @@ import {
 test("text input", async ({ page }) => {
   await page.goto("/forms/text-input/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
-  - heading "Username" [level=2]
+  - heading "Username" [level=1]
   - paragraph: This will be used to log in
   - textbox "Username"
   - button "Submit"`);

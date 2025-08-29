@@ -8,7 +8,7 @@ import {
 test("textarea", async ({ page }) => {
   await page.goto("/forms/textarea/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
-  - heading "Message" [level=2]
+  - heading "Message" [level=1]
   - textbox "Message"
   - button "Submit"`);
   await expectSingleFieldValue(page, null);

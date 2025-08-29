@@ -29,7 +29,7 @@ test("checkboxes", async ({ page }) => {
   await page.goto("/forms/checkboxes/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Languages":
-    - text: Languages
+    - heading "Languages" [level=1]
     - paragraph: Select up to two programming languages
     - checkbox "C++"
     - text: C++
