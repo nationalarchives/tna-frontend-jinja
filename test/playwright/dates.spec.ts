@@ -171,7 +171,7 @@ test("year input", async ({ page }) => {
 
   await expectFormFailure(page);
   await expect(page.getByRole("main")).toHaveText(
-    /Planned year of retirement must be a valid year/,
+    /Planned year of retirement must be a valid four-digit year/,
   );
   await expect(page.getByLabel("Year")).toHaveValue("abc");
   await page.getByLabel("Year").fill("1999");

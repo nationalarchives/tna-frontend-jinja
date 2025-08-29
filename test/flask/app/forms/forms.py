@@ -182,7 +182,7 @@ class DateInputYearForm(FlaskForm):
         "Planned year of retirement",
         description="Enter your planned year of retirement in the format YY or YYYY",
         allow_two_digit_year=True,
-        invalid_date_error_message="Planned year of retirement must be a valid year",
+        invalid_date_error_message="Planned year of retirement must be a valid four-digit year",
         validators=[
             validators.InputRequired(message="Enter a year for retirement"),
             tna_frontend_validators.FutureDate(
