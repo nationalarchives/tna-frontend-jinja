@@ -95,7 +95,7 @@ This way you can continue to use the same import (e.g. `{%- from 'components/but
 
 ## WTForms
 
-See the [TNA Frontend Jinja WTForms docs](docs/wtforms/index.md).
+See the [TNA Frontend Jinja WTForms docs](https://nationalarchives.github.io/tna-frontend-jinja/wtforms/).
 
 ## Running tests
 
