@@ -1,19 +1,3 @@
-from deepmerge import Merger
-
-merger = Merger(
-    # pass in a list of tuple, with the
-    # strategies you are looking to apply
-    # to each type.
-    [(list, ["append"]), (dict, ["merge"])],
-    # next, choose the fallback strategies,
-    # applied to all other types:
-    ["override"],
-    # finally, choose the strategies in
-    # the case where the types conflict:
-    ["override"],
-)
-
-
 def flatten_errors(errors, prefix="", id_map={}):
     """Return list of errors from form errors."""
     error_list = []
@@ -77,7 +61,10 @@ def wtforms_errors(form, params={}):
             [{"text": "Try submitting the form again", "href": None}]
         )
 
-    return merger.merge(wtforms_params, params)
+    merged = wtforms_params.copy()
+    merged.update(params)
+
+    return merged
 
 
 class WTFormsHelpers(object):
