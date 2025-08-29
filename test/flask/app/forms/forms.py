@@ -9,6 +9,7 @@ from tna_frontend_jinja.wtforms import (
     TnaDroppableFileInputWidget,
     TnaDroppableFilesInputWidget,
     TnaEmailInputWidget,
+    TnaFieldsetWidget,
     TnaFileInputWidget,
     TnaFilesInputWidget,
     TnaMonthField,
@@ -31,6 +32,7 @@ from wtforms import (
     EmailField,
     FileField,
     FloatField,
+    FormField,
     IntegerField,
     MultipleFileField,
     PasswordField,
@@ -180,7 +182,7 @@ class DateInputYearForm(FlaskForm):
         "Planned year of retirement",
         description="Enter your planned year of retirement in the format YY or YYYY",
         allow_two_digit_year=True,
-        invalid_date_error_message="Planned year of retirement must be a valid year",
+        invalid_date_error_message="Planned year of retirement must be a valid four-digit year",
         validators=[
             validators.InputRequired(message="Enter a year for retirement"),
             tna_frontend_validators.FutureDate(
@@ -357,6 +359,42 @@ class DroppableFilesInputForm(FlaskForm):
     )
 
 
+class AddressForm(FlaskForm):
+    address_1 = StringField(
+        "Address line 1",
+        widget=TnaTextInputWidget(),
+        validators=[
+            validators.InputRequired(message="Enter the first line of your address"),
+        ],
+        render_kw={"headingSize": "xs"},
+    )
+
+    address_2 = StringField(
+        "Address line 2",
+        widget=TnaTextInputWidget(),
+        render_kw={"headingSize": "xs"},
+    )
+
+    postcode = StringField(
+        "Postcode",
+        widget=TnaTextInputWidget(),
+        validators=[
+            validators.InputRequired(message="Enter your postcode"),
+            tna_frontend_validators.UKPostcode(message="Enter a valid UK postcode"),
+        ],
+        render_kw={"headingSize": "xs", "size": "s"},
+    )
+
+
+class FieldsetForm(FlaskForm):
+    field = FormField(
+        AddressForm,
+        label="Address",
+        description="Enter your address to recieve pizza.",
+        widget=TnaFieldsetWidget(),
+    )
+
+
 class KitchenSinkForm(FlaskForm):
     search = SearchField(
         "Search",
@@ -365,13 +403,13 @@ class KitchenSinkForm(FlaskForm):
 
     username = StringField(
         "Username",
-        widget=TnaTextInputWidget(),
         validators=[
             validators.InputRequired(message="Enter a username"),
             validators.Length(
                 max=16, message="Usernames must be 16 characters or fewer"
             ),
         ],
+        widget=TnaTextInputWidget(),
     )
 
     password = PasswordField(

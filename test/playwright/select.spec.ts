@@ -8,7 +8,7 @@ import {
 test("select", async ({ page }) => {
   await page.goto("/forms/select/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
-  - heading "Order" [level=2]
+  - heading "Order" [level=1]
   - combobox "Order":
     - option "None" [selected]
     - option "Date"

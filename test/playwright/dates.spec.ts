@@ -9,7 +9,7 @@ test("date input", async ({ page }) => {
   await page.goto("/forms/date-input/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Date of birth":
-    - heading "Date of birth" [level=2]
+    - heading "Date of birth" [level=1]
     - text: Day
     - textbox "Day"
     - text: Month
@@ -95,7 +95,7 @@ test("month input", async ({ page }) => {
   await page.goto("/forms/date-input-month/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Month of birth":
-    - heading "Month of birth" [level=2]
+    - heading "Month of birth" [level=1]
     - text: Month
     - textbox "Month"
     - text: Year
@@ -154,7 +154,7 @@ test("year input", async ({ page }) => {
   await page.goto("/forms/date-input-year/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Planned year of retirement":
-    - heading "Planned year of retirement" [level=2]
+    - heading "Planned year of retirement" [level=1]
     - text: Year
     - textbox "Year"
   - button "Submit"`);
@@ -171,7 +171,7 @@ test("year input", async ({ page }) => {
 
   await expectFormFailure(page);
   await expect(page.getByRole("main")).toHaveText(
-    /Planned year of retirement must be a valid year/,
+    /Planned year of retirement must be a valid four-digit year/,
   );
   await expect(page.getByLabel("Year")).toHaveValue("abc");
   await page.getByLabel("Year").fill("1999");
@@ -195,7 +195,7 @@ test("progressive date input", async ({ page }) => {
   await page.goto("/forms/date-input-progressive/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Search for date":
-    - heading "Search for date" [level=2]
+    - heading "Search for date" [level=1]
     - text: Year
     - textbox "Year"
   - button "Submit"`);
@@ -235,7 +235,7 @@ test("progressive date input", async ({ page }) => {
   await expect(page.getByRole("main")).not.toHaveText(/There is a problem/);
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Search for date":
-    - heading "Search for date" [level=2]
+    - heading "Search for date" [level=1]
     - text: Year
     - textbox "Year"
     - text: Month
@@ -266,7 +266,7 @@ test("progressive date input", async ({ page }) => {
   await expectSingleFieldValue(page, "Sat, 01 Feb 2003 00:00:00 GMT");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Search for date":
-    - heading "Search for date" [level=2]
+    - heading "Search for date" [level=1]
     - text: Year
     - textbox "Year"
     - text: Month
@@ -302,7 +302,7 @@ test("progressive date input end", async ({ page }) => {
   await page.goto("/forms/date-input-progressive-end/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Search for date":
-    - heading "Search for date" [level=2]
+    - heading "Search for date" [level=1]
     - text: Year
     - textbox "Year"
   - button "Submit"`);
@@ -342,7 +342,7 @@ test("progressive date input end", async ({ page }) => {
   await expect(page.getByRole("main")).not.toHaveText(/There is a problem/);
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Search for date":
-    - heading "Search for date" [level=2]
+    - heading "Search for date" [level=1]
     - text: Year
     - textbox "Year"
     - text: Month
@@ -373,7 +373,7 @@ test("progressive date input end", async ({ page }) => {
   await expectSingleFieldValue(page, "Fri, 28 Feb 2003 23:59:59 GMT");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Search for date":
-    - heading "Search for date" [level=2]
+    - heading "Search for date" [level=1]
     - text: Year
     - textbox "Year"
     - text: Month

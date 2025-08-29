@@ -10,6 +10,7 @@ from .widgets import (  # noqa: F401
     TnaDroppableFileInputWidget,
     TnaDroppableFilesInputWidget,
     TnaEmailInputWidget,
+    TnaFieldsetWidget,
     TnaFileInputWidget,
     TnaFilesInputWidget,
     TnaNumberInputWidget,

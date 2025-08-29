@@ -99,6 +99,8 @@ class TextInputForm(FlaskForm):
 
 - [Supported field widgets](#supported-fields-and-widgets)
 
+Use `render_kw` to set defaults for the attributes on the field. These can be overwritten by `params` in the template.
+
 ```diff
 from flask_wtf import FlaskForm
 + from tna_frontend_jinja.wtforms import (
@@ -132,6 +134,7 @@ class TextInputForm(FlaskForm):
             validators.Email(message="Enter a valid email address"),
         ],
 +         widget=TnaEmailInputWidget(),
++         render_kw={"size": "m"},
     )
 
     submit = SubmitField(
@@ -191,7 +194,7 @@ Customise the components by adding a `params` parameter to the field constructor
   {{ form.username }}
 
   <!-- Add the email field and customise it with parameters -->
-  {{ form.email(params={ 'headingLevel': 3 }) }}
+  {{ form.email(params={'headingLevel': 3}) }}
 
   <div class="tna-button-group">
     {{ form.submit }}
@@ -214,7 +217,7 @@ Customise the components by adding a `params` parameter to the field constructor
 | [`FieldList`](https://wtforms.readthedocs.io/en/3.1.x/fields/#wtforms.fields.FieldList)                     | 🔧 [not yet supported]                                                    |
 | [`FileField`](https://wtforms.readthedocs.io/en/3.1.x/fields/#wtforms.fields.FileField)                     | ✅ `TnaFileInputWidget` or `TnaDroppableFileInputWidget`                  |
 | [`FloatField`](https://wtforms.readthedocs.io/en/3.1.x/fields/#wtforms.fields.FloatField)                   | ✅ `TnaNumberInputWidget`                                                 |
-| [`FormField`](https://wtforms.readthedocs.io/en/3.1.x/fields/#wtforms.fields.FormField)                     | 🔧 [not yet supported]                                                    |
+| [`FormField`](https://wtforms.readthedocs.io/en/3.1.x/fields/#wtforms.fields.FormField)                     | ✅ `TnaFieldsetWidget` (optional)                                         |
 | [`HiddenField`](https://wtforms.readthedocs.io/en/3.1.x/fields/#wtforms.fields.HiddenField)                 | ✅ [none needed]                                                          |
 | [`IntegerField`](https://wtforms.readthedocs.io/en/3.1.x/fields/#wtforms.fields.IntegerField)               | ✅ `TnaNumberInputWidget`                                                 |
 | [`IntegerRangeField`](https://wtforms.readthedocs.io/en/3.1.x/fields/#wtforms.fields.IntegerRangeField)     | 🔧 [not yet supported]                                                    |

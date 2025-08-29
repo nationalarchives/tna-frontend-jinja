@@ -1,5 +1,5 @@
 {% macro tnaGlobalHeader(params) %}
-{% from "components/phase-banner/macro.html" import tnaPhaseBanner %}
+{%- from 'components/phase-banner/macro.html' import tnaPhaseBanner -%}
 
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
 {%- if params.collapseOnMedium -%}

@@ -8,7 +8,7 @@ import { readFileSync } from "fs";
 test("file input", async ({ page }) => {
   await page.goto("/forms/file-input/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
-  - heading "File" [level=2]
+  - heading "File" [level=1]
   - paragraph: Upload a file
   - button "File"
   - button "Submit"`);
@@ -56,7 +56,7 @@ test("file input", async ({ page }) => {
 test("multiple file input", async ({ page }) => {
   await page.goto("/forms/files-input/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
-  - heading "Files" [level=2]
+  - heading "Files" [level=1]
   - paragraph: Upload a set of files
   - button "Files"
   - button "Submit"`);

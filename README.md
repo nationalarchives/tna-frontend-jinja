@@ -72,7 +72,7 @@ Ensure your application is first on the list of template directories. This means
 ## Using the templates
 
 ```jinja
-{% from 'components/button/macro.html' import tnaButton %}
+{%- from 'components/button/macro.html' import tnaButton -%}
 
 {{ tnaButton({
   'text': 'Save and continue'
@@ -91,7 +91,7 @@ To make modifications to the templates, create a new file in your applciation te
 
 For example, if your application templates directory is `app/templates`, create `app/templates/components/button/macro.html` and insert your own HTML using the same macro name (e.g. `tnaButton`).
 
-This way you can continue to use the same import (e.g. `{% from 'components/button/macro.html' import tnaButton %}`) but introduce your own bespoke functionality.
+This way you can continue to use the same import (e.g. `{%- from 'components/button/macro.html' import tnaButton -%}`) but introduce your own bespoke functionality.
 
 ## WTForms
 
@@ -127,6 +127,7 @@ Ensure you install the correct version of TNA Frontend for the version of the te
 
 | TNA Frontend Jinja | Compatible TNA Frontend version(s) |
 | ------------------ | ---------------------------------- |
+| `0.24.0`           | `0.24.0`                           |
 | `0.23.0`           | `0.23.0`                           |
 | `0.22.0`           | `0.22.0`                           |
 | `0.21.0`           | `0.21.0`                           |

@@ -4,7 +4,7 @@ import { expectFormSuccess, expectSingleFieldValue } from "./lib";
 test("search", async ({ page }) => {
   await page.goto("/forms/search/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
-  - heading "Search" [level=2]
+  - heading "Search" [level=1]
   - searchbox "Search"
   - button "Search"`);
   await expectSingleFieldValue(page, null);
