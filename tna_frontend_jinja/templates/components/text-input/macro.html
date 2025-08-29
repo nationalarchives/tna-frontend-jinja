@@ -22,7 +22,6 @@
     {%- if params.autofill %} autofill="{{ params.autofill }}"{% endif %}
 {%- endif %}
 {%- if params.inputmode %} inputmode="{{ params.inputmode }}"{% endif %}
-{%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}
-{%- if extraAttributes %}{% for attribute, value in extraAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+{%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
 {%- endcall %}
 {% endmacro %}

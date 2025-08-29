@@ -366,11 +366,13 @@ class AddressForm(FlaskForm):
         validators=[
             validators.InputRequired(message="Enter the first line of your address"),
         ],
+        render_kw={"headingSize": "xs"},
     )
 
     address_2 = StringField(
         "Address line 2",
         widget=TnaTextInputWidget(),
+        render_kw={"headingSize": "xs"},
     )
 
     postcode = StringField(
@@ -380,7 +382,7 @@ class AddressForm(FlaskForm):
             validators.InputRequired(message="Enter your postcode"),
             tna_frontend_validators.UKPostcode(message="Enter a valid UK postcode"),
         ],
-        render_kw={"size": "s"},
+        render_kw={"headingSize": "xs", "size": "s"},
     )
 
 
