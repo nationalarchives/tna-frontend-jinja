@@ -12,9 +12,9 @@ class FutureDate:
         Error message to raise in case of a validation error.
     """
 
-    def __init__(self, message=None, include_today=False):
+    def __init__(self, message=None, include_now=False):
         self.message = message
-        self.include_today = include_today
+        self.include_now = include_now
 
     def __call__(self, form, field):
         message = self.message
@@ -27,8 +27,8 @@ class FutureDate:
                 field_date = field.data.date()
             except AttributeError:
                 field_date = field.data
-            if (self.include_today and field_date < datetime.date.today()) or (
-                not self.include_today and field_date <= datetime.date.today()
+            if (self.include_now and field_date < datetime.date.today()) or (
+                not self.include_now and field_date <= datetime.date.today()
             ):
                 raise ValueError(message)
         except ValueError as exc:
@@ -43,9 +43,9 @@ class PastDate:
         Error message to raise in case of a validation error.
     """
 
-    def __init__(self, message=None, include_today=False):
+    def __init__(self, message=None, include_now=False):
         self.message = message
-        self.include_today = include_today
+        self.include_now = include_now
 
     def __call__(self, form, field):
         message = self.message
@@ -58,8 +58,8 @@ class PastDate:
                 field_date = field.data.date()
             except AttributeError:
                 field_date = field.data
-            if (self.include_today and field_date > datetime.date.today()) or (
-                not self.include_today and field_date >= datetime.date.today()
+            if (self.include_now and field_date > datetime.date.today()) or (
+                not self.include_now and field_date >= datetime.date.today()
             ):
                 raise ValueError(message)
         except ValueError as exc:
@@ -104,7 +104,7 @@ class UKPostcode:
     def __call__(self, form, field):
         message = self.message
         if message is None:
-            message = field.gettext("Date must be in the future")
+            message = field.gettext("Enter a valid UK postcode")
         try:
             if not field.data:
                 raise ValidationError(message)

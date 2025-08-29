@@ -20,7 +20,7 @@ year_of_retirement = TnaYearField(
     "Planned year of retirement",
     description="Enter your planned year of retirement in the format YYYY",
     invalid_date_error_message="Planned year of retirement must be a valid year",
-    include_today=True,  # The current year is a valid option
+    include_now=True,  # The current year is a valid option
     validators=[
         validators.InputRequired(message="Enter a year for retirement"),
         tna_frontend_validators.FutureDate(
@@ -39,7 +39,7 @@ year_birth = TnaYearField(
     "Year of birth",
     description="Enter your year of birth in the format YYYY",
     invalid_date_error_message="Year of birth must be a valid year",
-    include_today=False,  # Don't consider the current year valid
+    include_now=False,  # Don't consider the current year valid
     validators=[
         validators.InputRequired(message="Enter a year of birth"),
         tna_frontend_validators.PastDate(
@@ -63,14 +63,27 @@ Import: **`tna_frontend_jinja.wtforms.validators.MaxOptions`**
 contact_preference = SelectMultipleField(
     "Contact preference",
     description="Select up to two methods of contact",
+    choices=[("phone", "Phone"), ("email", "Email"), ("sms", "SMS")],
     validators=[
-        validators.InputRequired(message="Select at least one item"),
         tna_frontend_validators.MaxOptions(
             max=2,
             message="You must select no more than 2 items"
         ),
     ],
-    choices=[("phone", "Phone"), ("email", "Email"), ("sms", "SMS")],
     widget=TnaCheckboxesWidget(),
+)
+```
+
+## `UKPostcode`
+
+Import: **`tna_frontend_jinja.wtforms.validators.UKPostcode`**
+
+```py
+postcode = StringField(
+    "Postcode",
+    validators=[
+        tna_frontend_validators.UKPostcode(message="Enter a valid UK postcode"),
+    ],
+    widget=TnaTextInputWidget(),
 )
 ```

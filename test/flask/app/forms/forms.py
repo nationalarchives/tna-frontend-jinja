@@ -403,13 +403,13 @@ class KitchenSinkForm(FlaskForm):
 
     username = StringField(
         "Username",
-        widget=TnaTextInputWidget(),
         validators=[
             validators.InputRequired(message="Enter a username"),
             validators.Length(
                 max=16, message="Usernames must be 16 characters or fewer"
             ),
         ],
+        widget=TnaTextInputWidget(),
     )
 
     password = PasswordField(

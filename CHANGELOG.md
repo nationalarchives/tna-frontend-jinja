@@ -20,11 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Partial date fields (`TnaProgressiveDateField`, `TnaMonthField`, `TnaYearField`) can no be coersed to the end of the date range with `end_of_partial_date_range`
 - New fieldset widget for optional use with `FormField`
+- New UK postcode validator `UKPostcode`
 
 ### Changed
 
 - Upgraded to [TNA Frontend `v0.24.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.24.0)
 - Removed requirement for `deepmerge` package
+- `include_today` parameter on `PastDate` and `FutureDate` validators changed to `include_now`
 
 ## [0.23.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.22.0...v0.23.0) - 2025-07-30
 
