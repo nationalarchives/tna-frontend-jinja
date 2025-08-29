@@ -99,6 +99,8 @@ class TextInputForm(FlaskForm):
 
 - [Supported field widgets](#supported-fields-and-widgets)
 
+Use `render_kw` to set defaults for the attributes on the field. These can be overwritten by `params` in the template.
+
 ```diff
 from flask_wtf import FlaskForm
 + from tna_frontend_jinja.wtforms import (
@@ -132,6 +134,7 @@ class TextInputForm(FlaskForm):
             validators.Email(message="Enter a valid email address"),
         ],
 +         widget=TnaEmailInputWidget(),
++         render_kw={"size": "m"},
     )
 
     submit = SubmitField(
@@ -191,7 +194,7 @@ Customise the components by adding a `params` parameter to the field constructor
   {{ form.username }}
 
   <!-- Add the email field and customise it with parameters -->
-  {{ form.email(params={ 'headingLevel': 3 }) }}
+  {{ form.email(params={'headingLevel': 3}) }}
 
   <div class="tna-button-group">
     {{ form.submit }}
