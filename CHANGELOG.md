@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Upgraded to [TNA Frontend `v0.25.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.25.0)
-- `BooleanField` with `TnaCheckboxWidget` doesn't render a fieldset and takes the fiel `desciption` as the checkbox label
+- `BooleanField` with `TnaCheckboxWidget` doesn't render a fieldset and takes the field `desciption` as the checkbox label
 
 ## [0.24.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.23.0...v0.24.0) - 2025-07-30
 
