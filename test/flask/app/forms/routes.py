@@ -150,7 +150,7 @@ def date_input_progressive_end():
 def checkbox():
     form = CheckboxForm()
     success = form.validate_on_submit()
-    return render_template("checkbox.html", form=form, success=success)
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/checkboxes/", methods=["GET", "POST"])

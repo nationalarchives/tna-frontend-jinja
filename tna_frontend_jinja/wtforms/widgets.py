@@ -170,6 +170,15 @@ class TnaCheckboxWidget(TnaCheckboxesWidget):
 
         return super().__call__(field_group, **kwargs)
 
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
+
+        if description := field.description:
+            params["items"][0]["text"] = description
+            del params["hint"]
+
+        return params
+
 
 class TnaRadiosWidget(TnaIterableWidget):
     template = "widgets/radios.html"

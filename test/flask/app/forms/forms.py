@@ -215,7 +215,8 @@ class DateInputProgressiveLastDateForm(FlaskForm):
 
 class CheckboxForm(FlaskForm):
     field = BooleanField(
-        "I agree to terms and conditions",
+        "Terms and conditions",
+        description="I agree to terms and conditions",
         validators=[
             validators.InputRequired(
                 message="You must agree to the terms and conditions"

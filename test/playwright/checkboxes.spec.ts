@@ -8,10 +8,9 @@ import {
 test("checkbox", async ({ page }) => {
   await page.goto("/forms/checkbox/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
-  - group "Terms and conditions":
-    - text: Terms and conditions
-    - checkbox "I agree to terms and conditions"
-    - text: I agree to terms and conditions
+  - heading "Terms and conditions" [level=1]
+  - checkbox "Terms and conditions I agree to terms and conditions"
+  - text: I agree to terms and conditions
   - button "Submit"`);
   await page.getByRole("button", { name: "Submit" }).click();
 
