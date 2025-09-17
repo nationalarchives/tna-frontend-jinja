@@ -110,7 +110,7 @@ class TnaDateField(DateField):
                 for part in self.field_codes(True)
             ]
 
-            if "" in raw_data:
+            if self.progressive and "" in raw_data:
                 raw_data = raw_data[: raw_data.index("")]
 
             self.raw_data = raw_data
@@ -130,7 +130,7 @@ class TnaDateField(DateField):
         if not valuelist:
             return
 
-        if "" in valuelist:
+        if self.progressive and "" in valuelist:
             valuelist = valuelist[: valuelist.index("")]
 
         date_str = " ".join([value for value in valuelist if value])

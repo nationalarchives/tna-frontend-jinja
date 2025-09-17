@@ -33,14 +33,45 @@ test("date input", async ({ page }) => {
   );
   await expectSingleFieldValue(page, null);
   await expect(page.getByLabel("Day")).toHaveValue("32");
-  await page.getByLabel("Month").fill("02");
-  await page.getByLabel("Year").fill("abc");
-  await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
   await expect(page.getByRole("main")).toHaveText(
     /Date of birth must be a real date/,
   );
+  await page.getByLabel("Day").clear();
+  await page.getByLabel("Month").clear();
+  await page.getByLabel("Year").fill("1999");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormFailure(page);
+  await expect(page.getByRole("main")).toHaveText(/Enter your date of birth/);
+  await expect(page.getByLabel("Day")).toHaveValue("");
+  await expect(page.getByLabel("Month")).toHaveValue("");
+  await expect(page.getByLabel("Year")).toHaveValue("1999");
+  await page.getByLabel("Month").fill("02");
+  await page.getByLabel("Year").fill("");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormFailure(page);
+  await expect(page.getByRole("main")).toHaveText(/Enter your date of birth/);
+  await expect(page.getByLabel("Day")).toHaveValue("");
+  await expect(page.getByLabel("Month")).toHaveValue("02");
+  await expect(page.getByLabel("Year")).toHaveValue("");
+  await page.getByLabel("Month").fill("abc");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormFailure(page);
+  await expect(page.getByRole("main")).toHaveText(/Enter your date of birth/);
+  await expect(page.getByLabel("Day")).toHaveValue("");
+  await expect(page.getByLabel("Month")).toHaveValue("abc");
+  await expect(page.getByLabel("Year")).toHaveValue("");
+  await page.getByLabel("Day").fill("32");
+  await page.getByLabel("Month").fill("02");
+  await page.getByLabel("Year").fill("abc");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormFailure(page);
+  await expect(page.getByRole("main")).toHaveText(/Enter your date of birth/);
   await expectSingleFieldValue(page, null);
   await expect(page.getByLabel("Day")).toHaveValue("32");
   await expect(page.getByLabel("Month")).toHaveValue("02");

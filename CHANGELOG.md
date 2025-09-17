@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
+
+- Fixed bug with non-persistence of partial dates
+
 ### Security
 
 ## [0.25.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.24.0...v0.25.0) - 2025-09-15
