@@ -126,6 +126,16 @@ class TnaDateField(DateField):
         except ValueError as e:
             self.process_errors.append(e.args[0])
 
+    def process_data(self, value):
+        if value:
+            for format in self.strptime_format:
+                try:
+                    self.data = datetime.datetime.strptime(value, format).date()
+                    return
+                except ValueError:
+                    pass
+        self.data = None
+
     def process_formdata(self, valuelist):
         if not valuelist:
             return
@@ -155,54 +165,45 @@ class TnaPartialDateField(TnaDateField):
         super().__init__(label, validators, end_of_partial_date_range, **kwargs)
         self.end_of_partial_date_range = end_of_partial_date_range
 
-    def process_formdata(self, valuelist):
-        if not valuelist:
-            return
+    # def process_formdata(self, valuelist):
+    #     if not valuelist:
+    #         return
 
-        if "" in valuelist:
-            valuelist = valuelist[: valuelist.index("")]
+    #     if "" in valuelist:
+    #         valuelist = valuelist[: valuelist.index("")]
 
-        has_year = len(valuelist) >= 1
-        has_month = len(valuelist) >= 2
-        has_day = len(valuelist) >= 3
+    #     has_year = len(valuelist) >= 1
+    #     has_month = len(valuelist) >= 2
+    #     has_day = len(valuelist) >= 3
 
-        date_str = " ".join([value for value in valuelist if value])
+    #     date_str = " ".join([value for value in valuelist if value])
 
-        for format in self.strptime_format:
-            try:
-                parsed_date = datetime.datetime.strptime(date_str, format)
+    #     for format in self.strptime_format:
+    #         try:
+    #             parsed_date = datetime.datetime.strptime(date_str, format).date()
 
-                if self.end_of_partial_date_range:
-                    if has_day:
-                        self.data = parsed_date.replace(hour=23, minute=59, second=59)
-                    elif has_month:
-                        self.data = parsed_date.replace(
-                            day=calendar.monthrange(
-                                parsed_date.year, parsed_date.month
-                            )[1],
-                            hour=23,
-                            minute=59,
-                            second=59,
-                        )
-                    elif has_year:
-                        self.data = parsed_date.replace(
-                            month=12,
-                            day=calendar.monthrange(
-                                parsed_date.year, parsed_date.month
-                            )[1],
-                            hour=23,
-                            minute=59,
-                            second=59,
-                        )
-                    else:
-                        self.data = parsed_date.replace(hour=23, minute=59, second=59)
-                else:
-                    self.data = parsed_date
-                return
-            except ValueError:
-                self.data = None
+    #             if self.end_of_partial_date_range:
+    #                 if has_month and has_year:
+    #                     parsed_date = parsed_date.replace(
+    #                         day=calendar.monthrange(
+    #                             parsed_date.year, parsed_date.month
+    #                         )[1],
+    #                     )
+    #                 elif has_year:
+    #                     parsed_date = parsed_date.replace(
+    #                         month=12,
+    #                         day=calendar.monthrange(
+    #                             parsed_date.year, parsed_date.month
+    #                         )[1],
+    #                     )
 
-        raise ValueError(self.gettext(self.invalid_date_error_message))
+    #             self.data = parsed_date
+    #             return
+    #         except ValueError:
+    #             print(f"Failed to parse {date_str} with format {format}")
+    #             self.data = None
+
+    #     raise ValueError(self.gettext(self.invalid_date_error_message))
 
 
 class TnaMonthField(TnaPartialDateField):
@@ -280,3 +281,57 @@ class TnaProgressiveDateField(TnaPartialDateField):
         ]
         self.progressive = True
         self.strptime_format = clean_datetime_format_for_strptime(self.format)
+
+    def process_formdata(self, valuelist):
+        if not valuelist:
+            return
+
+        if "" in valuelist:
+            valuelist = valuelist[: valuelist.index("")]
+
+        has_year = len(valuelist) >= 1
+        has_month = len(valuelist) >= 2
+        has_day = len(valuelist) >= 3
+
+        date_str = " ".join([value for value in valuelist if value])
+
+        for format in self.strptime_format:
+            try:
+                print(f"Trying to parse {date_str} with format {format}")
+                parsed_date = datetime.datetime.strptime(date_str, format)
+
+                if self.end_of_partial_date_range:
+                    if has_day and has_month and has_year:
+                        parsed_date = parsed_date.replace(
+                            hour=23,
+                            minute=59,
+                            second=59,
+                        )
+                    elif has_month and has_year:
+                        parsed_date = parsed_date.replace(
+                            day=calendar.monthrange(
+                                parsed_date.year, parsed_date.month
+                            )[1],
+                            hour=23,
+                            minute=59,
+                            second=59,
+                        )
+                    elif has_year:
+                        parsed_date = parsed_date.replace(
+                            month=12,
+                            day=calendar.monthrange(
+                                parsed_date.year, parsed_date.month
+                            )[1],
+                            hour=23,
+                            minute=59,
+                            second=59,
+                        )
+
+                self.data = parsed_date
+                return
+            except ValueError:
+                print(f"Failed to parse {date_str} with format {format}")
+                self.data = None
+
+        self.data = None
+        raise ValueError(self.gettext(self.invalid_date_error_message))

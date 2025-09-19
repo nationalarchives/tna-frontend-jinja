@@ -27,6 +27,11 @@ class FutureDate:
                 field_date = field.data.date()
             except AttributeError:
                 field_date = field.data
+            if type(field_date) is not datetime.date:
+                try:
+                    field_date = datetime.date.fromisoformat(field.data)
+                except Exception:
+                    raise ValueError()
             if (self.include_now and field_date < datetime.date.today()) or (
                 not self.include_now and field_date <= datetime.date.today()
             ):
@@ -58,6 +63,11 @@ class PastDate:
                 field_date = field.data.date()
             except AttributeError:
                 field_date = field.data
+            if type(field_date) is not datetime.date:
+                try:
+                    field_date = datetime.date.fromisoformat(field.data)
+                except Exception:
+                    raise ValueError()
             if (self.include_now and field_date > datetime.date.today()) or (
                 not self.include_now and field_date >= datetime.date.today()
             ):

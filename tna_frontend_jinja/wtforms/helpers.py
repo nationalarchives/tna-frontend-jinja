@@ -58,7 +58,7 @@ def wtforms_errors(form, params={}):
 
     if csrf_errors:
         wtforms_params["items"].extend(
-            [{"text": "Try submitting the form again", "href": None}]
+            [{"text": "The form timed out - try submitting again", "href": None}]
         )
 
     merged = wtforms_params.copy()

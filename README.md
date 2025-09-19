@@ -111,6 +111,9 @@ npm run test:fixtures
 
 # Run the Playwright tests
 npm run test:playwright
+
+# Run the Python tests
+docker compose exec flask poetry run python -m pytest
 ```
 
 ## Styles and JavaScript

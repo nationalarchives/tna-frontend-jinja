@@ -23,7 +23,7 @@ test("csrf", async ({ page }) => {
     /The CSRF token is invalid/,
   );
   await expect(page.getByRole("main")).toHaveText(
-    /Try submitting the form again/,
+    /The form timed out - try submitting again/,
   );
 
   await page.getByRole("button", { name: "Submit" }).click();

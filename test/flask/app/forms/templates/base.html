@@ -63,7 +63,7 @@
       </dl>
       {% block form_json %}
       {% set form_data=form.data %}
-      {% set csrf_token = form_data.pop('csrf_token') %}
+      {% set csrf_token = form_data.pop('csrf_token', '') %}
       {{ tnaTextarea({
         'label': 'Form data (JSON)',
         'headingLevel': 3,

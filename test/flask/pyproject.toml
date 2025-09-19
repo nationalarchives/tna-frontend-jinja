@@ -27,6 +27,7 @@ Flask-WTF = "^1.2.1"
 deepmerge = "^1.1.1"
 markupsafe = "^2.1.5"
 email-validator = "^2.2.0"
+pytest = "^8.4.2"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/nationalarchives/tna-frontend-jinja/issues"
@@ -38,3 +39,8 @@ build-backend = "poetry.core.masonry.api"
 [tool.black]
 line-length = 80
 include = '\.pyi?$'
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]

@@ -33,15 +33,13 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         shell: bash
       - name: Start test server
-        run: docker compose up -d flask
-      - name: Wait for response
-        uses: nev7n/wait_for_response@v1
-        with:
-          url: http://localhost:5001/healthcheck/live/
+        run: docker compose up --detach --wait flask
       - name: Run fixture tests
         run: node test/test-fixtures.mjs || exit 1
       - name: Run Playwright tests
         run: npx playwright test
+      - name: Run Python tests
+        run: docker compose exec flask poetry run python -m pytest
 
   deploy:
     runs-on: ubuntu-latest

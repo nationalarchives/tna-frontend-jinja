@@ -313,7 +313,7 @@ class FilesInputForm(FlaskForm):
         "Files",
         description="Upload a set of files",
         validators=[
-            validators.InputRequired(message="Select files to upload"),
+            FileRequired(message="Select files to upload"),
             FileAllowed(
                 upload_set=["json"],
                 message="File type not allowed. Only JSON files are accepted.",
@@ -347,7 +347,7 @@ class DroppableFilesInputForm(FlaskForm):
         "Files",
         description="Upload a set of files",
         validators=[
-            validators.InputRequired(message="Select files to upload"),
+            FileRequired(message="Select files to upload"),
             FileAllowed(
                 upload_set=["json"],
                 message="File type not allowed. Only JSON files are accepted.",

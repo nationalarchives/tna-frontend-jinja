@@ -84,7 +84,7 @@ test("date input", async ({ page }) => {
     /Date of birth must be a real date/,
   );
   await expectSingleFieldValue(page, null);
-  await page.getByLabel("Day").fill("01");
+  await page.getByLabel("Day").fill("1");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
@@ -108,18 +108,18 @@ test("date input", async ({ page }) => {
   );
   await expectSingleFieldValue(page, null);
   await expect(page.getByLabel("Month")).toHaveValue("abc");
-  await page.getByLabel("Month").fill("jan");
+  await page.getByLabel("Month").fill("feb");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
-  await expectSingleFieldValue(page, "Fri, 01 Jan 1999 00:00:00 GMT");
-  await expect(page.getByLabel("Month")).toHaveValue("jan");
-  await page.getByLabel("Month").fill("january");
+  await expectSingleFieldValue(page, "Mon, 01 Feb 1999 00:00:00 GMT");
+  await expect(page.getByLabel("Month")).toHaveValue("feb");
+  await page.getByLabel("Month").fill("february");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
-  await expect(page.getByLabel("Month")).toHaveValue("january");
-  await expectSingleFieldValue(page, "Fri, 01 Jan 1999 00:00:00 GMT");
+  await expect(page.getByLabel("Month")).toHaveValue("february");
+  await expectSingleFieldValue(page, "Mon, 01 Feb 1999 00:00:00 GMT");
 });
 
 test("month input", async ({ page }) => {

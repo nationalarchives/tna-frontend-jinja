@@ -220,6 +220,10 @@ class TnaDateInput(TnaWidget):
                         if len(field.raw_data) > format_part_index
                         else ""
                     )
+        elif field.data:
+            day = str(field.data.day).rjust(2, "0")
+            month = str(field.data.month).rjust(2, "0")
+            year = field.data.year
 
         params["value"] = {}
         if day:
