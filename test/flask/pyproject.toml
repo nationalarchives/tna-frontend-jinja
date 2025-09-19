@@ -42,5 +42,5 @@ include = '\.pyi?$'
 
 [tool.pytest.ini_options]
 testpaths = [
-    "tests",
+    "app/tests",
 ]
