@@ -6,13 +6,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: 2,
   workers: process.env.CI ? 1 : undefined,
-  reporter: process.env.CI
-    ? [
-        ["dot"],
-        ["@estruyf/github-actions-reporter"],
-        ["json", { outputFile: "./test/results.json" }],
-      ]
-    : "line",
+  reporter: "line",
   use: {
     baseURL: process.env.TEST_DOMAIN || "http://127.0.0.1:5001",
   },
