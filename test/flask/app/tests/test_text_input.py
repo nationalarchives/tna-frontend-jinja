@@ -15,12 +15,11 @@ class TextInputForm(FlaskForm):
         csrf = False
 
     string = StringField(
-        "Username",
         validators=[],
     )
 
 
-class TestTextInputForm(unittest.TestCase):
+class TestTextInput(unittest.TestCase):
     def test_empty_form(self):
         error_message = "Enter a username"
         with app.test_request_context():
