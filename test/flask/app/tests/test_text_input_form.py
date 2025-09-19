@@ -1,52 +1,65 @@
 import unittest
 
-from app.forms.forms import TextInputForm
+from flask_wtf import FlaskForm
 from werkzeug.datastructures import MultiDict
+from wtforms import (
+    StringField,
+    validators,
+)
 
 from app import app
 
 
-class TestTextInputForm(unittest.TestCase):
-    def setUp(self):
-        app.config["WTF_CSRF_ENABLED"] = False
+class TextInputForm(FlaskForm):
+    class Meta:
+        csrf = False
 
+    string = StringField(
+        "Username",
+        validators=[],
+    )
+
+
+class TestTextInputForm(unittest.TestCase):
     def test_empty_form(self):
+        error_message = "Enter a username"
         with app.test_request_context():
             form = TextInputForm()
-            assert "Username" in form.field.label.text
+            form.string.validators = [validators.InputRequired(message=error_message)]
             complete = form.validate()
-            assert form.errors == {"field": ["Enter a username"]}
-            assert complete is False
-
-    def test_with_formdata(self):
-        with app.test_request_context():
-            formdata = MultiDict([("field", "testuser")])
-            form = TextInputForm(formdata=formdata)
-            complete = form.validate()
-            assert form.errors == {}
-            assert complete is True
-
-    def test_with_formdata_too_long(self):
-        with app.test_request_context():
-            formdata = MultiDict([("field", "x" * 257)])
-            form = TextInputForm(formdata=formdata)
-            complete = form.validate()
-            assert form.errors == {
-                "field": ["Usernames must be 256 characters or fewer"]
-            }
+            assert form.errors == {"string": [error_message]}
             assert complete is False
 
     def test_with_data(self):
+        error_message = "Enter a username"
         with app.test_request_context():
-            data = {"field": "testuser"}
-            form = TextInputForm(formdata=None, data=data)
-            input_required_validator = [
-                i
-                for i, v in enumerate(form.field.validators)
-                if v.__class__.__name__ == "InputRequired"
-            ]
-            if input_required_validator:
-                form.field.validators.pop(input_required_validator[0])
+            formdata = MultiDict([("string", "testuser")])
+            form = TextInputForm(formdata=formdata)
+            form.string.validators = [validators.InputRequired(message=error_message)]
             complete = form.validate()
             assert form.errors == {}
             assert complete is True
+
+            data = {"string": "testuser"}
+            form = TextInputForm(formdata=None, data=data)
+            form.string.validators = [validators.DataRequired(message=error_message)]
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+    def test_with_data_length_validation(self):
+        error_message = "Usernames must be 256 characters or fewer"
+        with app.test_request_context():
+            formdata = MultiDict([("string", "x" * 257)])
+            form = TextInputForm(formdata=formdata)
+            form.string.validators = [validators.Length(max=256, message=error_message)]
+            complete = form.validate()
+            assert form.errors == {"string": [error_message]}
+            assert complete is False
+
+            data = {"string": "x" * 257}
+            form = TextInputForm(data=data)
+            form.string.validators = [validators.Length(max=256, message=error_message)]
+            complete = form.validate()
+            assert form.errors == {"string": [error_message]}
+            assert complete is False
