@@ -8,7 +8,9 @@
 ![Python version](https://img.shields.io/pypi/pyversions/tna-frontend-jinja?style=flat-square&logo=python&logoColor=white)
 [![Licence](https://img.shields.io/github/license/nationalarchives/tna-frontend-jinja?style=flat-square)](https://github.com/nationalarchives/tna-frontend-jinja/blob/main/LICENCE)
 
-TNA Frontend Jinja templates are a [Jinja](https://jinja.palletsprojects.com/en/3.1.x/) implementation of the templates provided as part of [TNA Frontend](https://github.com/nationalarchives/tna-frontend). See the [documentation](https://nationalarchives.github.io/tna-frontend-jinja/).
+TNA Frontend Jinja templates are a [Jinja](https://jinja.palletsprojects.com/en/3.1.x/) implementation of the templates provided as part of [TNA Frontend](https://github.com/nationalarchives/tna-frontend) as well as widgets for [WTForms](#wtforms).
+
+See the [documentation](https://nationalarchives.github.io/tna-frontend-jinja/).
 
 ## Quickstart for Flask projects
 
