@@ -9,11 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated the error message when CSRF validation fails
+
 ### Deprecated
 ### Removed
 ### Fixed
 
-- Fixed bug with non-persistence of partial dates
+- Fixed bug with non-persistence of date fields
 
 ### Security
 
