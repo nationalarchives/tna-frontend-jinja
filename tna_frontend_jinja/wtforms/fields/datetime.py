@@ -165,45 +165,44 @@ class TnaPartialDateField(TnaDateField):
         super().__init__(label, validators, end_of_partial_date_range, **kwargs)
         self.end_of_partial_date_range = end_of_partial_date_range
 
-    # def process_formdata(self, valuelist):
-    #     if not valuelist:
-    #         return
+    def process_formdata(self, valuelist):
+        if not valuelist:
+            return
 
-    #     if "" in valuelist:
-    #         valuelist = valuelist[: valuelist.index("")]
+        if "" in valuelist:
+            valuelist = valuelist[: valuelist.index("")]
 
-    #     has_year = len(valuelist) >= 1
-    #     has_month = len(valuelist) >= 2
-    #     has_day = len(valuelist) >= 3
+        has_year = len(valuelist) >= 1
+        has_month = len(valuelist) >= 2
 
-    #     date_str = " ".join([value for value in valuelist if value])
+        date_str = " ".join([value for value in valuelist if value])
 
-    #     for format in self.strptime_format:
-    #         try:
-    #             parsed_date = datetime.datetime.strptime(date_str, format).date()
+        for format in self.strptime_format:
+            try:
+                parsed_date = datetime.datetime.strptime(date_str, format).date()
 
-    #             if self.end_of_partial_date_range:
-    #                 if has_month and has_year:
-    #                     parsed_date = parsed_date.replace(
-    #                         day=calendar.monthrange(
-    #                             parsed_date.year, parsed_date.month
-    #                         )[1],
-    #                     )
-    #                 elif has_year:
-    #                     parsed_date = parsed_date.replace(
-    #                         month=12,
-    #                         day=calendar.monthrange(
-    #                             parsed_date.year, parsed_date.month
-    #                         )[1],
-    #                     )
+                if self.end_of_partial_date_range:
+                    if has_month and has_year:
+                        parsed_date = parsed_date.replace(
+                            day=calendar.monthrange(
+                                parsed_date.year, parsed_date.month
+                            )[1],
+                        )
+                    elif has_year:
+                        parsed_date = parsed_date.replace(
+                            month=12,
+                            day=calendar.monthrange(
+                                parsed_date.year, parsed_date.month
+                            )[1],
+                        )
 
-    #             self.data = parsed_date
-    #             return
-    #         except ValueError:
-    #             print(f"Failed to parse {date_str} with format {format}")
-    #             self.data = None
+                self.data = parsed_date
+                return
+            except ValueError:
+                print(f"Failed to parse {date_str} with format {format}")
+                self.data = None
 
-    #     raise ValueError(self.gettext(self.invalid_date_error_message))
+        raise ValueError(self.gettext(self.invalid_date_error_message))
 
 
 class TnaMonthField(TnaPartialDateField):

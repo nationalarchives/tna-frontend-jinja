@@ -2,7 +2,7 @@ import datetime
 import unittest
 
 from flask_wtf import FlaskForm
-from tna_frontend_jinja.wtforms import TnaDateField
+from tna_frontend_jinja.wtforms import TnaDateField, TnaMonthField, TnaYearField
 from tna_frontend_jinja.wtforms.validators import FutureDate, PastDate
 from werkzeug.datastructures import MultiDict
 from wtforms import validators
@@ -17,6 +17,38 @@ class DateInputForm(FlaskForm):
     date = TnaDateField(
         validators=[],
     )
+
+
+class MonthInputForm(FlaskForm):
+    class Meta:
+        csrf = False
+
+    date = TnaMonthField(
+        validators=[],
+    )
+
+
+class MonthInputEndOfRangeForm(FlaskForm):
+    class Meta:
+        csrf = False
+
+    date = TnaMonthField(validators=[], end_of_partial_date_range=True)
+
+
+class YearInputForm(FlaskForm):
+    class Meta:
+        csrf = False
+
+    date = TnaYearField(
+        validators=[],
+    )
+
+
+class YearInputEndOfRangeForm(FlaskForm):
+    class Meta:
+        csrf = False
+
+    date = TnaYearField(validators=[], end_of_partial_date_range=True)
 
 
 class TestDateInput(unittest.TestCase):
@@ -34,7 +66,7 @@ class TestDateInput(unittest.TestCase):
             assert form.errors == {"date": [self.error_message_required]}
             assert complete is False
 
-    def test_with_data(self):
+    def test_date_field(self):
         with app.test_request_context():
             formdata = MultiDict(
                 [("date-day", "01"), ("date-month", "02"), ("date-year", "2003")]
@@ -58,7 +90,7 @@ class TestDateInput(unittest.TestCase):
             assert form.errors == {}
             assert complete is True
 
-    def test_with_month_string(self):
+    def test_date_field_with_month_string(self):
         with app.test_request_context():
             formdata = MultiDict(
                 [("date-day", "01"), ("date-month", "feb"), ("date-year", "2003")]
@@ -72,7 +104,7 @@ class TestDateInput(unittest.TestCase):
             assert form.errors == {}
             assert complete is True
 
-    def test_with_invalid_month_string(self):
+    def test_date_field_with_invalid_month_string(self):
         with app.test_request_context():
             formdata = MultiDict(
                 [("date-day", "01"), ("date-month", "xyz"), ("date-year", "2003")]
@@ -86,7 +118,7 @@ class TestDateInput(unittest.TestCase):
             assert form.errors == {"date": [self.error_message_invalid]}
             assert complete is False
 
-    def test_with_partial_data(self):
+    def test_date_field_with_partial_data(self):
         with app.test_request_context():
             formdata = MultiDict(
                 [("date-day", ""), ("date-month", "02"), ("date-year", "2003")]
@@ -100,7 +132,7 @@ class TestDateInput(unittest.TestCase):
             assert form.errors == {"date": [self.error_message_required]}
             assert complete is False
 
-    def test_with_invalid_data(self):
+    def test_date_field_with_invalid_data(self):
         with app.test_request_context():
             formdata = MultiDict(
                 [("date-day", "01"), ("date-month", "13"), ("date-year", "2003")]
@@ -195,3 +227,131 @@ class TestDateInput(unittest.TestCase):
             complete = form.validate()
             assert form.errors == {"date": [error_message_past_date]}
             assert complete is False
+
+    def test_month_field(self):
+        with app.test_request_context():
+            formdata = MultiDict([("date-month", "02"), ("date-year", "2003")])
+            form = MonthInputForm(formdata=formdata)
+            form.date.validators = [
+                validators.InputRequired(message=self.error_message_required)
+            ]
+            assert form.date.data == datetime.date(2003, 2, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+            data = {"date": "02 2003"}
+            form = MonthInputForm(formdata=None, data=data)
+            form.date.validators = [
+                validators.DataRequired(message=self.error_message_required)
+            ]
+            assert form.date.data == datetime.date(2003, 2, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+    def test_month_field_with_month_string(self):
+        with app.test_request_context():
+            formdata = MultiDict([("date-month", "feb"), ("date-year", "2003")])
+            form = MonthInputForm(formdata=formdata)
+            form.date.validators = [
+                validators.InputRequired(message=self.error_message_required)
+            ]
+            assert form.date.data == datetime.date(2003, 2, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+    def test_month_field_with_invalid_month_string(self):
+        with app.test_request_context():
+            formdata = MultiDict([("date-month", "xyz"), ("date-year", "2003")])
+            form = MonthInputForm(formdata=formdata)
+            form.date.validators = [
+                validators.InputRequired(message=self.error_message_required)
+            ]
+            assert form.date.data is None
+            complete = form.validate()
+            assert form.errors == {"date": [self.error_message_invalid]}
+            assert complete is False
+
+    def test_month_field_with_partial_data(self):
+        with app.test_request_context():
+            formdata = MultiDict([("date-month", ""), ("date-year", "2003")])
+            form = MonthInputForm(formdata=formdata)
+            form.date.validators = [
+                validators.InputRequired(message=self.error_message_required)
+            ]
+            assert form.date.data is None
+            complete = form.validate()
+            assert form.errors == {"date": [self.error_message_required]}
+            assert complete is False
+
+    def test_month_field_with_invalid_data(self):
+        with app.test_request_context():
+            formdata = MultiDict([("date-month", "13"), ("date-year", "2003")])
+            form = MonthInputForm(formdata=formdata)
+            form.date.validators = [
+                validators.InputRequired(message=self.error_message_required)
+            ]
+            assert form.date.data is None
+            complete = form.validate()
+            assert form.errors == {"date": [self.error_message_invalid]}
+            assert complete is False
+
+    def test_month_field_end_of_range(self):
+        with app.test_request_context():
+            formdata = MultiDict([("date-month", "02"), ("date-year", "2003")])
+            form = MonthInputEndOfRangeForm(formdata=formdata)
+            form.date.validators = [
+                validators.InputRequired(message=self.error_message_required)
+            ]
+            assert form.date.data == datetime.date(2003, 2, 28)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+    def test_year_field(self):
+        with app.test_request_context():
+            formdata = MultiDict([("date-year", "2003")])
+            form = YearInputForm(formdata=formdata)
+            form.date.validators = [
+                validators.InputRequired(message=self.error_message_required)
+            ]
+            assert form.date.data == datetime.date(2003, 1, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+            data = {"date": "2003"}
+            form = YearInputForm(formdata=None, data=data)
+            form.date.validators = [
+                validators.DataRequired(message=self.error_message_required)
+            ]
+            assert form.date.data == datetime.date(2003, 1, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+    def test_year_field_with_invalid_data(self):
+        with app.test_request_context():
+            formdata = MultiDict([("date-year", "xyz")])
+            form = YearInputForm(formdata=formdata)
+            form.date.validators = [
+                validators.InputRequired(message=self.error_message_required)
+            ]
+            assert form.date.data is None
+            complete = form.validate()
+            assert form.errors == {"date": [self.error_message_invalid]}
+            assert complete is False
+
+    def test_year_field_end_of_range(self):
+        with app.test_request_context():
+            formdata = MultiDict([("date-year", "2003")])
+            form = YearInputEndOfRangeForm(formdata=formdata)
+            form.date.validators = [
+                validators.InputRequired(message=self.error_message_required)
+            ]
+            assert form.date.data == datetime.date(2003, 12, 31)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
