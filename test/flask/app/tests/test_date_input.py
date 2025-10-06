@@ -51,6 +51,16 @@ class YearInputEndOfRangeForm(FlaskForm):
     date = TnaYearField(validators=[], end_of_partial_date_range=True)
 
 
+class YearInputTwoDigitForm(FlaskForm):
+    class Meta:
+        csrf = False
+
+    date = TnaYearField(
+        validators=[],
+        allow_two_digit_year=True,
+    )
+
+
 class TestDateInput(unittest.TestCase):
     def setUp(self):
         self.error_message_required = "Enter a date"
@@ -355,3 +365,21 @@ class TestDateInput(unittest.TestCase):
             complete = form.validate()
             assert form.errors == {}
             assert complete is True
+
+    def test_year_field_two_digit(self):
+        with app.test_request_context():
+            formdata = MultiDict([("date-year", "2003")])
+            form = YearInputTwoDigitForm(formdata=formdata)
+            assert form.date.data == datetime.date(2003, 1, 1)
+
+            formdata = MultiDict([("date-year", "03")])
+            form = YearInputTwoDigitForm(formdata=formdata)
+            assert form.date.data == datetime.date(2003, 1, 1)
+
+            formdata = MultiDict([("date-year", "99")])
+            form = YearInputTwoDigitForm(formdata=formdata)
+            assert form.date.data == datetime.date(1999, 1, 1)
+
+            formdata = MultiDict([("date-year", "00")])
+            form = YearInputTwoDigitForm(formdata=formdata)
+            assert form.date.data == datetime.date(2000, 1, 1)
