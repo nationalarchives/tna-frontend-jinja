@@ -61,6 +61,34 @@ class TestDateInput(unittest.TestCase):
             assert form.errors == {}
             assert complete is True
 
+    def test_with_month_string(self):
+        with app.test_request_context():
+            formdata = MultiDict(
+                [("date-day", "01"), ("date-month", "feb"), ("date-year", "2003")]
+            )
+            form = DateInputForm(formdata=formdata)
+            form.date.validators = [
+                validators.InputRequired(message=self.error_message_required)
+            ]
+            assert form.date.data == datetime.date(2003, 2, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+    def test_with_invalid_month_string(self):
+        with app.test_request_context():
+            formdata = MultiDict(
+                [("date-day", "01"), ("date-month", "xyz"), ("date-year", "2003")]
+            )
+            form = DateInputForm(formdata=formdata)
+            form.date.validators = [
+                validators.InputRequired(message=self.error_message_required)
+            ]
+            assert form.date.data is None
+            complete = form.validate()
+            assert form.errors == {"date": [self.error_message_invalid]}
+            assert complete is False
+
     def test_with_partial_data(self):
         with app.test_request_context():
             formdata = MultiDict(
