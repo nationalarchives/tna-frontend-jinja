@@ -3,7 +3,9 @@
 
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
 
-{%- if params.defaultContent %}
+{% if 'social' in params %}
+  {% set social = params.social %}
+{% elif params.defaultContent %}
   {% set social = [
     {
       'href': 'https://twitter.com/UKNatArchives',
@@ -36,6 +38,13 @@
       'shortTitle': 'Instagram'
     }
   ] %}
+{% else %}
+  {% set social = [] %}
+{% endif %}
+
+{% if 'navigation' in params %}
+  {% set navigation = params.navigation %}
+{% elif params.defaultContent %}
   {% set navigation = [
     {
       'title': 'Quick links',
@@ -119,6 +128,13 @@
       ]
     }
   ] %}
+{% else %}
+  {% set navigation = [] %}
+{% endif %}
+
+{% if 'legal' in params %}
+  {% set legal = params.legal %}
+{% elif params.defaultContent %}
   {% set legal = [
     {
       'text': 'Accessibility statement',
@@ -141,13 +157,17 @@
       'href': (params.defaultContentBaseURL or '') ~ '/cookies/'
     }
   ] %}
-  {% set showNewsletter = true %}
-{%- else %}
-  {% set social = params.social or null %}
-  {% set navigation = params.navigation or null %}
-  {% set legal = params.legal or null %}
+{% else %}
+  {% set legal = [] %}
+{% endif %}
+
+{% if 'showNewsletter' in params and params.showNewsletter != None %}
   {% set showNewsletter = params.showNewsletter %}
-{%- endif -%}
+{% elif params.defaultContent %}
+  {% set showNewsletter = True %}
+{%- else %}
+  {% set showNewsletter = False %}
+{%- endif %}
 
 <footer class="tna-footer {{ ' '.join(containerClasses) }}" data-module="tna-footer" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   {%- if params.themeSelector %}
@@ -221,16 +241,16 @@
           <meta itemprop="name" content="Department for Culture, Media and Sport">
           <meta itemprop="url" content="https://gov.uk/dcms">
         </div>
-        {%- if params.meta -%}
+        {%- if params.meta %}
         <div class="tna-footer__meta">
           {{ params.meta | safe }}
         </div>
-        {%- endif -%}
-        {%- if social | length -%}
+        {%- endif %}
+        {%- if social %}
           <h3 class="tna-!--visually-hidden">Follow us on social media</h3>
           <nav class="tna-footer__social" aria-label="Social">
             <ul class="tna-ul tna-ul--plain tna-footer__social-items">
-            {%- for item in social -%}
+            {%- for item in social %}
               <li class="tna-footer__social-item">
                 <a href="{{ item.href }}" class="tna-footer__social-item-link"{%- if item.shortTitle %} aria-label="{{ item.title }}" title="{{ item.title }}"{%- endif %} data-name="{{ item.icon }}">
                   {%- if item.icon == 'twitter' %}
@@ -253,32 +273,32 @@
                   </span>
                 </a>
               </li>
-            {%- endfor -%}
+            {%- endfor %}
             </ul>
           </nav>
-        {%- endif -%}
+        {%- endif %}
       </div>
-      {%- if navigation | length -%}
+      {%- if navigation %}
       <div class="tna-footer__navigation tna-column tna-column--flex-2 tna-column--full-medium tna-column--full-small tna-column--full-tiny tna-columns tna-columns--2 tna-columns--1-tiny">
-        {%- for group in navigation -%}
+        {%- for group in navigation %}
         <nav class="tna-footer__navigation-block tna-columns__block" aria-label="{{ group.title }}">
           <h3 class="tna-footer__navigation-block-heading tna-heading-m">
             {{ group.title }}
           </h3>
           <ul class="tna-footer__navigation-block-items tna-ul tna-ul--plain">
-          {%- for item in group['items'] -%}
+          {%- for item in group['items'] %}
             <li class="tna-footer__navigation-block-item">
               <a href="{{ item.href }}" class="tna-footer__navigation-block-item-link"{%- if item.title or item.newTab %} title="{{ item.title if item.title else item.text }}{%- if item.newTab %} (opens in new tab){% endif %}"{% endif %}{%- if item.newTab %} target="_blank"{% endif %}{%- if item.external %} rel="noreferrer nofollow noopener"{% endif %}>
                 {{ item.text }}
               </a>
             </li>
-          {%- endfor -%}
+          {%- endfor %}
           </ul>
         </nav>
-        {%- endfor -%}
+        {%- endfor %}
       </div>
-      {%- endif -%}
-      {%- if showNewsletter -%}
+      {%- endif %}
+      {%- if showNewsletter %}
       <div class="tna-column tna-column--flex-1">
         <div class="tna-footer__mailing-list">
           <h3 class="tna-footer__navigation-block-heading tna-heading-m">
@@ -299,28 +319,28 @@
           </div>
         </div>
       </div>
-      {%- endif -%}
+      {%- endif %}
     </div>
     <div class="tna-container">
-      {%- if legal | length -%}
+      {%- if legal %}
       <h3 class="tna-!--visually-hidden">Legal information</h3>
       <nav class="tna-footer__legal tna-column tna-column--full" aria-label="Legal">
         <ul class="tna-footer__legal-items tna-ul tna-ul--plain">
-          {%- for item in legal -%}
+          {%- for item in legal %}
           <li class="tna-footer__legal-item">
             <a href="{{ item.href }}" class="tna-footer__legal-item-link" {%- if item.title %} title="{{ item.title }}"{% endif %}>
               {{ item.text }}
             </a>
           </li>
-          {%- endfor -%}
+          {%- endfor %}
         </ul>
         <hr>
       </nav>
-      {%- else -%}
+      {%- else %}
       <div class="tna-column--full">
         <hr>
       </div>
-      {%- endif -%}
+      {%- endif %}
     </div>
     <div class="tna-container tna-footer__licence">
       <div class="tna-column tna-column--full-tiny">

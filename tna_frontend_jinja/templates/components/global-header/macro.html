@@ -6,12 +6,20 @@
   {%- set containerClasses = containerClasses + ['tna-global-header--collapse-on-medium'] -%}
 {%- endif -%}
 
-{%- if params.defaultContent %}
+{% if 'logo' in params %}
+  {% set logo = params.logo %}
+{% elif params.defaultContent %}
   {% set logo = {
     'href': (params.defaultContentBaseURL or '') ~ '/',
     'title': 'The National Archives'
   } %}
+{% else %}
+  {% set logo = None %}
+{% endif %}
 
+{% if 'navigation' in params %}
+  {% set navigation = params.navigation %}
+{% elif params.defaultContent %}
   {% set navigation = [
     {
       'text': 'Visit',
@@ -38,7 +46,13 @@
       'href': (params.defaultContentBaseURL or '') ~ '/professional-guidance-and-services/'
     }
   ] %}
+{% else %}
+  {% set navigation = [] %}
+{% endif %}
 
+{% if 'topNavigation' in params %}
+  {% set topNavigation = params.topNavigation %}
+{% elif params.defaultContent %}
   {% set topNavigation = [
     {
       'text': 'Search',
@@ -51,11 +65,9 @@
       'icon': 'shop'
     }
   ] %}
-{%- else %}
-  {% set logo = params.logo or null %}
-  {% set navigation = params.navigation or [] %}
-  {% set topNavigation = params.topNavigation or [] %}
-{%- endif -%}
+{% else %}
+  {% set topNavigation = [] %}
+{% endif %}
 
 <header class="tna-global-header {{ ' '.join(containerClasses) }}" data-module="tna-global-header" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   {% if params.phaseBanner -%}
@@ -85,13 +97,15 @@
         {%- endif %}
       </span>
     </div>
+    {%- if topNavigation or navigation %}
     <div class="tna-column tna-column--order-2 tna-global-header__navigation-button-wrapper">
-      <button class="tna-global-header__navigation-button" type="button" aria-controls="{{ params.navigationId or 'tna-header__navigation' }} {{ params.topNavigationId or 'tna-header__top-navigation' }}" hidden>
+      <button class="tna-global-header__navigation-button" type="button" aria-controls="{{ (params.navigationId or 'tna-header__navigation') if navigation else '' }} {{ (params.topNavigationId or 'tna-header__top-navigation') if topNavigation else '' }}" hidden>
         Menu
         <span class="tna-global-header__hamburger"></span>
       </button>
     </div>
-    {%- if navigation | length %}
+    {%- endif %}
+    {%- if navigation %}
     <nav class="tna-column tna-column--full-small tna-column--full-tiny tna-column--order-3 tna-global-header__navigation-wrapper" id="{{ params.navigationId or 'tna-header__navigation' }}" aria-label="Primary">
       <ul class="tna-global-header__navigation">
         {%- for item in navigation %}
@@ -102,7 +116,7 @@
       </ul>
     </nav>
     {%- endif %}
-    {%- if topNavigation | length %}
+    {%- if topNavigation %}
     <nav class="tna-column tna-column--full tna-column--order-1 tna-column--order-4-small tna-column--order-4-tiny tna-global-header__top-navigation-wrapper" id="{{ params.topNavigationId or 'tna-header__top-navigation' }}" aria-label="Secondary">
       <ul class="tna-global-header__top-navigation">
         {%- for item in topNavigation %}

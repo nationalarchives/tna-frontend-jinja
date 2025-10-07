@@ -5,7 +5,7 @@
     "test:playwright": "npx playwright install && playwright test --ui"
   },
   "dependencies": {
-    "@nationalarchives/frontend": "0.25.0"
+    "@nationalarchives/frontend": "0.26.1"
   },
   "devDependencies": {
     "@estruyf/github-actions-reporter": "^1.10.0",
