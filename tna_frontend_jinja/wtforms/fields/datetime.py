@@ -30,6 +30,7 @@ class TnaDateField(DateField):
         self.format = [
             format
             for format in [
+                "%Y-%m-%d",
                 "%d %m %Y",
                 ("%d %m %y") if allow_two_digit_year else None,
                 "%d %b %Y",
@@ -128,6 +129,9 @@ class TnaDateField(DateField):
 
     def process_data(self, value):
         if value:
+            if type(value) is datetime.date:
+                self.data = value
+                return
             for format in self.strptime_format:
                 try:
                     self.data = datetime.datetime.strptime(value, format).date()
@@ -218,6 +222,7 @@ class TnaMonthField(TnaPartialDateField):
         self.format = [
             format
             for format in [
+                "%Y-%m",
                 "%m %Y",
                 ("%m %y") if allow_two_digit_year else None,
                 "%b %Y",
@@ -263,12 +268,14 @@ class TnaProgressiveDateField(TnaPartialDateField):
             for format in [
                 "%Y",
                 ("%y") if allow_two_digit_year else None,
+                "%Y-%m",
                 "%Y %m",
                 ("%y %m") if allow_two_digit_year else None,
                 "%Y %b",
                 ("%y %b") if allow_two_digit_year else None,
                 "%Y %B",
                 ("%y %B") if allow_two_digit_year else None,
+                "%Y-%m-%d",
                 "%Y %m %d",
                 ("%y %m %d") if allow_two_digit_year else None,
                 "%Y %b %d",

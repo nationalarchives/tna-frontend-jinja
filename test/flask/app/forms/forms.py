@@ -52,37 +52,37 @@ class TextInputForm(FlaskForm):
     field = StringField(
         "Username",
         description="This will be used to log in",
-        widget=TnaTextInputWidget(),
         validators=[
             validators.InputRequired(message="Enter a username"),
             validators.Length(
                 max=256, message="Usernames must be 256 characters or fewer"
             ),
         ],
+        widget=TnaTextInputWidget(),
     )
 
 
 class TextInputEmailForm(FlaskForm):
     field = EmailField(
         "Email address",
-        widget=TnaEmailInputWidget(),
         validators=[
             validators.InputRequired(message="Enter an email address"),
             validators.Email(message="Enter a valid email address"),
         ],
+        widget=TnaEmailInputWidget(),
     )
 
 
 class TextInputPasswordForm(FlaskForm):
     field = PasswordField(
         "Password",
-        widget=TnaPasswordWidget(),
         validators=[
             validators.InputRequired(message="Enter a password"),
             validators.Length(
                 min=8, message="Password must be at least 8 characters long"
             ),
         ],
+        widget=TnaPasswordWidget(),
     )
 
 

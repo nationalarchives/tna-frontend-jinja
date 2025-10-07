@@ -100,6 +100,26 @@ class TestDateInput(unittest.TestCase):
             assert form.errors == {}
             assert complete is True
 
+            data = {"date": "2003-02-01"}
+            form = DateInputForm(formdata=None, data=data)
+            form.date.validators = [
+                validators.DataRequired(message=self.error_message_required)
+            ]
+            assert form.date.data == datetime.date(2003, 2, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+            data = {"date": datetime.date(2003, 2, 1)}
+            form = DateInputForm(formdata=None, data=data)
+            form.date.validators = [
+                validators.DataRequired(message=self.error_message_required)
+            ]
+            assert form.date.data == datetime.date(2003, 2, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
     def test_date_field_with_month_string(self):
         with app.test_request_context():
             formdata = MultiDict(
@@ -176,6 +196,22 @@ class TestDateInput(unittest.TestCase):
             assert form.errors == {}
             assert complete is True
 
+            data = {"date": "2003-02-01"}
+            form = DateInputForm(formdata=None, data=data)
+            form.date.validators = [PastDate()]
+            assert form.date.data == datetime.date(2003, 2, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+            data = {"date": datetime.date(2003, 2, 1)}
+            form = DateInputForm(formdata=None, data=data)
+            form.date.validators = [PastDate()]
+            assert form.date.data == datetime.date(2003, 2, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
     def test_PastDate_validator_fail(self):
         error_message_past_date = "The date must be in the past"
         with app.test_request_context():
@@ -197,6 +233,22 @@ class TestDateInput(unittest.TestCase):
             assert form.errors == {"date": [error_message_past_date]}
             assert complete is False
 
+            data = {"date": "2103-02-01"}
+            form = DateInputForm(formdata=None, data=data)
+            form.date.validators = [PastDate(message=error_message_past_date)]
+            assert form.date.data == datetime.date(2103, 2, 1)
+            complete = form.validate()
+            assert form.errors == {"date": [error_message_past_date]}
+            assert complete is False
+
+            data = {"date": datetime.date(2103, 2, 1)}
+            form = DateInputForm(formdata=None, data=data)
+            form.date.validators = [PastDate(message=error_message_past_date)]
+            assert form.date.data == datetime.date(2103, 2, 1)
+            complete = form.validate()
+            assert form.errors == {"date": [error_message_past_date]}
+            assert complete is False
+
     def test_FutureDate_validator_pass(self):
         with app.test_request_context():
             formdata = MultiDict(
@@ -210,6 +262,22 @@ class TestDateInput(unittest.TestCase):
             assert complete is True
 
             data = {"date": "01 02 2103"}
+            form = DateInputForm(formdata=None, data=data)
+            form.date.validators = [FutureDate()]
+            assert form.date.data == datetime.date(2103, 2, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+            data = {"date": "2103-02-01"}
+            form = DateInputForm(formdata=None, data=data)
+            form.date.validators = [FutureDate()]
+            assert form.date.data == datetime.date(2103, 2, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+            data = {"date": datetime.date(2103, 2, 1)}
             form = DateInputForm(formdata=None, data=data)
             form.date.validators = [FutureDate()]
             assert form.date.data == datetime.date(2103, 2, 1)
@@ -238,6 +306,22 @@ class TestDateInput(unittest.TestCase):
             assert form.errors == {"date": [error_message_past_date]}
             assert complete is False
 
+            data = {"date": "2003-02-01"}
+            form = DateInputForm(formdata=None, data=data)
+            form.date.validators = [FutureDate(message=error_message_past_date)]
+            assert form.date.data == datetime.date(2003, 2, 1)
+            complete = form.validate()
+            assert form.errors == {"date": [error_message_past_date]}
+            assert complete is False
+
+            data = {"date": datetime.date(2003, 2, 1)}
+            form = DateInputForm(formdata=None, data=data)
+            form.date.validators = [FutureDate(message=error_message_past_date)]
+            assert form.date.data == datetime.date(2003, 2, 1)
+            complete = form.validate()
+            assert form.errors == {"date": [error_message_past_date]}
+            assert complete is False
+
     def test_month_field(self):
         with app.test_request_context():
             formdata = MultiDict([("date-month", "02"), ("date-year", "2003")])
@@ -251,6 +335,26 @@ class TestDateInput(unittest.TestCase):
             assert complete is True
 
             data = {"date": "02 2003"}
+            form = MonthInputForm(formdata=None, data=data)
+            form.date.validators = [
+                validators.DataRequired(message=self.error_message_required)
+            ]
+            assert form.date.data == datetime.date(2003, 2, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+            data = {"date": "2003-02"}
+            form = MonthInputForm(formdata=None, data=data)
+            form.date.validators = [
+                validators.DataRequired(message=self.error_message_required)
+            ]
+            assert form.date.data == datetime.date(2003, 2, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+            data = {"date": datetime.date(2003, 2, 1)}
             form = MonthInputForm(formdata=None, data=data)
             form.date.validators = [
                 validators.DataRequired(message=self.error_message_required)
@@ -333,6 +437,16 @@ class TestDateInput(unittest.TestCase):
             assert complete is True
 
             data = {"date": "2003"}
+            form = YearInputForm(formdata=None, data=data)
+            form.date.validators = [
+                validators.DataRequired(message=self.error_message_required)
+            ]
+            assert form.date.data == datetime.date(2003, 1, 1)
+            complete = form.validate()
+            assert form.errors == {}
+            assert complete is True
+
+            data = {"date": datetime.date(2003, 1, 1)}
             form = YearInputForm(formdata=None, data=data)
             form.date.validators = [
                 validators.DataRequired(message=self.error_message_required)
