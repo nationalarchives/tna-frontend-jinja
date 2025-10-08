@@ -209,6 +209,7 @@ class TnaPartialDateField(TnaDateField):
 
         has_year = len(valuelist) >= 1
         has_month = len(valuelist) >= 2
+        has_day = len(valuelist) >= 3
 
         date_str = " ".join([value for value in valuelist if value])
 
@@ -216,7 +217,7 @@ class TnaPartialDateField(TnaDateField):
             try:
                 parsed_date = datetime.datetime.strptime(date_str, format).date()
 
-                if self.end_of_partial_date_range:
+                if self.end_of_partial_date_range and not has_day:
                     if has_month and has_year:
                         parsed_date = parsed_date.replace(
                             day=calendar.monthrange(

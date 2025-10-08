@@ -379,7 +379,7 @@ test("progressive date input end", async ({ page }) => {
     - text: Month
     - textbox "Month"
   - button "Submit"`);
-  await expectSingleFieldValue(page, "Wed, 31 Dec 2003 23:59:59 GMT");
+  await expectSingleFieldValue(page, "Wed, 31 Dec 2003 00:00:00 GMT");
 
   await page.goto("/forms/date-input-progressive-end/");
   await expect(page.getByLabel("Month")).not.toBeVisible();
@@ -401,7 +401,7 @@ test("progressive date input end", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expect(page.getByRole("main")).not.toHaveText(/There is a problem/);
-  await expectSingleFieldValue(page, "Fri, 28 Feb 2003 23:59:59 GMT");
+  await expectSingleFieldValue(page, "Fri, 28 Feb 2003 00:00:00 GMT");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Search for date":
     - heading "Search for date" [level=1]
@@ -416,14 +416,14 @@ test("progressive date input end", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
-  await expectSingleFieldValue(page, "Sat, 15 Feb 2003 23:59:59 GMT");
+  await expectSingleFieldValue(page, "Sat, 15 Feb 2003 00:00:00 GMT");
   await page.getByLabel("Month").clear();
   await expect(page.getByLabel("Day")).not.toBeVisible();
   await expect(page.getByLabel("Day")).toHaveValue("15");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
-  await expectSingleFieldValue(page, "Wed, 31 Dec 2003 23:59:59 GMT");
+  await expectSingleFieldValue(page, "Wed, 31 Dec 2003 00:00:00 GMT");
   await expect(page.getByLabel("Year")).toBeVisible();
   await expect(page.getByLabel("Year")).toHaveValue("2003");
   await expect(page.getByLabel("Month")).toBeVisible();
