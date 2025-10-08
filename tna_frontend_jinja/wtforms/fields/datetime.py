@@ -10,7 +10,7 @@ from ..widgets import TnaDateInput
 
 class TnaDateField(DateField):
     """
-    A text field which stores a :class:`datetime.datetime` matching one or
+    A text field which stores a :class:`datetime.date` matching one or
     several formats. If ``format`` is a list, any input value matching any
     format will be accepted, and the first format in the list will be used
     to produce HTML values.
@@ -203,7 +203,6 @@ class TnaPartialDateField(TnaDateField):
                 self.data = parsed_date
                 return
             except ValueError:
-                print(f"Failed to parse {date_str} with format {format}")
                 self.data = None
 
         raise ValueError(self.gettext(self.invalid_date_error_message))
@@ -303,7 +302,6 @@ class TnaProgressiveDateField(TnaPartialDateField):
 
         for format in self.strptime_format:
             try:
-                print(f"Trying to parse {date_str} with format {format}")
                 parsed_date = datetime.datetime.strptime(date_str, format)
 
                 if self.end_of_partial_date_range:
@@ -336,7 +334,6 @@ class TnaProgressiveDateField(TnaPartialDateField):
                 self.data = parsed_date
                 return
             except ValueError:
-                print(f"Failed to parse {date_str} with format {format}")
                 self.data = None
 
         self.data = None
