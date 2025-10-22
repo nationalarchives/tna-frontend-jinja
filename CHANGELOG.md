@@ -5,12 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.26.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.27.0...HEAD)
 
 ### Added
-
-- Allowed the details component to have a `caller()` function
-
 ### Changed
 ### Deprecated
 ### Removed
@@ -21,6 +18,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed issue with processing date fields using both `formdata` and `data`
 
 ### Security
+
+## [0.27.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.26.0...v0.27.0) - 2025-10-07
+
+### Added
+
+- Allowed the details component to have a `caller()` function
+
+### Changed
+
+- Upgraded to [TNA Frontend `v0.27.1`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.27.1)
+
+### Fixed
+
+- Allowed `PastDate` and `FutureDate` validators to use `datetime` objects
+- Date fields can use ISO 8601 dates as `data` in addition to the existing date formats
+- Fixed issue with processing date fields using both `formdata` and `data`
 
 ## [0.26.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.25.0...v0.26.0) - 2025-10-07
 

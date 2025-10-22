@@ -11,11 +11,9 @@
 {%- endif -%}
 {%- if params.iconOnly -%}
   {%- set buttonClasses = buttonClasses + ['tna-button--icon-only'] -%}
-{%- endif -%}
-{%- if params.iconOnlyOnMobile -%}
+{%- elif params.iconOnlyOnMobile -%}
   {%- set buttonClasses = buttonClasses + ['tna-button--icon-only-mobile'] -%}
-{%- endif -%}
-{%- if params.rightAlignIcon -%}
+{%- elif params.rightAlignIcon -%}
   {%- set buttonClasses = buttonClasses + ['tna-button--icon-right'] -%}
 {%- endif -%}
 {%- set classes = ' '.join(buttonClasses) -%}
