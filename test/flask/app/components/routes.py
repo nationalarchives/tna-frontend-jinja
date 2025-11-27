@@ -14,6 +14,11 @@ def accordion():
     return render_component("widgets/accordion.html")
 
 
+@bp.route("/back-link")
+def back_link():
+    return render_component("widgets/back-link.html")
+
+
 @bp.route("/breadcrumbs")
 def breadcrumbs():
     return render_component("widgets/breadcrumbs.html")

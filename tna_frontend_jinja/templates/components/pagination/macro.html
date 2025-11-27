@@ -33,7 +33,8 @@
           'title': 'Page ' + (item.number | string),
           'accent': params.solid and item.current,
           'plain': not params.solid and not item.current,
-          'classes': 'tna-pagination__link'
+          'classes': 'tna-pagination__link',
+          'attributes': { 'aria-current': 'page' } if item.current else {}
         }) }}
       </li>
       {% endif -%}
