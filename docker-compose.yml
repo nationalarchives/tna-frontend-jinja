@@ -10,6 +10,8 @@ services:
     volumes:
       - ./test/flask/app:/app/app
       - ./tna_frontend_jinja:/app/tna_frontend_jinja
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
 
   dev:
     image: ghcr.io/nationalarchives/tna-python-dev:preview
