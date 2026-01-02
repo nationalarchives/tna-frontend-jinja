@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
+
+- Fixed error summary link for single checkboxes (`BooleanField`)
+- Added missing default `headingLevel` on error summary components
+
 ### Security
 
 ## [0.29.1](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.29.0...v0.29.1) - 2025-11-27
