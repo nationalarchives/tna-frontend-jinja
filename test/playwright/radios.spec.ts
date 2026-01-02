@@ -28,6 +28,8 @@ test("radios", async ({ page }) => {
 
   await expectFormFailure(page);
   await expect(page.getByRole("main")).toHaveText(/Select a level/);
+  await page.getByRole("link", { name: "Select a level" }).click();
+  await expect(page.getByLabel("Apprentice")).toBeFocused();
   await expect(page.getByLabel("Apprentice")).not.toBeChecked();
   await expect(page.getByLabel("Junior")).not.toBeChecked();
   await expect(page.getByLabel("Mid-level")).not.toBeChecked();

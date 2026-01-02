@@ -20,6 +20,8 @@ test("select", async ({ page }) => {
 
   await expectFormFailure(page);
   await expect(page.getByRole("main")).toHaveText(/Select an order/);
+  await page.getByRole("link", { name: "Select an order" }).click();
+  await expect(page.getByLabel("Order")).toBeFocused();
   await expectSingleFieldValue(page, "");
   await expect(page.getByLabel("Order")).toHaveValue("");
   await page.getByLabel("Order").selectOption({ label: "Relevance" });

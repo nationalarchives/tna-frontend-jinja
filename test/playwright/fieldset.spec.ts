@@ -24,6 +24,12 @@ test("fieldset", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await page
+    .getByRole("link", { name: "Enter the first line of your address" })
+    .click();
+  await expect(page.getByLabel("Address line 1")).toBeFocused();
+  await page.getByRole("link", { name: "Enter your postcode" }).click();
+  await expect(page.getByLabel("Postcode")).toBeFocused();
   await page.getByLabel("Address line 1").fill("10 Downing St");
   await page.getByLabel("Address line 2").fill("Westminster");
   await page.getByRole("button", { name: "Submit" }).click();

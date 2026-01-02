@@ -17,6 +17,8 @@ test("textarea", async ({ page }) => {
   await expectFormFailure(page);
   await expect(page.getByRole("textbox", { name: "Message" })).toHaveValue("");
   await expect(page.getByRole("main")).toHaveText(/Enter a message/);
+  await page.getByRole("link", { name: "Enter a message" }).click();
+  await expect(page.getByLabel("Message")).toBeFocused();
   await expectSingleFieldValue(page, "");
   await page.getByRole("textbox", { name: "Message" }).fill("abc");
   await page.getByRole("button", { name: "Submit" }).click();
