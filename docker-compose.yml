@@ -3,8 +3,6 @@ services:
     build:
       context: .
       dockerfile: test/flask/Dockerfile
-    environment:
-      - RUNTIME=develop
     ports:
       - 5001:8080
     volumes:
@@ -12,11 +10,7 @@ services:
       - ./tna_frontend_jinja:/app/tna_frontend_jinja
       - ./package.json:/app/package.json
       - ./package-lock.json:/app/package-lock.json
-
-  dev:
-    image: ghcr.io/nationalarchives/tna-python-dev:preview
-    volumes:
-      - ./:/app
+      - ./node_modules:/app/node_modules
 
   docs:
     image: squidfunk/mkdocs-material

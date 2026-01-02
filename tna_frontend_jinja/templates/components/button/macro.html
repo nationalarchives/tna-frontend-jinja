@@ -17,7 +17,7 @@
   {%- set buttonClasses = buttonClasses + ['tna-button--icon-right'] -%}
 {%- endif -%}
 {%- set classes = ' '.join(buttonClasses) -%}
-<{{ 'button' if params.buttonElement else 'a' }}{%- if not params.buttonElement %} href="{{ params.href }}"{%- endif %} class="tna-button {{ classes }}"{%- if params.buttonElement %} type="{{ params.buttonType or 'button' }}"{%- endif -%}{%- if params.title %} aria-label="{{ params.title }}" title="{{ params.title }}"{% endif %} {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+<{{ 'button' if params.buttonElement else 'a' }}{%- if not params.buttonElement %} href="{{ params.href }}"{%- endif %} class="tna-button {{ classes }}"{%- if params.buttonElement %} type="{{ params.buttonType or 'button' }}"{%- endif -%}{%- if params.title %} aria-label="{{ params.title }}" title="{{ params.title }}"{% elif params.iconOnly and params.text %} title="{{ params.text }}"{% endif %} {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   {% if params.icon -%}
   <i class="fa-solid fa-{{ params.icon }}" aria-hidden="true"></i>
   {% elif params.iconSvg -%}

@@ -3,7 +3,7 @@
 <div class="tna-error-summary {{ ' '.join(containerClasses) }}" data-module="tna-error-summary" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}{%- if params.disableAutoFocus != undefined %} data-disable-autofocus="{{ params.disableAutoFocus | lower }}"{% endif %}>
   <div role="alert">
     <h{{ params.headingLevel or '2' }} class="tna-error-summary__heading tna-heading-m">
-      {{ params.title }}
+      {{ params.title or 'There is a problem' }}
     </h{{ params.headingLevel or '2' }}>
     <ul class="tna-error-summary__list">
       {%- for item in params['items'] %}
