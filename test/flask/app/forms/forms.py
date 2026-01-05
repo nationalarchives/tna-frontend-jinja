@@ -90,7 +90,9 @@ class TextInputIntegerForm(FlaskForm):
     field = IntegerField(
         "Integer",
         validators=[
-            validators.InputRequired(message="Enter a whole number between 1 and 99"),
+            validators.InputRequired(
+                message="Enter a whole number between 1 and 99"
+            ),
             validators.NumberRange(
                 min=1, max=99, message="Number must be between 1 and 99"
             ),
@@ -105,7 +107,9 @@ class TextInputDecimalForm(FlaskForm):
         places=2,
         rounding=decimal.ROUND_UP,
         validators=[
-            validators.InputRequired(message="Enter a decimal between 1 and 10"),
+            validators.InputRequired(
+                message="Enter a decimal between 1 and 10"
+            ),
             validators.NumberRange(
                 min=1, max=10, message="Number must be between 1 and 10"
             ),
@@ -118,7 +122,9 @@ class TextInputFloatForm(FlaskForm):
     field = FloatField(
         "Float",
         validators=[
-            validators.InputRequired(message="Enter a float value between 1 and 10"),
+            validators.InputRequired(
+                message="Enter a float value between 1 and 10"
+            ),
             validators.NumberRange(
                 min=1, max=10, message="Number must be between 1 and 10"
             ),
@@ -171,8 +177,12 @@ class DateInputMonthForm(FlaskForm):
         "Month of birth",
         description="Enter your month of birth in the format MM YYYY",
         validators=[
-            validators.InputRequired(message="Enter your month and year of birth"),
-            tna_frontend_validators.PastDate(message="Date must be in the past"),
+            validators.InputRequired(
+                message="Enter your month and year of birth"
+            ),
+            tna_frontend_validators.PastDate(
+                message="Date must be in the past"
+            ),
         ],
     )
 
@@ -223,6 +233,20 @@ class CheckboxForm(FlaskForm):
             ),
         ],
         widget=TnaCheckboxWidget(),
+    )
+
+
+class CheckboxFormNoLabel(FlaskForm):
+    field = BooleanField(
+        "Terms and conditions",
+        description="I agree to terms and conditions",
+        validators=[
+            validators.InputRequired(
+                message="You must agree to the terms and conditions"
+            ),
+        ],
+        widget=TnaCheckboxWidget(),
+        render_kw={"label": ""},
     )
 
 
@@ -302,7 +326,9 @@ class FileInputForm(FlaskForm):
                 upload_set=["json"],
                 message="File type not allowed. Only JSON files are accepted.",
             ),
-            FileSize(max_size=20 * 1024, message="File size must be less than 20 KB."),
+            FileSize(
+                max_size=20 * 1024, message="File size must be less than 20 KB."
+            ),
         ],
         widget=TnaFileInputWidget(),
     )
@@ -319,7 +345,8 @@ class FilesInputForm(FlaskForm):
                 message="File type not allowed. Only JSON files are accepted.",
             ),
             FileSize(
-                max_size=20 * 1024, message="Each file size must be less than 20 KB."
+                max_size=20 * 1024,
+                message="Each file size must be less than 20 KB.",
             ),
         ],
         widget=TnaFilesInputWidget(),
@@ -336,7 +363,9 @@ class DroppableFileInputForm(FlaskForm):
                 upload_set=["json"],
                 message="File type not allowed. Only JSON files are accepted.",
             ),
-            FileSize(max_size=20 * 1024, message="File size must be less than 20 KB."),
+            FileSize(
+                max_size=20 * 1024, message="File size must be less than 20 KB."
+            ),
         ],
         widget=TnaDroppableFileInputWidget(),
     )
@@ -353,7 +382,8 @@ class DroppableFilesInputForm(FlaskForm):
                 message="File type not allowed. Only JSON files are accepted.",
             ),
             FileSize(
-                max_size=20 * 1024, message="Each file size must be less than 20 KB."
+                max_size=20 * 1024,
+                message="Each file size must be less than 20 KB.",
             ),
         ],
         widget=TnaDroppableFilesInputWidget(),
@@ -365,7 +395,9 @@ class AddressForm(FlaskForm):
         "Address line 1",
         widget=TnaTextInputWidget(),
         validators=[
-            validators.InputRequired(message="Enter the first line of your address"),
+            validators.InputRequired(
+                message="Enter the first line of your address"
+            ),
         ],
         render_kw={"headingSize": "xs"},
     )
@@ -381,7 +413,9 @@ class AddressForm(FlaskForm):
         widget=TnaTextInputWidget(),
         validators=[
             validators.InputRequired(message="Enter your postcode"),
-            tna_frontend_validators.UKPostcode(message="Enter a valid UK postcode"),
+            tna_frontend_validators.UKPostcode(
+                message="Enter a valid UK postcode"
+            ),
         ],
         render_kw={"headingSize": "xs", "size": "s"},
     )

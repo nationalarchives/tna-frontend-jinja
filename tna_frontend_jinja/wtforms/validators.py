@@ -92,7 +92,9 @@ class MaxOptions:
     def __call__(self, form, field):
         message = self.message
         if message is None:
-            message = field.gettext(f"You must select no more than {self.max} options")
+            message = field.gettext(
+                f"You must select no more than {self.max} options"
+            )
         try:
             if len(field.data) > self.max:
                 raise ValidationError(message)

@@ -73,7 +73,9 @@ class TnaDateField(DateField):
             for part in self.format[len(self.format) - 1].split(" ")
         ]
 
-    def process(self, formdata, data=unset_value, extra_filters=None):  # noqa: C901
+    def process(  # noqa: C901
+        self, formdata, data=unset_value, extra_filters=None
+    ):
         """
         Process incoming data, calling process_data, process_formdata as needed,
         and run filters.
@@ -215,7 +217,9 @@ class TnaPartialDateField(TnaDateField):
 
         for format in self.strptime_format:
             try:
-                parsed_date = datetime.datetime.strptime(date_str, format).date()
+                parsed_date = datetime.datetime.strptime(
+                    date_str, format
+                ).date()
 
                 if self.end_of_partial_date_range and not has_day:
                     if has_month and has_year:

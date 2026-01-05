@@ -24,7 +24,9 @@ class TestTextInput(unittest.TestCase):
         error_message = "Enter a username"
         with app.test_request_context():
             form = TextInputForm()
-            form.string.validators = [validators.InputRequired(message=error_message)]
+            form.string.validators = [
+                validators.InputRequired(message=error_message)
+            ]
             complete = form.validate()
             assert form.errors == {"string": [error_message]}
             assert complete is False
@@ -34,14 +36,18 @@ class TestTextInput(unittest.TestCase):
         with app.test_request_context():
             formdata = MultiDict([("string", "testuser")])
             form = TextInputForm(formdata=formdata)
-            form.string.validators = [validators.InputRequired(message=error_message)]
+            form.string.validators = [
+                validators.InputRequired(message=error_message)
+            ]
             complete = form.validate()
             assert form.errors == {}
             assert complete is True
 
             data = {"string": "testuser"}
             form = TextInputForm(formdata=None, data=data)
-            form.string.validators = [validators.DataRequired(message=error_message)]
+            form.string.validators = [
+                validators.DataRequired(message=error_message)
+            ]
             complete = form.validate()
             assert form.errors == {}
             assert complete is True
@@ -51,14 +57,18 @@ class TestTextInput(unittest.TestCase):
         with app.test_request_context():
             formdata = MultiDict([("string", "x" * 257)])
             form = TextInputForm(formdata=formdata)
-            form.string.validators = [validators.Length(max=256, message=error_message)]
+            form.string.validators = [
+                validators.Length(max=256, message=error_message)
+            ]
             complete = form.validate()
             assert form.errors == {"string": [error_message]}
             assert complete is False
 
             data = {"string": "x" * 257}
             form = TextInputForm(data=data)
-            form.string.validators = [validators.Length(max=256, message=error_message)]
+            form.string.validators = [
+                validators.Length(max=256, message=error_message)
+            ]
             complete = form.validate()
             assert form.errors == {"string": [error_message]}
             assert complete is False

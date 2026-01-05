@@ -5,6 +5,7 @@ from app.forms import bp
 from app.forms.forms import (
     CheckboxesForm,
     CheckboxForm,
+    CheckboxFormNoLabel,
     DateInputForm,
     DateInputMonthForm,
     DateInputProgressiveForm,
@@ -51,7 +52,9 @@ def index():
             and rule.endpoint not in ["forms.index", "forms.success"]
             and rule.endpoint.startswith("forms.")
         ):
-            urls[rule.endpoint] = url_for(rule.endpoint, **(rule.defaults or {}))
+            urls[rule.endpoint] = url_for(
+                rule.endpoint, **(rule.defaults or {})
+            )
     return render_template("index.html", urls=urls)
 
 
@@ -149,6 +152,13 @@ def date_input_progressive_end():
 @bp.route("/checkbox/", methods=["GET", "POST"])
 def checkbox():
     form = CheckboxForm()
+    success = form.validate_on_submit()
+    return render_template("single-field.html", form=form, success=success)
+
+
+@bp.route("/checkbox-no-label/", methods=["GET", "POST"])
+def checkbox_no_label():
+    form = CheckboxFormNoLabel()
     success = form.validate_on_submit()
     return render_template("single-field.html", form=form, success=success)
 

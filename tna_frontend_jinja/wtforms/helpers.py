@@ -5,10 +5,14 @@ def flatten_errors(errors, prefix="", id_map={}):
         for key, value in errors.items():
             if key in id_map:
                 key = id_map[key]
-            error_list += flatten_errors(value, prefix=f"{prefix}{key}-", id_map=id_map)
+            error_list += flatten_errors(
+                value, prefix=f"{prefix}{key}-", id_map=id_map
+            )
     elif isinstance(errors, list) and isinstance(errors[0], dict):
         for idx, error in enumerate(errors):
-            error_list += flatten_errors(error, prefix=f"{prefix}{idx}-", id_map=id_map)
+            error_list += flatten_errors(
+                error, prefix=f"{prefix}{idx}-", id_map=id_map
+            )
     elif isinstance(errors, list):
         error_list.append(
             {
@@ -56,7 +60,12 @@ def wtforms_errors(form, params={}):
 
     if csrf_errors:
         wtforms_params["items"].extend(
-            [{"text": "The form timed out - try submitting again", "href": None}]
+            [
+                {
+                    "text": "The form timed out - try submitting again",
+                    "href": None,
+                }
+            ]
         )
 
     merged = wtforms_params.copy()

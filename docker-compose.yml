@@ -7,10 +7,15 @@ services:
       - 5001:8080
     volumes:
       - ./test/flask/app:/app/app
+      - ./test/flask/pyproject.toml:/app/pyproject.toml
+      - ./test/flask/poetry.lock:/app/poetry.lock
       - ./tna_frontend_jinja:/app/tna_frontend_jinja
       - ./package.json:/app/package.json
       - ./package-lock.json:/app/package-lock.json
       - ./node_modules:/app/node_modules
+      - ./.nvmrc:/app/.nvmrc
+      - ./.prettierignore:/app/.prettierignore
+      - ./.eslintrc.js:/app/.eslintrc.js
 
   docs:
     image: squidfunk/mkdocs-material

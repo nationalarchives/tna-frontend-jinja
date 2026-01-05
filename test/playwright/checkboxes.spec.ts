@@ -40,6 +40,39 @@ test("checkbox", async ({ page }) => {
   await expectSingleFieldValue(page, true);
 });
 
+test("checkbox-no-label", async ({ page }) => {
+  await page.goto("/forms/checkbox-no-label/");
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - checkbox "I agree to terms and conditions"
+  - text: I agree to terms and conditions
+  - button "Submit"`);
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormFailure(page);
+  await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
+  - alert:
+    - heading "There is a problem" [level=2]
+    - list:
+      - listitem:
+        - link "You must agree to the terms and conditions":
+          - /url: "#field"
+  - paragraph: "Error: You must agree to the terms and conditions"
+  - checkbox "I agree to terms and conditions"
+  - text: I agree to terms and conditions
+  - button "Submit"`);
+  await page
+    .getByRole("link", { name: "You must agree to the terms and conditions" })
+    .click();
+  await expect(page.getByLabel("Terms and conditions")).toBeFocused();
+  await expectSingleFieldValue(page, false);
+  await page.getByLabel("Terms and conditions").check();
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormSuccess(page);
+  await expect(page.getByLabel("Terms and conditions")).toBeChecked();
+  await expectSingleFieldValue(page, true);
+});
+
 test("checkboxes", async ({ page }) => {
   await page.goto("/forms/checkboxes/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
