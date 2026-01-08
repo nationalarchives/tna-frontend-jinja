@@ -1,5 +1,5 @@
 services:
-  flask:
+  app:
     build:
       context: .
       dockerfile: test/flask/Dockerfile

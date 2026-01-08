@@ -29,10 +29,10 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         shell: bash
       - name: Start test server
-        run: docker compose up --detach --wait flask
+        run: docker compose up --detach --wait app
       - name: Run fixture tests
         run: node test/test-fixtures.mjs || exit 1
       - name: Run Playwright tests
         run: npx playwright test
       - name: Run Python tests
-        run: docker compose exec flask poetry run python -m pytest
+        run: docker compose exec app poetry run python -m pytest
