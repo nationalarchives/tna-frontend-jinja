@@ -3,10 +3,14 @@ import {
   expectFormFailure,
   expectFormSuccess,
   expectSingleFieldValue,
+  checkAccessibility,
+  validateHtml,
 } from "./lib";
 
 test("text input", async ({ page }) => {
   await page.goto("/forms/text-input/");
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - heading "Username" [level=1]
   - paragraph: This will be used to log in
@@ -22,6 +26,8 @@ test("text input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("textbox", { name: "Username" })).toHaveValue("");
   await expectSingleFieldValue(page, "");
   await expect(page.getByRole("main")).toHaveText(/Enter a username/);
@@ -33,6 +39,8 @@ test("text input", async ({ page }) => {
   await page.keyboard.press("Enter");
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(
     /Usernames must be 256 characters or fewer/,
   );
@@ -44,6 +52,8 @@ test("text input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("textbox", { name: "Username" })).toHaveValue(
     "jsmith",
   );
@@ -52,15 +62,21 @@ test("text input", async ({ page }) => {
 
 test("text input - email", async ({ page }) => {
   await page.goto("/forms/text-input-email/");
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, "");
   await page.getByLabel("Email address").fill("abc");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(
     /Enter a valid email address/,
   );
@@ -72,6 +88,8 @@ test("text input - email", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(
     page.getByRole("textbox", { name: "Email address" }),
   ).toHaveValue("jsmith@test.com");
@@ -80,10 +98,14 @@ test("text input - email", async ({ page }) => {
 
 test("text input - password", async ({ page }) => {
   await page.goto("/forms/text-input-password/");
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, "");
   await page.getByRole("textbox", { name: "Password" }).fill("abc");
   await expect(page.getByRole("textbox", { name: "Password" })).toHaveAttribute(
@@ -98,6 +120,8 @@ test("text input - password", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(
     /Password must be at least 8 characters long/,
   );
@@ -106,6 +130,8 @@ test("text input - password", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("textbox", { name: "Password" })).toHaveValue(
     "abcde12345",
   );
@@ -114,16 +140,22 @@ test("text input - password", async ({ page }) => {
 
 test("text input - tel", async ({ page }) => {
   await page.goto("/forms/text-input-tel/");
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(/Enter a phone number/);
   await expectSingleFieldValue(page, "");
   await page.getByLabel("Phone number").fill("abc");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(/Enter a valid phone number/);
   await expectSingleFieldValue(page, "abc");
   await expect(page.getByRole("textbox", { name: "Phone number" })).toHaveValue(
@@ -133,6 +165,8 @@ test("text input - tel", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(/Enter a valid phone number/);
   await expectSingleFieldValue(page, "012345");
   await expect(page.getByRole("textbox", { name: "Phone number" })).toHaveValue(
@@ -142,6 +176,8 @@ test("text input - tel", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("textbox", { name: "Phone number" })).toHaveValue(
     "+44 1234 567890",
   );
@@ -150,21 +186,29 @@ test("text input - tel", async ({ page }) => {
 
 test("text input - integer", async ({ page }) => {
   await page.goto("/forms/text-input-integer/");
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, null);
   await page.getByRole("textbox", { name: "Integer" }).fill("abc");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, null);
   await expect(page.getByRole("textbox", { name: "Integer" })).toHaveValue("");
   await page.getByRole("textbox", { name: "Integer" }).fill("999");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(
     /Number must be between 1 and 99/,
   );
@@ -173,6 +217,8 @@ test("text input - integer", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(/Not a valid integer value./);
   await expectSingleFieldValue(page, null);
   await expect(page.getByRole("textbox", { name: "Integer" })).toHaveValue("");
@@ -180,6 +226,8 @@ test("text input - integer", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("textbox", { name: "Integer" })).toHaveValue(
     "12",
   );
@@ -188,21 +236,29 @@ test("text input - integer", async ({ page }) => {
 
 test("text input - decimal", async ({ page }) => {
   await page.goto("/forms/text-input-decimal/");
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, null);
   await page.getByRole("textbox", { name: "Decimal" }).fill("");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, null);
   await expect(page.getByRole("textbox", { name: "Decimal" })).toHaveValue("");
   await page.getByRole("textbox", { name: "Decimal" }).fill("0.12345");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(
     /Number must be between 1 and 10/,
   );
@@ -214,6 +270,8 @@ test("text input - decimal", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(/Not a valid decimal value./);
   await expectSingleFieldValue(page, null);
   await expect(page.getByRole("textbox", { name: "Decimal" })).toHaveValue("");
@@ -221,6 +279,8 @@ test("text input - decimal", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   // TODO: Fix this - the value should be rounded to 2 decimal places
   // await expect(page.getByRole("textbox", { name: "Decimal" })).toHaveValue(
   //   "1.23",
@@ -230,15 +290,21 @@ test("text input - decimal", async ({ page }) => {
 
 test("text input - float", async ({ page }) => {
   await page.goto("/forms/text-input-float/");
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, null);
   await page.getByRole("textbox", { name: "Float" }).fill("abc");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(/Not a valid float value/);
   await expectSingleFieldValue(page, null);
   await expect(page.getByRole("textbox", { name: "Float" })).toHaveValue("");
@@ -246,6 +312,8 @@ test("text input - float", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(
     /Number must be between 1 and 10/,
   );
@@ -257,6 +325,8 @@ test("text input - float", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("textbox", { name: "Float" })).toHaveValue(
     "1.23456",
   );
@@ -265,15 +335,21 @@ test("text input - float", async ({ page }) => {
 
 test("text input - url", async ({ page }) => {
   await page.goto("/forms/text-input-url/");
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, null);
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldValue(page, "");
   await page.getByRole("textbox", { name: "Site URL" }).fill("abc");
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(/Enter a valid URL/);
   await expectSingleFieldValue(page, "abc");
   await page
@@ -282,6 +358,8 @@ test("text input - url", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("textbox", { name: "Site URL" })).toHaveValue(
     "https://www.nationalarchives.gov.uk/",
   );

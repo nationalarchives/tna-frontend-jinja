@@ -3,10 +3,14 @@ import {
   expectFormSuccess,
   expectSingleFieldKeyValue,
   expectFormFailure,
+  checkAccessibility,
+  validateHtml,
 } from "./lib";
 
 test("fieldset", async ({ page }) => {
   await page.goto("/forms/fieldset/");
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - group "Address":
     - heading "Address" [level=1]
@@ -24,6 +28,8 @@ test("fieldset", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await page
     .getByRole("link", { name: "Enter the first line of your address" })
     .click();
@@ -35,6 +41,8 @@ test("fieldset", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldKeyValue(page, "address_1", "10 Downing St");
   await expectSingleFieldKeyValue(page, "address_2", "Westminster");
   await expectSingleFieldKeyValue(page, "postcode", "");
@@ -42,6 +50,8 @@ test("fieldset", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldKeyValue(page, "address_1", "10 Downing St");
   await expectSingleFieldKeyValue(page, "address_2", "Westminster");
   await expectSingleFieldKeyValue(page, "postcode", "ABC 123");
@@ -49,6 +59,8 @@ test("fieldset", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldKeyValue(page, "address_1", "10 Downing St");
   await expectSingleFieldKeyValue(page, "address_2", "Westminster");
   await expectSingleFieldKeyValue(page, "postcode", "TW 94 DU");
@@ -56,6 +68,8 @@ test("fieldset", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expectSingleFieldKeyValue(page, "address_1", "10 Downing St");
   await expectSingleFieldKeyValue(page, "address_2", "Westminster");
   await expectSingleFieldKeyValue(page, "postcode", "TW9 4DU");

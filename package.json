@@ -7,12 +7,13 @@
     "@nationalarchives/frontend": "0.32.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.0",
     "@estruyf/github-actions-reporter": "^1.10.0",
     "@playwright/test": "^1.52.0",
     "@types/node": "^25.0.3",
     "diff": "^8.0.0",
     "glob": "^13.0.0",
-    "html-validate": "^10.5.0",
+    "html-validate": "^10.6.0",
     "js-beautify": "^1.14.8",
     "node-fetch": "^3.3.1"
   }

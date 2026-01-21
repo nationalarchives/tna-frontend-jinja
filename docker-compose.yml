@@ -7,6 +7,8 @@ services:
       - 5001:8080
     volumes:
       - ./test/flask/app:/app/app
+      - ./test/playwright:/app/playwright-tests
+      - ./test/test-fixtures.mjs:/app/test-fixtures.mjs
       - ./test/flask/pyproject.toml:/app/pyproject.toml
       - ./test/flask/poetry.lock:/app/poetry.lock
       - ./tna_frontend_jinja:/app/tna_frontend_jinja

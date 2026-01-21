@@ -260,18 +260,22 @@ class CheckboxesForm(FlaskForm):
                 max=2, message="You must select no more than 2 items"
             ),
         ],
-        choices=[("cpp", "C++"), ("py", "Python"), ("php", "PHP")],
+        choices=[
+            ("cpp", "C++"),
+            ("py", "Python 3", {"hint": "Python 2 has been deprecated"}),
+            ("php", "PHP"),
+        ],
         widget=TnaCheckboxesWidget(),
     )
 
 
 class RadiosForm(FlaskForm):
     field = RadioField(
-        "Level",
+        "Grade",
         choices=[
             ("1", "Apprentice"),
             ("2", "Junior"),
-            ("3", "Mid-level"),
+            ("3", "Mid-level", {"hint": "Also known as 'Intermediate'"}),
             ("4", "Senior"),
             ("5", "Lead"),
             ("6", "Principal"),

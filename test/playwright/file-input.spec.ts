@@ -1,12 +1,19 @@
 /// <reference lib="dom"/>
 
 import { test, expect } from "@playwright/test";
-import { expectFormFailure, expectFormSuccess } from "./lib";
+import {
+  expectFormFailure,
+  expectFormSuccess,
+  checkAccessibility,
+  validateHtml,
+} from "./lib";
 import path from "path";
 import { readFileSync } from "fs";
 
 test("file input", async ({ page }) => {
   await page.goto("/forms/file-input/");
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - heading "File" [level=1]
   - paragraph: Upload a file
@@ -21,6 +28,8 @@ test("file input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(/Select a file to upload/);
   await page.getByRole("link", { name: "Select a file to upload" }).click();
   await expect(page.getByLabel("File")).toBeFocused();
@@ -31,6 +40,8 @@ test("file input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(
     /File type not allowed. Only JSON files are accepted./,
   );
@@ -41,6 +52,8 @@ test("file input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(
     /File size must be less than 20 KB./,
   );
@@ -51,10 +64,14 @@ test("file input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
 });
 
 test("multiple file input", async ({ page }) => {
   await page.goto("/forms/files-input/");
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - heading "Files" [level=1]
   - paragraph: Upload a set of files
@@ -69,6 +86,8 @@ test("multiple file input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(/Select files to upload/);
   await page.getByRole("link", { name: "Select files to upload" }).click();
   await expect(page.getByLabel("Files")).toBeFocused();
@@ -82,6 +101,8 @@ test("multiple file input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(
     /File type not allowed. Only JSON files are accepted./,
   );
@@ -95,6 +116,8 @@ test("multiple file input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(
     /Each file size must be less than 20 KB./,
   );
@@ -105,6 +128,8 @@ test("multiple file input", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
 });
 
 // test("droppable file input", async ({ page }) => {

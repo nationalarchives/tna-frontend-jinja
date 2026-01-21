@@ -60,7 +60,11 @@ class TnaWidget(object):
         if isinstance(field.errors, list) and len(field.errors):
             params["error"] = {"text": field.errors[0]}
 
-        for attributes_key in ["attributes", "formItemAttributes"]:
+        for attributes_key in [
+            "attributes",
+            "formItemAttributes",
+            "fieldsetAttributes",
+        ]:
             if attributes_key in params:
                 for key, value in params[attributes_key].items():
                     if value is True:
@@ -90,8 +94,24 @@ class TnaIterableWidget(TnaWidget):
         kwargs["items"] = []
         kwargs["selected"] = None
 
+        choices_attributes = {}
+        if hasattr(field, "choices"):
+            choices_attributes = {
+                choice[0]: choice[2]
+                for choice in field.choices
+                if len(choice) > 2
+            }
+            field.choices = [
+                (choice[0], choice[1]) for choice in field.iter_choices()
+            ]
+
         for subfield in field:
-            item = {"text": subfield.label.text, "value": subfield._value()}
+            choice_attributes = choices_attributes.get(subfield._value(), {})
+            item = {
+                "text": subfield.label.text,
+                "value": subfield._value(),
+                **choice_attributes,
+            }
 
             if getattr(subfield, "checked", subfield.data):
                 item["checked"] = True

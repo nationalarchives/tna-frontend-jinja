@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.32.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.31.1...v0.32.0) - 2026-01-21
 
+### Added
+
+- Added support for extra attributes on choices of checkbox and radio fields
+
 ### Changed
 
 - Upgraded to [TNA Frontend `v0.32.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.32.0)

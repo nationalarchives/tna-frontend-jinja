@@ -3,10 +3,14 @@ import {
   expectFormFailure,
   expectFormSuccess,
   expectSingleFieldValue,
+  checkAccessibility,
+  validateHtml,
 } from "./lib";
 
 test("select", async ({ page }) => {
   await page.goto("/forms/select/");
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
   - heading "Order" [level=1]
   - combobox "Order":
@@ -19,6 +23,8 @@ test("select", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormFailure(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(/Select an order/);
   await page.getByRole("link", { name: "Select an order" }).click();
   await expect(page.getByLabel("Order")).toBeFocused();
@@ -28,6 +34,8 @@ test("select", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   await expectFormSuccess(page);
+  await checkAccessibility(page);
+  await validateHtml(page);
   await expect(page.getByLabel("Order")).toHaveValue("relevance");
   await expectSingleFieldValue(page, "relevance");
 });
