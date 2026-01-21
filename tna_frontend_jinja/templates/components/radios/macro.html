@@ -19,6 +19,9 @@
       {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
       <label for="{{ params.id }}-{{ item.value }}" class="tna-radios__item-label">
         {{ item.text }}
+        {%- if item.hint %}
+        <span class="tna-radios__item-hint"><span class="tna-visually-hidden">(</span>{{ item.hint }}<span class="tna-visually-hidden">)</span></span>
+        {%- endif %}
       </label>
     </div>
     {%- endfor %}
