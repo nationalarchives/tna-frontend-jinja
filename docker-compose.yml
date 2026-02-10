@@ -18,6 +18,9 @@ services:
       - ./.nvmrc:/app/.nvmrc
       - ./.prettierignore:/app/.prettierignore
       - ./.eslintrc.js:/app/.eslintrc.js
+    healthcheck:
+      start_period: 10s
+      start_interval: 2s
 
   docs:
     image: squidfunk/mkdocs-material
