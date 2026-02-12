@@ -25,9 +25,6 @@ python = "^3.12"
 django = "^5.2.2"
 jinja2 = "^3.1.6"
 
-[tool.poetry.urls]
-"Bug Tracker" = "https://github.com/nationalarchives/tna-frontend-jinja/issues"
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

@@ -1,27 +1,7 @@
-from django.forms.widgets import (
-    CheckboxInput,
-    CheckboxSelectMultiple,
-    ClearableFileInput,
-    DateInput,
-    DateTimeInput,
-    EmailInput,
-    FileInput,
-    HiddenInput,
+from django.forms.widgets import (  # CheckboxInput,; CheckboxSelectMultiple,; ClearableFileInput,; DateInput,; DateTimeInput,; EmailInput,; FileInput,; HiddenInput,; MultipleHiddenInput,; NullBooleanSelect,; NumberInput,; RadioSelect,; Select,; SelectDateWidget,; SelectMultiple,; SplitDateTimeWidget,; SplitHiddenDateTimeWidget,; Textarea,; TimeInput,; URLInput,
     Input,
-    MultipleHiddenInput,
-    NullBooleanSelect,
-    NumberInput,
     PasswordInput,
-    RadioSelect,
-    Select,
-    SelectDateWidget,
-    SelectMultiple,
-    SplitDateTimeWidget,
-    SplitHiddenDateTimeWidget,
-    Textarea,
     TextInput,
-    TimeInput,
-    URLInput,
 )
 
 

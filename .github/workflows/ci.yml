@@ -10,13 +10,13 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Get installed Playwright version
         id: playwright-version
         run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_ENV
         shell: bash
       - name: Cache playwright binaries
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         id: playwright-cache
         with:
           path: |
@@ -31,10 +31,12 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         shell: bash
       - name: Start test server
-        run: docker compose up --detach --wait app
+        run: docker compose up --detach --wait app django
       - name: Run fixture tests
         run: node test/test-fixtures.mjs || exit 1
-      - name: Run Playwright tests
-        run: npx playwright test
-      - name: Run Python tests
+      - name: Run Playwright tests (Flask)
+        run: TEST_DOMAIN=http://127.0.0.1:5001 npx playwright test
+      - name: Run Playwright tests (Django)
+        run: TEST_DOMAIN=http://127.0.0.1:5002 npx playwright test
+      - name: Run Python tests (Flask)
         run: docker compose exec app poetry run python -m pytest

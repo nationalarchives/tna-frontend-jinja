@@ -1,7 +1,8 @@
 {
   "scripts": {
     "test:fixtures": "node test/test-fixtures.mjs",
-    "test:playwright": "npx playwright install && playwright test --ui"
+    "test:playwright:flask": "npx playwright install && playwright test --ui",
+    "test:playwright:django": "npx playwright install && TEST_DOMAIN=http://127.0.0.1:5002 playwright test --ui"
   },
   "dependencies": {
     "@nationalarchives/frontend": "0.33.0"

@@ -26,7 +26,8 @@ class Jinja2(BaseRenderer):
         jinja_config = next(
             template_config
             for template_config in settings.TEMPLATES
-            if template_config["BACKEND"] == "django.template.backends.jinja2.Jinja2"
+            if template_config["BACKEND"]
+            == "django.template.backends.jinja2.Jinja2"
         )
         return self.backend(
             {
