@@ -7,64 +7,111 @@ from wtforms.widgets.core import (
     TextInput,
 )
 
-from .helpers import merger
-
 
 class TnaWidget(object):
+    """
+    Base class for all TNA Frontend WTForms widgets
+    """
+
+    allowed_template_params = [
+        "label",
+        "headingLevel",
+        "headingSize",
+        "hint",
+        "classes",
+        "attributes",
+        "formItemClasses",
+        "formItemAttributes",
+    ]
+
     def __call__(self, field, **kwargs):
-        kwargs.setdefault("id", kwargs["id"] if "id" in kwargs else field.id)
+        kwargs.setdefault("id", kwargs.get("id", field.id))
         kwargs.setdefault("name", field.name)
-        kwargs.setdefault("headingLevel", 2)
         kwargs.setdefault("label", field.label.text)
         kwargs.setdefault("hint", field.description or None)
         return self.render(self.map_tna_params(field, **kwargs))
 
     def map_tna_params(self, field, **kwargs):
-        params = {
-            "id": kwargs["id"],
-            "name": kwargs["name"],
-            "headingLevel": kwargs["headingLevel"],
-            "label": kwargs["label"],
-        }
+        params = kwargs
+        template_params = params.pop("params", {})
 
-        if "hint" in kwargs:
-            params["hint"] = kwargs.get("hint", field.description)
+        for key in self.allowed_template_params:
+            value = None
+            if (
+                key in template_params
+                and isinstance(template_params[key], dict)
+                and key in params
+                and isinstance(params[key], dict)
+            ):
+                merged = params[key].copy()
+                merged.update(template_params[key])
+                value = merged
+            if key in template_params:
+                value = template_params[key]
+            elif key in params:
+                value = params[key]
 
-        if "params" in kwargs:
-            params.update(kwargs["params"])
+            if value:
+                if key in params and isinstance(params[key], dict):
+                    params[key].update(value)
+                else:
+                    params[key] = value
 
-        if "type" in kwargs:
-            params["type"] = kwargs["type"]
-
-        if field.errors:
+        if isinstance(field.errors, list) and len(field.errors):
             params["error"] = {"text": field.errors[0]}
 
-        if "attributes" in kwargs:
-            params["attributes"].update(kwargs["attributes"])
-
-        if "attributes" in params:
-            for key, value in params["attributes"].items():
-                if value is True:
-                    params["attributes"][key] = ""
+        for attributes_key in [
+            "attributes",
+            "formItemAttributes",
+            "fieldsetAttributes",
+        ]:
+            if attributes_key in params:
+                for key, value in params[attributes_key].items():
+                    if value is True:
+                        params[attributes_key][key] = ""
+                    else:
+                        params[attributes_key][key] = value
 
         return params
-
-    def merge_params(self, a, b):
-        return merger.merge(a, b)
 
     def render(self, params):
         return Markup(render_template(self.template, params=params))
 
 
 class TnaIterableWidget(TnaWidget):
-    def __call__(self, field, **kwargs):
-        kwargs.setdefault("id", field.id)
+    """
+    Base class for widgets that iterate over subfields, like checkboxes, radios and select components
+    """
 
+    def __init__(self):
+        super().__init__()
+        self.allowed_template_params = self.allowed_template_params + [
+            "small",
+            "inline",
+        ]
+
+    def __call__(self, field, **kwargs):
         kwargs["items"] = []
         kwargs["selected"] = None
 
+        choices_attributes = {}
+        if hasattr(field, "choices"):
+            choices_attributes = {
+                choice[0]: choice[2]
+                for choice in field.choices
+                if len(choice) > 2
+            }
+            field.choices = [
+                (choice[0], choice[1]) for choice in field.iter_choices()
+            ]
+
         for subfield in field:
-            item = {"text": subfield.label.text, "value": subfield._value()}
+            choice_attributes = choices_attributes.get(subfield._value(), {})
+            item = {
+                "text": subfield.label.text,
+                "value": subfield._value(),
+                **choice_attributes,
+            }
 
             if getattr(subfield, "checked", subfield.data):
                 item["checked"] = True
@@ -74,32 +121,19 @@ class TnaIterableWidget(TnaWidget):
 
         return super().__call__(field, **kwargs)
 
-    def map_tna_params(self, field, **kwargs):
-        params = {
-            "id": field.id,
-            "name": field.name,
-            "items": kwargs["items"],
-            "selected": kwargs["selected"],
-            "hint": field.description,
-        }
-
-        if "params" in kwargs:
-            if "items" in kwargs["params"]:
-                for index, item in enumerate(kwargs["params"]["items"]):
-                    item = self.merge_params(params["items"][index], item)
-
-                del kwargs["params"]["items"]
-
-            params.update(kwargs["params"])
-
-        if field.errors:
-            params["error"] = {"text": field.errors[0]}
-
-        return params
-
 
 class TnaInput(TnaWidget, Input):
     template = "widgets/text-input.html"
+
+    def __init__(self):
+        super().__init__()
+        self.allowed_template_params = self.allowed_template_params + [
+            "type",
+            "inputmode",
+            "autocomplete",
+            "size",
+            "maxLength",
+        ]
 
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
@@ -107,7 +141,6 @@ class TnaInput(TnaWidget, Input):
         if "value" not in params:
             if "value" in kwargs:
                 params["value"] = kwargs["value"]
-                # del kwargs["value"]
             elif field.data:
                 params["value"] = field.data
 
@@ -117,18 +150,18 @@ class TnaInput(TnaWidget, Input):
 class TnaTextInputWidget(TnaInput, TextInput):
     input_type = "text"
 
+    def __init__(self):
+        super().__init__()
+        self.allowed_template_params = self.allowed_template_params + [
+            "password",
+            "spellcheck",
+            "autocapitalize",
+            "autocorrect",
+        ]
+
 
 class TnaCheckboxesWidget(TnaIterableWidget):
     template = "widgets/checkboxes.html"
-
-    def map_tna_params(self, field, **kwargs):
-        params = super().map_tna_params(field, **kwargs)
-
-        params.setdefault(
-            "label",
-            field.label.text,
-        )
-        return params
 
 
 class TnaCheckboxWidget(TnaCheckboxesWidget):
@@ -157,18 +190,19 @@ class TnaCheckboxWidget(TnaCheckboxesWidget):
 
         return super().__call__(field_group, **kwargs)
 
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
+
+        if description := field.description:
+            params["items"][0]["text"] = description
+            del params["hint"]
+
+        return params
+
 
 class TnaRadiosWidget(TnaIterableWidget):
     template = "widgets/radios.html"
     input_type = "radio"
-
-    def map_tna_params(self, field, **kwargs):
-        params = super().map_tna_params(field, **kwargs)
-        params.setdefault(
-            "label",
-            field.label.text,
-        )
-        return params
 
 
 class TnaDateInput(TnaWidget):
@@ -182,30 +216,45 @@ class TnaDateInput(TnaWidget):
 
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-        day, month, year = [""] * 3
 
+        day, month, year = [""] * 3
         if field.raw_data:
             for format_part_index, format_part in enumerate(
                 field.format[len(field.format) - 1].split(" ")
             ):
                 if format_part.replace("%", "").lower() == "d":
-                    day = field.raw_data[format_part_index]
+                    day = (
+                        field.raw_data[format_part_index]
+                        if len(field.raw_data) > format_part_index
+                        else ""
+                    )
                 elif format_part.replace("%", "").lower() in ["m", "b"]:
-                    month = field.raw_data[format_part_index]
+                    month = (
+                        field.raw_data[format_part_index]
+                        if len(field.raw_data) > format_part_index
+                        else ""
+                    )
                 elif format_part.replace("%", "").lower() == "y":
-                    year = field.raw_data[format_part_index]
+                    year = (
+                        field.raw_data[format_part_index]
+                        if len(field.raw_data) > format_part_index
+                        else ""
+                    )
+        elif field.data:
+            day = str(field.data.day).rjust(2, "0")
+            month = str(field.data.month).rjust(2, "0")
+            year = field.data.year
 
-        params["fields"] = field.field_codes()
-        params.setdefault("label", field.label.text)
-        params.setdefault(
-            "value",
-            {
-                "day": day,
-                "month": month,
-                "year": year,
-            },
-        )
+        params["value"] = {}
+        if day:
+            params["value"]["day"] = day
+        if month:
+            params["value"]["month"] = month
+        if year:
+            params["value"]["year"] = year
+        params.setdefault("fields", field.field_codes())
         params.setdefault("progressive", field.progressive)
+
         return params
 
 
@@ -225,12 +274,6 @@ class TnaSubmitWidget(TnaInput):
 class TnaTextareaWidget(TnaInput, TextArea):
     template = "widgets/textarea.html"
 
-    def __call__(self, field, **kwargs):
-        kwargs.setdefault("id", field.id)
-        if "value" not in kwargs:
-            kwargs["value"] = field._value()
-        return super().__call__(field, **kwargs)
-
 
 class TnaSelectWidget(TnaWidget, Select):
     template = "widgets/select.html"
@@ -244,34 +287,20 @@ class TnaSelectWidget(TnaWidget, Select):
             )
 
         kwargs["items"] = []
-
         for val, label, selected, render_kw in field.iter_choices():
             item = {"text": label, "value": val, "selected": selected}
-
             kwargs["items"].append(item)
-
             if selected:
                 kwargs["selected"] = val
 
         return super().__call__(field, **kwargs)
-
-    def map_tna_params(self, field, **kwargs):
-        params = super().map_tna_params(field, **kwargs)
-
-        params["items"] = kwargs["items"]
-
-        if "selected" in kwargs:
-            params["selected"] = kwargs["selected"]
-            del kwargs["selected"]
-
-        return params
 
 
 class TnaPasswordWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
 
-        params["password"] = True
+        params.setdefault("password", True)
 
         return params
 
@@ -280,7 +309,7 @@ class TnaNumberInputWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
 
-        params["inputmode"] = "numeric"
+        params.setdefault("inputmode", "numeric")
 
         return params
 
@@ -289,7 +318,7 @@ class TnaEmailInputWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
 
-        params["inputmode"] = "email"
+        params.setdefault("inputmode", "email")
 
         return params
 
@@ -298,7 +327,7 @@ class TnaTelInputWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
 
-        params["inputmode"] = "tel"
+        params.setdefault("inputmode", "tel")
 
         return params
 
@@ -307,7 +336,7 @@ class TnaUrlInputWidget(TnaTextInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
 
-        params["inputmode"] = "url"
+        params.setdefault("inputmode", "url")
 
         return params
 
@@ -315,8 +344,49 @@ class TnaUrlInputWidget(TnaTextInputWidget):
 class TnaSearchFieldWidget(TnaTextInputWidget):
     template = "widgets/search-field.html"
 
+
+class TnaFileInputWidget(TnaInput):
+    template = "widgets/file-input.html"
+
+
+class TnaFilesInputWidget(TnaFileInputWidget):
     def map_tna_params(self, field, **kwargs):
         params = super().map_tna_params(field, **kwargs)
-        print(f"params: {params}")
-        print(f"kwargs: {kwargs}")
+
+        params.setdefault("multiple", True)
+
+        return params
+
+
+class TnaDroppableFileInputWidget(TnaFileInputWidget):
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
+
+        params.setdefault("droppable", True)
+
+        return params
+
+
+class TnaDroppableFilesInputWidget(TnaFilesInputWidget):
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
+
+        params.setdefault("multiple", True)
+        params.setdefault("droppable", True)
+
+        return params
+
+
+class TnaFieldsetWidget(TnaWidget):
+    template = "widgets/fieldset.html"
+
+    def map_tna_params(self, field, **kwargs):
+        params = super().map_tna_params(field, **kwargs)
+
+        params["legend"] = params.get("label", field.label.text)
+
+        params["html"] = ""
+        for subfield in field:
+            params["html"] += subfield()
+
         return params

@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test("kitchen sink form", async ({ page }) => {
-  await page.goto("/forms/kitchen-sink");
+  await page.goto("/forms/kitchen-sink/");
   await expect(await page.getByTestId("form")).toMatchAriaSnapshot(`
 - heading "Search" [level=2]
 - searchbox "Search"
@@ -16,10 +16,9 @@ test("kitchen sink form", async ({ page }) => {
 - textbox "Email address"
 - heading "Height in centimetres" [level=2]
 - textbox "Height in centimetres"
-- group "Terms and conditions":
-  - heading "Terms and conditions" [level=2]
-  - checkbox "I agree to terms and conditions"
-  - text: I agree to terms and conditions
+- heading "Terms and conditions" [level=2]
+- checkbox "Terms and conditions I agree to terms and conditions"
+- text: I agree to terms and conditions
 - heading "Site URL" [level=2]
 - textbox "Site URL"
 - group "Shopping list":

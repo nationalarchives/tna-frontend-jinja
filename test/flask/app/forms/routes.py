@@ -1,11 +1,21 @@
+# import io
+# import os
+
 from app.forms import bp
 from app.forms.forms import (
     CheckboxesForm,
     CheckboxForm,
+    CheckboxFormNoLabel,
     DateInputForm,
     DateInputMonthForm,
     DateInputProgressiveForm,
+    DateInputProgressiveLastDateForm,
     DateInputYearForm,
+    DroppableFileInputForm,
+    DroppableFilesInputForm,
+    FieldsetForm,
+    FileInputForm,
+    FilesInputForm,
     KitchenSinkForm,
     RadiosForm,
     SearchForm,
@@ -20,7 +30,10 @@ from app.forms.forms import (
     TextInputTelForm,
     TextInputURLForm,
 )
-from flask import current_app, render_template, url_for
+from flask import current_app, render_template, url_for  # , request
+
+# from PIL import Image
+# from werkzeug.utils import secure_filename
 
 
 def has_no_empty_params(rule):
@@ -39,7 +52,9 @@ def index():
             and rule.endpoint not in ["forms.index", "forms.success"]
             and rule.endpoint.startswith("forms.")
         ):
-            urls[rule.endpoint] = url_for(rule.endpoint, **(rule.defaults or {}))
+            urls[rule.endpoint] = url_for(
+                rule.endpoint, **(rule.defaults or {})
+            )
     return render_template("index.html", urls=urls)
 
 
@@ -127,11 +142,25 @@ def date_input_progressive():
     return render_template("single-field.html", form=form, success=success)
 
 
+@bp.route("/date-input-progressive-end/", methods=["GET", "POST"])
+def date_input_progressive_end():
+    form = DateInputProgressiveLastDateForm()
+    success = form.validate_on_submit()
+    return render_template("single-field.html", form=form, success=success)
+
+
 @bp.route("/checkbox/", methods=["GET", "POST"])
 def checkbox():
     form = CheckboxForm()
     success = form.validate_on_submit()
-    return render_template("checkbox.html", form=form, success=success)
+    return render_template("single-field.html", form=form, success=success)
+
+
+@bp.route("/checkbox-no-label/", methods=["GET", "POST"])
+def checkbox_no_label():
+    form = CheckboxFormNoLabel()
+    success = form.validate_on_submit()
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/checkboxes/", methods=["GET", "POST"])
@@ -169,6 +198,96 @@ def search():
     return render_template(
         "single-field.html", form=form, success=success, showSubmitButton=False
     )
+
+
+@bp.route("/file-input/", methods=["GET", "POST"])
+def file_input():
+    form = FileInputForm()
+    success = form.validate_on_submit()
+    # if success:
+    #     if file := request.files['field']:
+    #         filename = secure_filename(file.filename)
+    #         file.save(os.path.join("/uploads", filename))
+    # if success:
+    #     if file := request.files.get("field"):
+    #         filename = secure_filename(file.filename)
+    #         im = Image.open(io.BytesIO(file.read()))
+    #         rgb_im = im.convert("RGB")
+    #         rgb_im.thumbnail((2048, 2048))
+    #         rgb_im.save(
+    #             os.path.join("/uploads", ".".join(filename.split(".")[:-1]) + ".jpg"),
+    #             "JPEG",
+    #         )
+    return render_template(
+        "single-field-multipart-form-data.html",
+        form=form,
+        success=success,
+    )
+
+
+@bp.route("/files-input/", methods=["GET", "POST"])
+def files_input():
+    form = FilesInputForm()
+    success = form.validate_on_submit()
+    # if success:
+    #     if files := request.files.getlist('field'):
+    #         for file in files:
+    #             filename = secure_filename(file.filename)
+    #             file.save(os.path.join("/uploads", filename))
+    # if success:
+    #     if files := request.files.getlist('field'):
+    #         for file in files:
+    #             filename = secure_filename(file.filename)
+    #             im = Image.open(io.BytesIO(file.read()))
+    #             rgb_im = im.convert("RGB")
+    #             rgb_im.thumbnail((2048, 2048))
+    #             rgb_im.save(
+    #                 os.path.join("/uploads", ".".join(filename.split(".")[:-1]) + ".jpg"),
+    #                 "JPEG",
+    #             )
+    return render_template(
+        "single-field-multipart-form-data.html",
+        form=form,
+        success=success,
+    )
+
+
+@bp.route("/file-input-droppable/", methods=["GET", "POST"])
+def dropable_file_input():
+    form = DroppableFileInputForm()
+    success = form.validate_on_submit()
+    # if success:
+    #     if file := request.files['field']:
+    #         filename = secure_filename(file.filename)
+    #         file.save(os.path.join("/uploads", filename))
+    return render_template(
+        "single-field-multipart-form-data.html",
+        form=form,
+        success=success,
+    )
+
+
+@bp.route("/files-input-droppable/", methods=["GET", "POST"])
+def dropable_files_input():
+    form = DroppableFilesInputForm()
+    success = form.validate_on_submit()
+    # if success:
+    #     if files := request.files.getlist('field'):
+    #         for file in files:
+    #             filename = secure_filename(file.filename)
+    #             file.save(os.path.join("/uploads", filename))
+    return render_template(
+        "single-field-multipart-form-data.html",
+        form=form,
+        success=success,
+    )
+
+
+@bp.route("/fieldset/", methods=["GET", "POST"])
+def fieldset():
+    form = FieldsetForm()
+    success = form.validate_on_submit()
+    return render_template("single-field.html", form=form, success=success)
 
 
 @bp.route("/kitchen-sink/", methods=["GET", "POST"])

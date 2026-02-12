@@ -1,0 +1,19 @@
+{%- from 'utilities/forms/form-item.html' import tnaFormItem -%}
+
+{% macro tnaFileInput(params) %}
+{%- call tnaFormItem({
+  'headingLevel': params.headingLevel,
+  'headingSize': params.headingSize,
+  'id': params.id,
+  'label': params.label,
+  'hint': params.hint,
+  'error': params.error,
+  'classes': params.formItemClasses,
+  'attributes': params.formItemAttributes
+}, 'tna-file-input' if params.droppable else '') %}
+  <input id="{{ params.id }}" class="tna-file-input{% if params.classes %} {{ params.classes }}{% endif %}" name="{{ params.name }}" type="file"
+  {%- if params.hint or params.error %} aria-describedby="{%- if params.hint -%}{{ params.id }}-hint{%- endif %} {% if params.error -%}{{ params.id }}-error{%- endif -%}"{%- endif %}
+  {%- if params.multiple %} multiple{% endif %}
+  {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+{%- endcall %}
+{% endmacro %}

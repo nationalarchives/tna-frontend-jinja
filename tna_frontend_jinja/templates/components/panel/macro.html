@@ -1,0 +1,14 @@
+{% macro tnaPanel(params) %}
+<div class="tna-panel{% if params.classes %} {{ params.classes }}{% endif %}"{%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+  <h{{ params.headingLevel or '1' }} class="tna-heading-{{ params.headingSize or 'xl' }} tna-panel__heading">
+    {{ params.title }}
+  </h{{ params.headingLevel or '1' }}>
+  <div class="tna-panel__content">
+    {%- if params.text %}
+      <p>{{ params.text }}</p>
+    {%- else %}
+      {{ params.body | safe }}
+    {%- endif %}
+  </div>
+</div>
+{% endmacro %}

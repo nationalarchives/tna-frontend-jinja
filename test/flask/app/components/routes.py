@@ -6,12 +6,19 @@ from flask import render_template, request
 
 def render_component(template):
     params = request.args.get("params")
-    return render_template(template, params=json.loads(params) if params else {})
+    return render_template(
+        template, params=json.loads(params) if params else {}
+    )
 
 
 @bp.route("/accordion")
 def accordion():
     return render_component("widgets/accordion.html")
+
+
+@bp.route("/back-link")
+def back_link():
+    return render_component("widgets/back-link.html")
 
 
 @bp.route("/breadcrumbs")
@@ -64,6 +71,16 @@ def error_summary():
     return render_component("widgets/error-summary.html")
 
 
+@bp.route("/fieldset")
+def fieldset():
+    return render_component("widgets/fieldset.html")
+
+
+@bp.route("/file-input")
+def file_input():
+    return render_component("widgets/file-input.html")
+
+
 @bp.route("/files-list")
 def files_list():
     return render_component("widgets/files-list.html")
@@ -102,6 +119,11 @@ def index_grid():
 @bp.route("/pagination")
 def pagination():
     return render_component("widgets/pagination.html")
+
+
+@bp.route("/panel")
+def panel():
+    return render_component("widgets/panel.html")
 
 
 @bp.route("/phase-banner")

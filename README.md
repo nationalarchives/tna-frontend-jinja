@@ -8,7 +8,9 @@
 ![Python version](https://img.shields.io/pypi/pyversions/tna-frontend-jinja?style=flat-square&logo=python&logoColor=white)
 [![Licence](https://img.shields.io/github/license/nationalarchives/tna-frontend-jinja?style=flat-square)](https://github.com/nationalarchives/tna-frontend-jinja/blob/main/LICENCE)
 
-TNA Frontend Jinja templates are a [Jinja](https://jinja.palletsprojects.com/en/3.1.x/) implementation of the templates provided as part of [TNA Frontend](https://github.com/nationalarchives/tna-frontend).
+TNA Frontend Jinja templates are a [Jinja](https://jinja.palletsprojects.com/en/3.1.x/) implementation of the templates provided as part of [TNA Frontend](https://github.com/nationalarchives/tna-frontend) as well as widgets for [WTForms](#wtforms).
+
+See the [documentation](https://nationalarchives.github.io/tna-frontend-jinja/).
 
 ## Quickstart for Flask projects
 
@@ -72,7 +74,7 @@ Ensure your application is first on the list of template directories. This means
 ## Using the templates
 
 ```jinja
-{% from 'components/button/macro.html' import tnaButton %}
+{%- from 'components/button/macro.html' import tnaButton -%}
 
 {{ tnaButton({
   'text': 'Save and continue'
@@ -91,105 +93,11 @@ To make modifications to the templates, create a new file in your applciation te
 
 For example, if your application templates directory is `app/templates`, create `app/templates/components/button/macro.html` and insert your own HTML using the same macro name (e.g. `tnaButton`).
 
-This way you can continue to use the same import (e.g. `{% from 'components/button/macro.html' import tnaButton %}`) but introduce your own bespoke functionality.
+This way you can continue to use the same import (e.g. `{%- from 'components/button/macro.html' import tnaButton -%}`) but introduce your own bespoke functionality.
 
 ## WTForms
 
-### Form construction
-
-```python
-from flask_wtf import FlaskForm
-from tna_frontend_jinja.wtforms import TnaTextInputWidget
-from wtforms import StringField, SubmitField
-from wtforms.validators import InputRequired, Length
-
-class MyForm(FlaskForm):
-    username = StringField(
-        "Username",
-        widget=TnaTextInputWidget(),
-        validators=[
-            InputRequired(message="Enter a username"),
-            Length(max=256, message="Usernames must be 256 characters or fewer"),
-        ],
-    )
-    submit = SubmitField("Continue", widget=TnaSubmitWidget())
-```
-
-### Route
-
-```python
-@app.route("/my-form/", methods=["GET", "POST"])
-def my_form():
-    form = MyForm()
-    if form.validate_on_submit():
-        return redirect(url_for("success"))
-    return render_template("my-form.html", form=form)
-
-@app.route("/success/")
-def success():
-    return render_template("success.html")
-```
-
-### Template
-
-```jinja2
-{% if form.errors %}
-  {{ tnaErrorSummary(wtforms_errors(form)) }}
-{% endif %}
-<h1 class="tna-heading-xl">My form</h1>
-<form action="{{ url_for('my_form') }}" method="post" novalidate>
-  {{ form.csrf_token }}
-  {{ form.username }}
-  <div class="tna-button-group">
-    {{ form.submit }}
-  </div>
-</form>
-```
-
-### Fields
-
-| WTForms field         | TNA Widget             | Notes                                                                         |
-| --------------------- | ---------------------- | ----------------------------------------------------------------------------- |
-| `BooleanField`        | `TnaCheckboxWidget`    | https://design-system.nationalarchives.gov.uk/components/checkboxes/          |
-| `DateField`           | [not supported]        | Use `tna_frontend_jinja.wtforms.fields.TnaDateField`                          |
-| `DecimalField`        | `TnaNumberInputWidget` |                                                                               |
-| `EmailField`          | `TnaEmailInputWidget`  |                                                                               |
-| `FloatField`          | `TnaNumberInputWidget` |                                                                               |
-| `HiddenField`         | [none needed]          |                                                                               |
-| `IntegerField`        | `TnaNumberInputWidget` |                                                                               |
-| `MonthField`          | [not supported]        | Use `tna_frontend_jinja.wtforms.fields.TnaMonthField`                         |
-| `PasswordField`       | `TnaPasswordWidget`    | https://design-system.nationalarchives.gov.uk/components/text-input/#password |
-| `RadioField`          | `TnaRadiosWidget`      | https://design-system.nationalarchives.gov.uk/components/radios/              |
-| `SelectField`         | `TnaSelectWidget`      | https://design-system.nationalarchives.gov.uk/components/select/              |
-| `SearchField`         | `TnaSearchFieldWidget` | https://design-system.nationalarchives.gov.uk/components/search-field/        |
-| `SelectMultipleField` | `TnaCheckboxesWidget`  | https://design-system.nationalarchives.gov.uk/components/checkboxes/          |
-| `SubmitField`         | `TnaSubmitWidget`      | https://design-system.nationalarchives.gov.uk/components/button/              |
-| `StringField`         | `TnaTextInputWidget`   | https://design-system.nationalarchives.gov.uk/components/text-input/          |
-| `TelField`            | `TnaTelInputWidget`    |                                                                               |
-| `TextAreaField`       | `TnaTextareaWidget`    | https://design-system.nationalarchives.gov.uk/components/textarea/            |
-| `URLField`            | `TnaUrlInputWidget`    |                                                                               |
-
-#### WTForms fields currently not supported:
-
-- `ColorField`
-- `DateTimeField`
-- `DateTimeLocalField`
-- `DecimalRangeField`
-- `FieldList`
-- `FileField`
-- `FormField`
-- `IntegerRangeField`
-- `MultipleFileField`
-- `TimeField`
-
-### TNA Frontend Jinja fields
-
-| TNA Frontend Jinja field  | Purpose                                                    |
-| ------------------------- | ---------------------------------------------------------- |
-| `TnaDateField`            | Day, month and year fields                                 |
-| `TnaMonthField`           | Month and year fields                                      |
-| `TnaYearField`            | Year field                                                 |
-| `TnaProgressiveDateField` | Date fields that accept year, year/month or year/month/day |
+See the [TNA Frontend Jinja WTForms docs](https://nationalarchives.github.io/tna-frontend-jinja/wtforms/).
 
 ## Running tests
 
@@ -201,10 +109,13 @@ docker compose up -d
 npm install
 
 # Run the fixture tests
-node test/test-fixtures.mjs
+npm run test:fixtures
 
 # Run the Playwright tests
 npm run test:playwright
+
+# Run the Python tests
+docker compose exec app poetry run python -m pytest
 ```
 
 ## Styles and JavaScript
@@ -221,6 +132,20 @@ Ensure you install the correct version of TNA Frontend for the version of the te
 
 | TNA Frontend Jinja | Compatible TNA Frontend version(s) |
 | ------------------ | ---------------------------------- |
+| `0.33.0`           | `0.33.x`                           |
+| `0.32.0`           | `0.32.x`                           |
+| `0.31.x`           | `0.31.x`                           |
+| `0.30.0`           | `0.30.x`                           |
+| `0.29.1`           | `0.29.1`                           |
+| `0.29.0`           | `0.29.0`                           |
+| `0.28.0`           | `0.28.x`                           |
+| `0.27.0`           | `0.27.x`                           |
+| `0.26.0`           | `0.26.x`                           |
+| `0.25.0`           | `0.25.x`                           |
+| `0.24.0`           | `0.24.x`                           |
+| `0.23.0`           | `0.23.x`                           |
+| `0.22.0`           | `0.22.x`                           |
+| `0.21.0`           | `0.21.x`                           |
 | `0.20.1`           | `0.20.1`                           |
 | `0.20.0`           | `0.20.0`                           |
 | `0.19.0`           | `0.19.x`                           |

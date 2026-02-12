@@ -1,5 +1,5 @@
 {% macro tnaCookieBanner(params) %}
-{% from "components/button/macro.html" import tnaButton %}
+{%- from 'components/button/macro.html' import tnaButton -%}
 
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
 <section class="tna-cookie-banner {{ ' '.join(containerClasses) }}" data-module="tna-cookie-banner" aria-label="Cookies on {{ params.serviceName }}"
@@ -36,7 +36,7 @@
         }) }}
       </div>
     </div>
-    <div class="tna-column tna-column--full tna-cookie-banner__message tna-cookie-banner__message--accepted" tabindex="0" hidden>
+    <div class="tna-column tna-column--full tna-cookie-banner__message tna-cookie-banner__message--accepted tna-!--no-focus-style" hidden>
       {% if params.acceptedBody %}
       {{ params.acceptedBody | safe }}
       {% else %}
@@ -52,7 +52,7 @@
         }) }}
       </div>
     </div>
-    <div class="tna-column tna-column--full tna-cookie-banner__message tna-cookie-banner__message--rejected" tabindex="0" hidden>
+    <div class="tna-column tna-column--full tna-cookie-banner__message tna-cookie-banner__message--rejected tna-!--no-focus-style" hidden>
       {% if params.rejectedBody %}
       {{ params.rejectedBody | safe }}
       {% else %}

@@ -1,32 +1,56 @@
 services:
-  flask:
+  app:
     build:
-      context: test/flask
-    environment:
-      - RUNTIME=develop
-      - SECRET_KEY=abc123
+      context: .
+      dockerfile: test/flask/Dockerfile
     ports:
       - 5001:8080
     volumes:
       - ./test/flask/app:/app/app
-      - ./tna_frontend_jinja:/app/tna_frontend_jinja
+      - ./test/playwright:/app/playwright-tests
+      - ./test/test-fixtures.mjs:/app/test-fixtures.mjs
       - ./test/flask/pyproject.toml:/app/pyproject.toml
       - ./test/flask/poetry.lock:/app/poetry.lock
+      - ./tna_frontend_jinja:/app/tna_frontend_jinja
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+      - ./node_modules:/app/node_modules
+      - ./.nvmrc:/app/.nvmrc
+      - ./.prettierignore:/app/.prettierignore
+      - ./.eslintrc.js:/app/.eslintrc.js
+    healthcheck:
+      start_period: 10s
+      start_interval: 2s
+
   django:
     build:
-      context: test/django
+      context: .
+      dockerfile: test/django/Dockerfile
     environment:
-      - RUNTIME=develop
       - DJANGO_SETTINGS_MODULE=app.settings
       - SECRET_KEY=abc123
     ports:
       - 5002:8080
     volumes:
-      - ./test/django/app:/app/app
+      - ./test/flask/app:/app/app
+      - ./test/playwright:/app/playwright-tests
+      - ./test/test-fixtures.mjs:/app/test-fixtures.mjs
+      - ./test/flask/pyproject.toml:/app/pyproject.toml
+      - ./test/flask/poetry.lock:/app/poetry.lock
       - ./tna_frontend_jinja:/app/tna_frontend_jinja
-      - ./test/django/pyproject.toml:/app/pyproject.toml
-      - ./test/django/poetry.lock:/app/poetry.lock
-  dev:
-    image: ghcr.io/nationalarchives/tna-python-dev:preview
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+      - ./node_modules:/app/node_modules
+      - ./.nvmrc:/app/.nvmrc
+      - ./.prettierignore:/app/.prettierignore
+      - ./.eslintrc.js:/app/.eslintrc.js
+    healthcheck:
+      start_period: 10s
+      start_interval: 2s
+
+  docs:
+    image: squidfunk/mkdocs-material
     volumes:
-      - ./:/app
+      - .:/docs
+    ports:
+      - 5002:8000

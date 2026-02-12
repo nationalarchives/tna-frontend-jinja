@@ -1,0 +1,7 @@
+{% macro tnaBackLink(params) %}
+{%- set containerClasses = [params.classes] if params.classes else [] -%}
+{%- set classes = containerClasses | join(' ') -%}
+<a href="{{ params.href }}" class="tna-back-link{% if classes %} {{ classes }}{% endif %}"{%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+  <span class="tna-back-link__inner">{{ params.text or 'Back' }}</span>
+</a>
+{% endmacro %}

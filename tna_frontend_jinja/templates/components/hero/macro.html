@@ -1,5 +1,5 @@
 {% macro tnaHero(params) %}
-{% from "components/button/macro.html" import tnaButton %}
+{%- from 'components/button/macro.html' import tnaButton -%}
 
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
 {%- if params.style == "contrast" -%}
@@ -8,6 +8,8 @@
   {%- set containerClasses = containerClasses + ['tna-background-tint'] -%}
 {%- elif params.style == "accent" -%}
   {%- set containerClasses = containerClasses + ['tna-background-accent'] -%}
+{%- elif params.style == "accent-light" -%}
+  {%- set containerClasses = containerClasses + ['tna-background-accent-light'] -%}
 {%- endif -%}
 {%- if params.layout == "shift" -%}
   {%- set containerClasses = containerClasses + ['tna-hero--shift'] -%}
@@ -76,9 +78,9 @@
     {%- if params.imageCaption -%}
     <figcaption class="tna-hero__caption">
       <details class="tna-hero__details">
-        <summary class="tna-hero__details-summary" aria-label="Additional information
-        about the featured image">
-          About this <span class="tna-hero__details-summary-icon">i</span>mage
+        <summary class="tna-hero__details-summary tna-button tna-button--small tna-button--icon-only-mobile" aria-label="Additional information about this image">
+          <i class="fa-solid fa-circle-info tna-hero__details-summary-icon" aria-hidden="true"></i>
+          About this image
         </summary>
         <div class="tna-hero__information">
           {{ params.imageCaption | safe }}

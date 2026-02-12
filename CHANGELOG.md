@@ -5,17 +5,148 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.20.1...HEAD)
+## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.33.0...HEAD)
+
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [0.33.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.32.0...v0.33.0) - 2026-02-10
+
+### Changed
+
+- Upgraded to [TNA Frontend `v0.33.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.33.0)
+
+## [0.32.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.31.1...v0.32.0) - 2026-01-21
+
+### Added
+
+- Added support for extra attributes on choices of checkbox and radio fields
+
+### Changed
+
+- Upgraded to [TNA Frontend `v0.32.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.32.0)
+
+## [0.31.1](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.31.0...v0.31.1) - 2026-01-08
+
+Version bump for failed immutable release
+
+## [0.31.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.30.0...v0.31.0) - 2026-01-08
+
+### Changed
+
+- Upgraded to [TNA Frontend `v0.31.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.31.0)
+
+## [0.30.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.29.1...v0.30.0) - 2026-01-02
+
+### Changed
+
+- Upgraded to [TNA Frontend `v0.30.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.30.0)
+
+### Fixed
+
+- Fixed error summary link for single checkboxes (`BooleanField`)
+- Added missing default `headingLevel` on error summary components
+
+## [0.29.1](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.29.0...v0.29.1) - 2025-11-27
+
+### Changed
+
+- Upgraded to [TNA Frontend `v0.29.1`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.29.1)
+
+### Fixed
+
+- Added missing `href` in back link component
+
+## [0.29.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.28.0...v0.29.0) - 2025-11-27
+
+### Changed
+
+- Upgraded to [TNA Frontend `v0.29.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.29.0)
+
+## [0.28.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.27.0...v0.28.0) - 2025-10-07
+
+### Changed
+
+- Upgraded to [TNA Frontend `v0.28.1`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.28.1)
+
+## [0.27.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.26.0...v0.27.0) - 2025-10-07
+
+### Added
+
+- Allowed the details component to have a `caller()` function
+
+### Changed
+
+- Upgraded to [TNA Frontend `v0.27.1`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.27.1)
+
+### Fixed
+
+- Allowed `PastDate` and `FutureDate` validators to use `datetime` objects
+- Date fields can use ISO 8601 dates as `data` in addition to the existing date formats
+- Fixed issue with processing date fields using both `formdata` and `data`
+
+## [0.26.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.25.0...v0.26.0) - 2025-10-07
+
+### Changed
+
+- Upgraded to [TNA Frontend `v0.26.1`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.26.1)
+- Updated the error message when CSRF validation fails
+
+### Fixed
+
+- Fixed bug with non-persistence of date fields
+
+## [0.25.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.24.0...v0.25.0) - 2025-09-15
+
+### Changed
+
+- Upgraded to [TNA Frontend `v0.25.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.25.0)
+- `BooleanField` with `TnaCheckboxWidget` doesn't render a fieldset and takes the field `description` as the checkbox label
+
+## [0.24.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.23.0...v0.24.0) - 2025-07-30
+
+### Added
+
+- Partial date fields (`TnaProgressiveDateField`, `TnaMonthField`, `TnaYearField`) can no be coersed to the end of the date range with `end_of_partial_date_range`
+- New fieldset widget for optional use with `FormField`
+- New UK postcode validator `UKPostcode`
+
+### Changed
+
+- Upgraded to [TNA Frontend `v0.24.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.24.0)
+- Removed requirement for `deepmerge` package
+- `include_today` parameter on `PastDate` and `FutureDate` validators changed to `include_now`
+
+## [0.23.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.22.0...v0.23.0) - 2025-07-30
+
+### Changed
+
+- Upgraded to [TNA Frontend `v0.23.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.23.0)
+
+## [0.22.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.21.0...v0.22.0) - 2025-07-21
+
+### Added
+
+- Added support for `FileField` and `MultipleFileField` from WTForms
+
+### Changed
+
+- Simplified CSRF error messages
+- Upgraded to [TNA Frontend `v0.22.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.22.0)
+
+## [0.21.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.20.1...v0.21.0) - 2025-06-30
 
 ### Added
 
 - Added support for [WTForms widgets](https://wtforms.readthedocs.io/en/2.3.x/widgets/)
 
 ### Changed
-### Deprecated
-### Removed
-### Fixed
-### Security
+
+- Upgraded to [TNA Frontend `v0.21.0`](https://github.com/nationalarchives/tna-frontend/releases/tag/v0.21.0)
 
 ## [0.20.1](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.20.0...v0.20.1) - 2025-06-13
 

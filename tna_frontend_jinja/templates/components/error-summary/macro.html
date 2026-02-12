@@ -2,13 +2,17 @@
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
 <div class="tna-error-summary {{ ' '.join(containerClasses) }}" data-module="tna-error-summary" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}{%- if params.disableAutoFocus != undefined %} data-disable-autofocus="{{ params.disableAutoFocus | lower }}"{% endif %}>
   <div role="alert">
-    <h{{ params.headingLevel }} class="tna-error-summary__heading tna-heading-m">
-      {{ params.title }}
-    </h{{ params.headingLevel }}>
+    <h{{ params.headingLevel or '2' }} class="tna-error-summary__heading tna-heading-m">
+      {{ params.title or 'There is a problem' }}
+    </h{{ params.headingLevel or '2' }}>
     <ul class="tna-error-summary__list">
       {%- for item in params['items'] %}
       <li class="tna-error-summary__item">
+        {%- if item.href %}
         <a href="{{ item.href }}" class="tna-error-summary__link">{{ item.text }}</a>
+        {%- else %}
+        <span class="tna-error-summary__link">{{ item.text }}</span>
+        {%- endif %}
       </li>
       {%- endfor %}
     </ul>

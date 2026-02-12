@@ -1,10 +1,14 @@
-FROM ghcr.io/nationalarchives/tna-python:latest
+FROM ghcr.io/nationalarchives/tna-python-dev:latest
 
-COPY --chown=app ./pyproject.toml /app/pyproject.toml
-COPY --chown=app ./poetry.lock /app/poetry.lock
+COPY ./test/flask/pyproject.toml /app/pyproject.toml
+COPY ./test/flask/poetry.lock /app/poetry.lock
+COPY ./package.json /app/package.json
+COPY ./package-lock.json /app/package-lock.json
 
-RUN tna-build
+RUN . tna-nvm; \
+    npm i; \
+    tna-build
 
-COPY --chown=app ./app /app/app
+COPY ./test/flask/app /app/app
 
-CMD ["tna-run", "app:app"]
+CMD ["tna-wsgi", "app:app"]

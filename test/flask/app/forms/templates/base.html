@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://use.typekit.net/kaq6qqh.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400..700&family=Roboto+Mono:wght@400..500&display=swap">
-  <link href="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.20.1/nationalarchives/all.css" rel="stylesheet" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='@nationalarchives/frontend/nationalarchives/all.css') }}">
 {% endblock %}
 
 {% block cookies %}
@@ -21,13 +21,12 @@
 {% block content %}
 <div class="tna-container tna-!--padding-bottom-l">
   <div class="tna-column tna-column--width-2-3 tna-column--full-small tna-column--full-tiny tna-!--margin-top-l">
-    {% if form.errors %}
-      {{ tnaErrorSummary(wtforms_errors(form)) }}
-    {% endif %}
-    <h1 class="tna-heading-xl">Form</h1>
-    <form data-testid="form" action="{{ request.url }}" method="post" novalidate>
-      {{ form.csrf_token }}
+    <form data-testid="form" action="{{ request.url }}" method="post" enctype="{{ form_enctype or 'application/x-www-form-urlencoded' }}" novalidate>
+      {% if form.errors %}
+        {{ tnaErrorSummary(wtforms_errors(form)) }}
+      {% endif %}
       {% block form %}{% endblock %}
+      {{ form.csrf_token }}
       {% if showSubmitButton != False %}
       <div class="tna-button-group">
         {{ tnaButton({
@@ -62,25 +61,30 @@
         {% endif %}
         {% endfor %}
       </dl>
+      {% block form_json %}
+      {% set form_data=form.data %}
+      {% set csrf_token = form_data.pop('csrf_token', '') %}
       {{ tnaTextarea({
         'label': 'Form data (JSON)',
         'headingLevel': 3,
         'headingSize': 's',
         'id': 'form_data',
         'name': 'form_data',
-        'value': form.data | tojson,
+        'value': form_data | tojson,
         'rows': 10,
+        'formGroupClasses': 'tna-!--margin-top-s',
         'attributes': {
           'readonly': '',
           'data-testid': 'form_data'
         }
       }) }}
+      {% endblock %}
     </div>
   </div>
 </div>
 {% endblock %}
 
 {% block bodyEnd %}
-  <script src="https://cdn.jsdelivr.net/npm/@nationalarchives/frontend@0.20.1/nationalarchives/all.js" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='@nationalarchives/frontend/nationalarchives/all.js') }}"></script>
   <script>window.TNAFrontend.initAll();</script>
 {% endblock %}

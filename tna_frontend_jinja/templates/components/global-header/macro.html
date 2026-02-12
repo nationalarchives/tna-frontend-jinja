@@ -1,10 +1,74 @@
 {% macro tnaGlobalHeader(params) %}
-{% from "components/phase-banner/macro.html" import tnaPhaseBanner %}
+{%- from 'components/phase-banner/macro.html' import tnaPhaseBanner -%}
 
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
 {%- if params.collapseOnMedium -%}
   {%- set containerClasses = containerClasses + ['tna-global-header--collapse-on-medium'] -%}
 {%- endif -%}
+
+{% if 'logo' in params %}
+  {% set logo = params.logo %}
+{% elif params.defaultContent %}
+  {% set logo = {
+    'href': (params.defaultContentBaseURL or '') ~ '/',
+    'title': 'The National Archives home page'
+  } %}
+{% else %}
+  {% set logo = None %}
+{% endif %}
+
+{% if 'navigation' in params %}
+  {% set navigation = params.navigation %}
+{% elif params.defaultContent %}
+  {% set navigation = [
+    {
+      'text': 'Visit',
+      'href': (params.defaultContentBaseURL or '') ~ '/about/visit-us/'
+    },
+    {
+      'text': 'What’s on',
+      'href': (params.defaultContentBaseURL or '') ~ '/whats-on/'
+    },
+    {
+      'text': 'Explore the collection',
+      'href': (params.defaultContentBaseURL or '') ~ '/explore-the-collection/'
+    },
+    {
+      'text': 'Help using the archive',
+      'href': (params.defaultContentBaseURL or '') ~ '/help-with-your-research/'
+    },
+    {
+      'text': 'Education',
+      'href': (params.defaultContentBaseURL or '') ~ '/education/'
+    },
+    {
+      'text': 'Professional guidance and services',
+      'href': (params.defaultContentBaseURL or '') ~ '/professional-guidance-and-services/'
+    }
+  ] %}
+{% else %}
+  {% set navigation = [] %}
+{% endif %}
+
+{% if 'topNavigation' in params %}
+  {% set topNavigation = params.topNavigation %}
+{% elif params.defaultContent %}
+  {% set topNavigation = [
+    {
+      'text': 'Search',
+      'href': (params.defaultContentBaseURL or '') ~ '/search/',
+      'icon': 'search'
+    },
+    {
+      'text': 'Shop',
+      'href': 'https://shop.nationalarchives.gov.uk/',
+      'icon': 'shop'
+    }
+  ] %}
+{% else %}
+  {% set topNavigation = [] %}
+{% endif %}
+
 <header class="tna-global-header {{ ' '.join(containerClasses) }}" data-module="tna-global-header" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   {% if params.phaseBanner -%}
   {{ tnaPhaseBanner(params.phaseBanner) }}
@@ -12,8 +76,8 @@
   <div class="tna-container tna-global-header__main">
     <div class="tna-column tna-column--flex-1 tna-column--order-2">
       <span class="tna-global-header__logo-wrapper">
-        {% if params.logo and params.logo.href -%}
-        <a href="{{ params.logo.href }}" class="tna-global-header__logo tna-global-header__logo--link" title="{%- if params.logo.title -%}{{ params.logo.title }}{%- else -%}The National Archives{%- if params.logo.strapline %} - {{ params.logo.strapline }}{%- endif -%}{%- endif -%}" aria-label="{%- if params.logo.title -%}{{ params.logo.title }}{%- else -%}The National Archives{%- if params.logo.strapline %} - {{ params.logo.strapline }}{%- endif -%}{%- endif -%}">
+        {% if logo and logo.href -%}
+        <a href="{{ logo.href }}" class="tna-global-header__logo tna-global-header__logo--link" title="{%- if logo.title -%}{{ logo.title }}{%- else -%}The National Archives{%- if logo.strapline %} - {{ logo.strapline }}{%- endif -%}{%- endif -%}" aria-label="{%- if logo.title -%}{{ logo.title }}{%- else -%}The National Archives{%- if logo.strapline %} - {{ logo.strapline }}{%- endif -%}{%- endif -%}">
         {%- else %}
         <span class="tna-global-header__logo">
         {%- endif %}
@@ -26,23 +90,25 @@
               </g>
             </svg>
           </span>
-        {%- if params.logo and params.logo.href %}
+        {%- if logo and logo.href %}
         </a>
         {%- else %}
         </span>
         {%- endif %}
       </span>
     </div>
+    {%- if topNavigation or navigation %}
     <div class="tna-column tna-column--order-2 tna-global-header__navigation-button-wrapper">
-      <button class="tna-global-header__navigation-button" type="button" aria-controls="{{ params.navigationId or 'tna-header__navigation' }} {{ params.topNavigationId or 'tna-header__top-navigation' }}" hidden>
+      <button class="tna-global-header__navigation-button" type="button" aria-controls="{{ (params.navigationId or 'tna-header__navigation') if navigation else '' }} {{ (params.topNavigationId or 'tna-header__top-navigation') if topNavigation else '' }}" hidden>
         Menu
         <span class="tna-global-header__hamburger"></span>
       </button>
     </div>
-    {%- if params.navigation %}
+    {%- endif %}
+    {%- if navigation %}
     <nav class="tna-column tna-column--full-small tna-column--full-tiny tna-column--order-3 tna-global-header__navigation-wrapper" id="{{ params.navigationId or 'tna-header__navigation' }}" aria-label="Primary">
       <ul class="tna-global-header__navigation">
-        {%- for item in params.navigation %}
+        {%- for item in navigation %}
         <li class="tna-global-header__navigation-item">
           <a href="{{ item.href }}" class="tna-global-header__navigation-item-link" {%- if item.title %} aria-label="{{ item.title }}" title="{{ item.title }}"{% endif %} tabindex="0">{{ item.text }}</a>
         </li>
@@ -50,10 +116,10 @@
       </ul>
     </nav>
     {%- endif %}
-    {%- if params.topNavigation %}
+    {%- if topNavigation %}
     <nav class="tna-column tna-column--full tna-column--order-1 tna-column--order-4-small tna-column--order-4-tiny tna-global-header__top-navigation-wrapper" id="{{ params.topNavigationId or 'tna-header__top-navigation' }}" aria-label="Secondary">
       <ul class="tna-global-header__top-navigation">
-        {%- for item in params.topNavigation %}
+        {%- for item in topNavigation %}
         <li class="tna-global-header__top-navigation-item">
           <a href="{{ item.href }}" class="tna-global-header__top-navigation-link" {%- if item.title %} aria-label="{{ item.title }}" title="{{ item.title }}"{% endif %} tabindex="0">
             {%- if item.icon == 'search' %}

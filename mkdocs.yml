@@ -1,0 +1,17 @@
+site_name: TNA Frontend Jinja Docs
+repo_url: https://github.com/nationalarchives/tna-frontend-jinja
+theme:
+  name: material
+  favicon: https://raw.githubusercontent.com/nationalarchives/tna-frontend/main/src/nationalarchives/assets/images/favicon.ico
+  features:
+    - navigation.indexes
+extra_css:
+  - https://nationalarchives.github.io/tna-frontend-docs/stylesheets/extra.css
+plugins:
+  - search
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format

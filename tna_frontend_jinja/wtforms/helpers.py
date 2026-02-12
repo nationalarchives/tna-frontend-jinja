@@ -1,35 +1,32 @@
-from deepmerge import Merger
-
-merger = Merger(
-    # pass in a list of tuple, with the
-    # strategies you are looking to apply
-    # to each type.
-    [(list, ["append"]), (dict, ["merge"])],
-    # next, choose the fallback strategies,
-    # applied to all other types:
-    ["override"],
-    # finally, choose the strategies in
-    # the case where the types conflict:
-    ["override"],
-)
-
-
 def flatten_errors(errors, prefix="", id_map={}):
     """Return list of errors from form errors."""
     error_list = []
     if isinstance(errors, dict):
         for key, value in errors.items():
-            # Recurse to handle subforms.
             if key in id_map:
                 key = id_map[key]
-            error_list += flatten_errors(value, prefix=f"{prefix}{key}-", id_map=id_map)
+            error_list += flatten_errors(
+                value, prefix=f"{prefix}{key}-", id_map=id_map
+            )
     elif isinstance(errors, list) and isinstance(errors[0], dict):
         for idx, error in enumerate(errors):
-            error_list += flatten_errors(error, prefix=f"{prefix}{idx}-", id_map=id_map)
+            error_list += flatten_errors(
+                error, prefix=f"{prefix}{idx}-", id_map=id_map
+            )
     elif isinstance(errors, list):
-        error_list.append({"text": errors[0], "href": "#{}".format(prefix.rstrip("-"))})
+        error_list.append(
+            {
+                "text": errors[0],
+                "href": f"#{prefix.rstrip('-')}",
+            }
+        )
     else:
-        error_list.append({"text": errors, "href": "#{}".format(prefix.rstrip("-"))})
+        error_list.append(
+            {
+                "text": errors,
+                "href": f"#{prefix.rstrip('-')}",
+            }
+        )
     return error_list
 
 
@@ -53,14 +50,28 @@ def wtforms_errors(form, params={}):
                 id_map[field_name] = (
                     f"{field.id}-{'m' if field.field_codes(True)[0] in ['m', 'b'] else field.field_codes(True)[0]}"
                 )
-            elif field.type in ["BooleanField"]:
-                id_map[field_name] = f"{field.id}-y"
             else:
                 id_map[field_name] = field.id
 
-    wtforms_params["items"] = flatten_errors(form.errors, id_map=id_map)
+    errors = form.errors
+    csrf_errors = errors.pop("csrf_token", None)
 
-    return merger.merge(wtforms_params, params)
+    wtforms_params["items"] = flatten_errors(errors, id_map=id_map)
+
+    if csrf_errors:
+        wtforms_params["items"].extend(
+            [
+                {
+                    "text": "The form timed out - try submitting again",
+                    "href": None,
+                }
+            ]
+        )
+
+    merged = wtforms_params.copy()
+    merged.update(params)
+
+    return merged
 
 
 class WTFormsHelpers(object):
