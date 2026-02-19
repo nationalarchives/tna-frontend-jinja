@@ -61,8 +61,8 @@ class CustomBuildHook(BuildHookInterface):
         ) as f:
             email_template_content = f.read()
         email_template_content = email_template_content.replace(
-            "<!-- COMPILED_EMAIL_CSS -->",
-            f'<style media="all" type="text/css">{compiled_css}</style>',
+            "/* COMPILED_EMAIL_CSS */",
+            compiled_css,
         )
 
         new_email_template = os.path.join(self.temp_dir, file_name)

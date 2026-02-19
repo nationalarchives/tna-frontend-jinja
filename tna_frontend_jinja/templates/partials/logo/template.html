@@ -1,3 +1,4 @@
+{%- set params = params or {} -%}
 <span class="tna-logo{% if params.solid %} tna-logo--solid{% endif %}{% if params.adornable %} tna-logo--adornable{% endif %}">
   <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 160 160" width="{{ params.size or '96' }}" height="{{ params.size or '96' }}" aria-hidden="true" focusable="false">
     <path class="tna-logo__background" fill="transparent" d="M0 0h160v160H0z" />
