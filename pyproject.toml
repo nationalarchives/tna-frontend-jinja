@@ -1,0 +1,37 @@
+[project]
+name = "tna-frontend-jinja"
+version = "0.34.0"
+requires-python = ">=3.10"
+authors = [
+  {name = "Andrew Hosgood", email = "andrew.hosgood@nationalarchives.gov.uk"},
+]
+description = "TNA Frontend Jinja templates"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENCE"]
+keywords = ["templates", "wtforms", "jinja", "macro", "the national archives", "tna"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+
+[project.urls]
+Homepage = "https://pypi.org/project/tna-frontend-jinja/"
+Documentation = "https://nationalarchives.github.io/tna-frontend-jinja/"
+Repository = "https://github.com/nationalarchives/tna-frontend-jinja"
+"Bug Tracker" = "https://github.com/nationalarchives/tna-frontend-jinja/issues"
+Changelog = "https://github.com/nationalarchives/tna-frontend-jinja/blob/main/CHANGELOG.md"
+
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+packages = ["tna_frontend_jinja"]
