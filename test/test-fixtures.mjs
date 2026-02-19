@@ -189,46 +189,60 @@ for (let i = 0; i < utilities.length; i++) {
   }
 }
 
+console.log("\nTemplates");
 const templatesDirectory = `${tnaFrontendDirectory}/nationalarchives/templates/`;
 const { fixtures } = JSON.parse(
   fs.readFileSync(`${templatesDirectory}fixtures.json`, "utf8"),
 );
-const genericFixture = fixtures.find((fixture) => fixture.name === "generic");
-const testUrl = `${testEndpoint}templates/base`;
-console.log("\nTemplates");
-const response = await fetch(testUrl)
-  .then((response) => {
-    if (response.status >= 400 && response.status < 600) {
-      fail(`${genericFixture.name}\n`);
-      throw new Error("Bad response from server");
+await fixtures
+  .filter((fixture) => fixture.template)
+  .filter(
+    (fixture) =>
+      ![
+        "plain.njk",
+        "list.njk",
+        "index-grid.njk",
+        "error-page-not-found.njk",
+      ].includes(fixture.template),
+  )
+  .forEach(async (fixture) => {
+    const testUrl = `${testEndpoint}templates/${fixture.template.replace(/\.njk/, ".html")}?params=${encodeURIComponent(
+      JSON.stringify(fixture.options),
+    )}`;
+    const response = await fetch(testUrl)
+      .then((response) => {
+        if (response.status >= 400 && response.status < 600) {
+          fail(`${fixture.name}\n`);
+          throw new Error("Bad response from server");
+        }
+        return response;
+      })
+      .catch((e) => {
+        fail(`${fixture.name}\n`);
+        console.error(e, testUrl);
+      });
+    const body = await response.text();
+    const bodyPretty = standardiseHtml(body);
+    const fixturePretty = standardiseHtml(fixture.html);
+    const mismatch = bodyPretty !== fixturePretty;
+    if (mismatch) {
+      fail(`${fixture.name}\n`);
+      console.error(testUrl);
+      const diff = diffChars(bodyPretty, fixturePretty)
+        .map(
+          (part) =>
+            `${
+              part.added ? "\x1b[32m" : part.removed ? "\x1b[31m" : "\x1b[0m"
+            }${part.value === " " ? "█" : part.value}`,
+        )
+        .join("");
+      console.log(diff);
+      console.log("\n");
+      console.log("GREEN text shows expected content that wasn't rendered");
+      console.log("RED text shows rendered content that wasn't expected");
+      process.exitCode = 1;
+      throw new Error("Fixtures tests failed");
+    } else {
+      pass(fixture.name);
     }
-    return response;
-  })
-  .catch((e) => {
-    fail(`${genericFixture.name}\n`);
-    console.error(e, testUrl);
   });
-const body = await response.text();
-const bodyPretty = standardiseHtml(body);
-const fixturePretty = standardiseHtml(genericFixture.html);
-const mismatch = bodyPretty !== fixturePretty;
-if (mismatch) {
-  fail(`${genericFixture.name}\n`);
-  console.error(testUrl);
-  const diff = diffChars(bodyPretty, fixturePretty)
-    .map(
-      (part) =>
-        `${
-          part.added ? "\x1b[32m" : part.removed ? "\x1b[31m" : "\x1b[0m"
-        }${part.value === " " ? "█" : part.value}`,
-    )
-    .join("");
-  console.log(diff);
-  console.log("\n");
-  console.log("GREEN text shows expected content that wasn't rendered");
-  console.log("RED text shows rendered content that wasn't expected");
-  process.exitCode = 1;
-  throw new Error("Fixtures tests failed");
-} else {
-  pass(genericFixture.name);
-}
