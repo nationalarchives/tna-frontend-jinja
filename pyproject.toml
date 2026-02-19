@@ -35,3 +35,5 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.sdist]
 packages = ["tna_frontend_jinja"]
+
+[tool.hatch.build.hooks.custom]
