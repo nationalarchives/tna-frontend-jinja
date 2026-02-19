@@ -195,16 +195,6 @@ const { fixtures } = JSON.parse(
   fs.readFileSync(`${templatesDirectory}fixtures.json`, "utf8"),
 );
 await fixtures
-  .filter((fixture) => fixture.template)
-  .filter(
-    (fixture) =>
-      ![
-        "plain.njk",
-        "list.njk",
-        "index-grid.njk",
-        "error-page-not-found.njk",
-      ].includes(fixture.template),
-  )
   .forEach(async (fixture) => {
     const testUrl = `${testEndpoint}templates/${fixture.template.replace(/\.njk/, ".html")}?params=${encodeURIComponent(
       JSON.stringify(fixture.options),

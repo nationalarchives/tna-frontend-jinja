@@ -1,6 +1,6 @@
 {% macro tnaFooter(params) %}
 {%- from 'components/button/macro.html' import tnaButton -%}
-{%- from 'partials/logo.html' import tnaLogo -%}
+{%- from 'partials/logo/macro.html' import tnaLogo -%}
 
 {%- set containerClasses = [params.classes] if params.classes else [] -%}
 
