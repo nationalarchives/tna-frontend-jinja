@@ -118,6 +118,8 @@ class TextInputForm(FlaskForm):
 
 Use `render_kw` to set defaults for the attributes on the field. These can be overwritten by `params` in the template.
 
+The available options can be found under the "Nunjucks options" dropdown of the Nunjucks examples in the components section of the [National Archives Design System](https://design-system.nationalarchives.gov.uk/components/).
+
 ```diff
 from flask_wtf import FlaskForm
 + from tna_frontend_jinja.wtforms import (
@@ -211,7 +213,7 @@ Customise the components by adding a `params` parameter to the field constructor
   {{ form.username }}
 
   <!-- Add the email field and customise it with parameters -->
-  {{ form.email(params={'headingLevel': 3}) }}
+  {{ form.email(params={'headingLevel': 2}) }}
 
   <div class="tna-button-group">
     {{ form.submit }}
