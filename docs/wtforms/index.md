@@ -2,10 +2,14 @@
 
 ## Get started
 
-### 1. Install WTForms
+### 1. Install WTForms version
 
 ```sh
-poetry add Flask-WTF
+# Install with Poetry
+poetry add tna-frontend-jinja[wtforms]
+
+# Install with pip
+pip install tna-frontend-jinja[wtforms]
 ```
 
 ### 2. Add the TNA Frontend Jinja WTForms helpers

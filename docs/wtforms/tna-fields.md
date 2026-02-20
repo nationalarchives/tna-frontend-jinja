@@ -8,7 +8,7 @@ These exist mostly because we handle the date field with three inputs for day, m
 
 All fields support an optional `invalid_date_error_message` parameter to set the error message when an invalid date is entered. This defaults to "[field name] must be a real date".
 
-## Absolute date fields
+## Date fields
 
 ### `TnaDateField`
 
@@ -82,11 +82,11 @@ year_of_birth = TnaYearField(
 
 Pass `end_of_partial_date_range=True` parameter to coerse a partial date to the end of its range.
 
-| Inputs           | `end_of_partial_date_range=False` | `end_of_partial_date_range=True` |
-| ---------------- | --------------------------------- | -------------------------------- |
-| `2003`           | `Wed, 01 Jan 2003 00:00:00 GMT`   | `Wed, 31 Dec 2003 23:59:59 GMT`  |
-| `2003`, `9`      | `Mon, 01 Sep 2003 00:00:00 GMT`   | `Tue, 30 Sep 2003 23:59:59 GMT`  |
-| `2003`, `9`, `2` | `Tue, 02 Sep 2003 00:00:00 GMT`   | `Tue, 02 Sep 2003 23:59:59 GMT`  |
+| Inputs           | `end_of_partial_date_range=False` (default) | `end_of_partial_date_range=True` |
+| ---------------- | ------------------------------------------- | -------------------------------- |
+| `2003`           | `Wed, 01 Jan 2003 00:00:00 GMT`             | `Wed, 31 Dec 2003 23:59:59 GMT`  |
+| `2003`, `9`      | `Mon, 01 Sep 2003 00:00:00 GMT`             | `Tue, 30 Sep 2003 23:59:59 GMT`  |
+| `2003`, `9`, `2` | `Tue, 02 Sep 2003 00:00:00 GMT`             | `Tue, 02 Sep 2003 23:59:59 GMT`  |
 
 ```py
 # Will result in 1 Jan for the given year

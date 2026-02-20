@@ -1,3 +1,0 @@
-# Using TNA components
-
-## Parameters
