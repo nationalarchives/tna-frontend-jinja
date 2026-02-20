@@ -2,14 +2,31 @@
 
 ## Get started
 
-### 1. Install WTForms version
+### 1. Installation
 
 ```sh
-# Install with Poetry
+# Install the WTForms version with Poetry
 poetry add tna-frontend-jinja[wtforms]
 
-# Install with pip
+# Install the WTForms version with pip
 pip install tna-frontend-jinja[wtforms]
+```
+
+The dependencies added for [WTForms](https://wtforms.readthedocs.io/en/3.2.x/) are done through [Flask-WTF](https://flask-wtf.readthedocs.io/en/1.2.x/).
+
+Flask-WTF includes some helpful extras to WTForms, like CSRF and file upload. Both are maintained as part of the [Pallets Ecosystem](https://github.com/pallets-eco).
+
+`tna-frontend-jinja` depends on the `email` version of Flask-WTF so that [email-validator](https://pypi.org/project/email-validator/) is also included, allowing you to validate email addresses.
+
+The dependency chain looks like:
+
+```
+tna-frontend-jinja[wtforms]
+  ↳ Flask-WTF[email]
+    ↳ Flask
+    ↳ WTForms
+    ↳ email_validator
+    ↳ ...
 ```
 
 ### 2. Add the TNA Frontend Jinja WTForms helpers
