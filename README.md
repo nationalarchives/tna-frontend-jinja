@@ -10,6 +10,14 @@
 
 TNA Frontend Jinja templates are a [Jinja](https://jinja.palletsprojects.com/en/3.1.x/) implementation of the templates provided as part of [TNA Frontend](https://github.com/nationalarchives/tna-frontend) as well as widgets for [WTForms](#wtforms).
 
+```sh
+# Install with Poetry
+poetry add tna-frontend-jinja
+
+# Install with pip
+pip install tna-frontend-jinja
+```
+
 See the [documentation](https://nationalarchives.github.io/tna-frontend-jinja/).
 
 ## Quickstart for Flask projects
@@ -95,9 +103,17 @@ For example, if your application templates directory is `app/templates`, create 
 
 This way you can continue to use the same import (e.g. `{%- from 'components/button/macro.html' import tnaButton -%}`) but introduce your own bespoke functionality.
 
-## WTForms
+## WTForms support
 
-See the [TNA Frontend Jinja WTForms docs](https://nationalarchives.github.io/tna-frontend-jinja/wtforms/).
+```sh
+# Install with Poetry
+poetry add tna-frontend-jinja[wtforms]
+
+# Install with pip
+pip install tna-frontend-jinja[wtforms]
+```
+
+See the [TNA Frontend Jinja WTForms docs](https://nationalarchives.github.io/tna-frontend-jinja/wtforms/) for more information.
 
 ## Running tests
 
