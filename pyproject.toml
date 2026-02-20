@@ -1,6 +1,6 @@
 [project]
 name = "tna-frontend-jinja"
-version = "0.35.0"
+version = "0.35.1"
 requires-python = ">=3.10"
 authors = [
   {name = "Andrew Hosgood", email = "andrew.hosgood@nationalarchives.gov.uk"},
