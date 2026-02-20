@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.35.1...HEAD)
 
 ### Added
+
+- Option to install with required dependencies for WTForms (e.g. `pip install tna-frontend-jinja[wtforms]`)
+
 ### Changed
 
 - Jinja2 dependency changed to version 3 or higher

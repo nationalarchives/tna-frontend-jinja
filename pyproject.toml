@@ -12,8 +12,8 @@ license-files = ["LICENCE"]
 keywords = ["templates", "wtforms", "jinja", "macro", "the national archives", "tna"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
-  "Programming Language :: Python",
   "Intended Audience :: Developers",
+  "Programming Language :: Python",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -24,6 +24,8 @@ classifiers = [
 dependencies = [
   "Jinja2>=3"
 ]
+[project.optional-dependencies]
+wtforms = ["Flask-WTF"]
 
 [project.urls]
 Homepage = "https://pypi.org/project/tna-frontend-jinja/"
