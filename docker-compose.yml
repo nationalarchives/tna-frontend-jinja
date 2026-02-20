@@ -19,6 +19,7 @@ services:
       - ./.prettierignore:/app/.prettierignore
       - ./.eslintrc.js:/app/.eslintrc.js
       - ./hatch_build.py:/app/hatch_build.py
+      - ./docs:/app/docs
     healthcheck:
       start_period: 10s
       start_interval: 2s
