@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Jinja2 dependency changed to version 3 or higher
+
 ### Deprecated
 ### Removed
 ### Fixed
