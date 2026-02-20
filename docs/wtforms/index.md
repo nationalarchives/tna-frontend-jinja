@@ -36,12 +36,8 @@ from flask import Flask
 from tna_frontend_jinja.wtforms.helpers import WTFormsHelpers
 
 
-def create_app():
-    app = Flask(__name__)
-
-    # ...application setup...
-
-    WTFormsHelpers(app)
+app = Flask(__name__)
+WTFormsHelpers(app)
 ```
 
 ### 3. Form setup
