@@ -22,7 +22,7 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
 ]
 dependencies = [
-  "jinja2"
+  "Jinja2>=3"
 ]
 
 [project.urls]
