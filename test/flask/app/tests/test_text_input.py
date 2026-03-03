@@ -31,7 +31,7 @@ class TestTextInput(unittest.TestCase):
             assert form.errors == {"string": [error_message]}
             assert complete is False
 
-    def test_with_data(self):
+    def test_with_formdata(self):
         error_message = "Enter a username"
         with app.test_request_context():
             formdata = MultiDict([("string", "testuser")])
@@ -43,6 +43,9 @@ class TestTextInput(unittest.TestCase):
             assert form.errors == {}
             assert complete is True
 
+    def test_with_data(self):
+        error_message = "Enter a username"
+        with app.test_request_context():
             data = {"string": "testuser"}
             form = TextInputForm(formdata=None, data=data)
             form.string.validators = [
@@ -52,7 +55,7 @@ class TestTextInput(unittest.TestCase):
             assert form.errors == {}
             assert complete is True
 
-    def test_with_data_length_validation(self):
+    def test_with_data_length_validation_formdata(self):
         error_message = "Usernames must be 256 characters or fewer"
         with app.test_request_context():
             formdata = MultiDict([("string", "x" * 257)])
@@ -64,6 +67,9 @@ class TestTextInput(unittest.TestCase):
             assert form.errors == {"string": [error_message]}
             assert complete is False
 
+    def test_with_data_length_validation_data(self):
+        error_message = "Usernames must be 256 characters or fewer"
+        with app.test_request_context():
             data = {"string": "x" * 257}
             form = TextInputForm(data=data)
             form.string.validators = [
