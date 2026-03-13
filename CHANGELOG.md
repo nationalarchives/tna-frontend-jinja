@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.36.1...HEAD)
 
 ### Added
+
+- Allowed `WTFormsHelpers` to also be initialised with `WTFormsHelpers.init_app()`
+
 ### Changed
 ### Deprecated
 ### Removed

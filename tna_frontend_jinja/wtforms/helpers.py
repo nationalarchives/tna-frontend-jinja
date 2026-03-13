@@ -87,4 +87,5 @@ class WTFormsHelpers(object):
             self.init_app(app)
 
     def init_app(self, app):
-        app.add_template_global(wtforms_errors)
+        self.app = app
+        self.app.add_template_global(wtforms_errors)
