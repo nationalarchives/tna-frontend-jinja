@@ -10,7 +10,7 @@
   'error': params.error,
   'classes': params.formItemClasses,
   'attributes': params.formItemAttributes
-}, 'tna-text-input') %}
+}, 'tna-text-input-password' if params.password else '') %}
   <input id="{{ params.id }}" class="tna-text-input
 {%- if params.size %} tna-text-input--{{ params.size }}{% endif %}
 {%- if params.classes %} {{ params.classes }}{% endif %}" name="{{ params.name }}" value="{{ params.value }}"
