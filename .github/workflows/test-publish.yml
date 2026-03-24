@@ -22,11 +22,11 @@ jobs:
             ./.github/get-release-notes.sh ${{ steps.get-version.outputs.VERSION }}
             echo EOF
           } >> "$GITHUB_OUTPUT"
-      # - uses: rtCamp/action-slack-notify@v2
-      #   env:
-      #     SLACK_TITLE: "`v${{ steps.get-version.outputs.VERSION }}` of `tna-frontend-jinja` has just been published"
-      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      #     SLACK_ICON: "https://raw.githubusercontent.com/nationalarchives/tna-frontend/main/src/nationalarchives/assets/images/icon-1024x1024.png"
-      #     MSG_MINIMAL: true
-      #     SLACKIFY_MARKDOWN: true
-      #     SLACK_MESSAGE: ${{ steps.release-notes.outputs.RELEASE_NOTES }}
+      - uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: "`v${{ steps.get-version.outputs.VERSION }}` of `tna-frontend-jinja` has just been published"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_ICON: "https://raw.githubusercontent.com/nationalarchives/tna-frontend/main/src/nationalarchives/assets/images/icon-1024x1024.png"
+          MSG_MINIMAL: true
+          SLACKIFY_MARKDOWN: true
+          SLACK_MESSAGE: ${{ steps.release-notes.outputs.RELEASE_NOTES }}
