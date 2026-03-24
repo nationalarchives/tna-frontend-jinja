@@ -65,3 +65,32 @@ jobs:
         run: python -m build
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+
+  notify-slack:
+    runs-on: ubuntu-latest
+    needs:
+      - deploy
+    steps:
+      - uses: actions/checkout@v6
+      - name: Get version number
+        id: get-version
+        run: |
+          pip install -e .
+          VERSION=$(python -c "import importlib.metadata; print(importlib.metadata.version('tna_frontend_jinja'))")
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Get the release notes
+        id: release-notes
+        run: |
+          {
+            echo 'RELEASE_NOTES<<EOF'
+            ./tasks/get-release-notes.sh ${{ steps.get-version.outputs.VERSION }}
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+      - uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: "`v${{ steps.get-version.outputs.VERSION }}` of `tna-frontend-jinja` has just been published"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_ICON: "https://raw.githubusercontent.com/nationalarchives/tna-frontend/main/src/nationalarchives/assets/images/icon-1024x1024.png"
+          MSG_MINIMAL: true
+          SLACKIFY_MARKDOWN: true
+          SLACK_MESSAGE: ${{ steps.release-notes.outputs.RELEASE_NOTES }}
