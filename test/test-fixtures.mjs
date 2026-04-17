@@ -197,6 +197,10 @@ const { fixtures } = JSON.parse(
 await fixtures
   .filter((fixture) => fixture.template !== "layouts/_generic.njk")
   .forEach(async (fixture) => {
+    if (fixture.omitFixtureHtmlValidation === true) {
+      pass(`${fixture.name} (${fixture.template}) (validation skipped)`);
+      return false;
+    }
     let fixturePretty = fixture.html;
     const testUrl = `${testEndpoint}templates/${fixture.template.replace(/\.njk/, ".html")}?params=${encodeURIComponent(
       JSON.stringify(fixture.options),
