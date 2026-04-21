@@ -14,13 +14,13 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Get installed Playwright version
         id: playwright-version
         run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_ENV
         shell: bash
       - name: Cache playwright binaries
-        uses: actions/cache@v3
+        uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c # v3.5.0
         id: playwright-cache
         with:
           path: |
@@ -51,9 +51,9 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: "3.x"
       - name: Install build dependencies
@@ -73,7 +73,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Get version number
         id: get-version
         run: |
@@ -88,7 +88,7 @@ jobs:
             ./.github/get-release-notes.sh ${{ steps.get-version.outputs.VERSION }}
             echo EOF
           } >> "$GITHUB_OUTPUT"
-      - uses: rtCamp/action-slack-notify@v2
+      - uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2.3.3
         env:
           SLACK_TITLE: "`v${{ steps.get-version.outputs.VERSION }}` of `tna-frontend-jinja` has just been published"
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
