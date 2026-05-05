@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Replaced macro-based `email.html` layout with a safe, table-based inline-HTML version matching the updated TNA Frontend `email.njk`
+
 ### Deprecated
 ### Removed
 ### Fixed
