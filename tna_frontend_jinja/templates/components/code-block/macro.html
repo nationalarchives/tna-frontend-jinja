@@ -1,0 +1,20 @@
+{%- from 'components/button/macro.html' import tnaButton -%}
+
+{% macro tnaCodeBlock(params) %}
+{%- set containerClasses = [params.classes] if params.classes else [] -%}
+{%- set classes = containerClasses | join(' ') -%}
+<div class="tna-code-block{% if classes %} {{ classes }}{% endif %}"{% if params.filename %} title="{{ params.filename }}"{% endif %} {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}{% if 'copy' in params and params.copy %} data-module="tna-code-block"{% endif %}>
+  {{ tnaButton({
+      'text': 'Copy code',
+      'plain': True,
+      'small': True,
+      'buttonElement': True,
+      'classes': 'tna-code-block__copy',
+      'attributes': {
+        'hidden': '',
+        'aria-live': 'assertive'
+      }
+    }) }}
+  <pre class="tna-code-block__pre"><code class="language-{{ params.language or 'plain' }}">{{ params.code|escape }}</code></pre>
+</div>
+{% endmacro %}

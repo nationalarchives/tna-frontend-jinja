@@ -20,7 +20,8 @@ const standardiseHtml = (html) =>
       .replace(/(\n\s*){1,}/g, "")
       .replace(/\s{2,}/g, " ")
       .replace(/(\w+)="([^"]*)\s+"/g, '$1="$2"')
-      .replace(/(\w+)="\s+([^"]*)"/g, '$1="$2"'),
+      .replace(/(\w+)="\s+([^"]*)"/g, '$1="$2"')
+      .replace(/&quot;/g, "&#34;"),
     {
       "wrap-attributes": "force",
       "preserve-newlines": false,
@@ -197,7 +198,7 @@ const { fixtures } = JSON.parse(
 await fixtures
   .filter((fixture) => fixture.template !== "layouts/_generic.njk")
   .forEach(async (fixture) => {
-    let fixturePretty = fixture.html;
+    const fixtureHtml = fixture.html;
     const testUrl = `${testEndpoint}templates/${fixture.template.replace(/\.njk/, ".html")}?params=${encodeURIComponent(
       JSON.stringify(fixture.options),
     )}`;
@@ -214,19 +215,8 @@ await fixtures
         console.error(e, testUrl);
       });
     const body = await response.text();
-    let bodyPretty = body;
-    if (bodyPretty.includes("/* COMPILED_EMAIL_CSS */")) {
-      let emailCss = fs.readFileSync(
-        "node_modules/@nationalarchives/frontend/nationalarchives/email.css",
-        "utf8",
-      );
-      emailCss = emailCss
-        .replace("/*# sourceMappingURL=email.css.map */", "")
-        .trim();
-      bodyPretty = bodyPretty.replace("/* COMPILED_EMAIL_CSS */", emailCss);
-    }
-    bodyPretty = standardiseHtml(bodyPretty);
-    fixturePretty = standardiseHtml(fixturePretty);
+    const bodyPretty = standardiseHtml(body);
+    const fixturePretty = standardiseHtml(fixtureHtml);
     const mismatch = bodyPretty !== fixturePretty;
     if (mismatch) {
       // if (bodyPretty.length > 10000 || fixturePretty.length > 10000) {
