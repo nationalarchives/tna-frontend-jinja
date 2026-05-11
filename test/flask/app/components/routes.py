@@ -41,6 +41,11 @@ def checkboxes():
     return render_component("widgets/checkboxes.html")
 
 
+@bp.route("/code-block")
+def code_block():
+    return render_component("widgets/code-block.html")
+
+
 @bp.route("/compound-filters")
 def compound_filters():
     return render_component("widgets/compound-filters.html")
