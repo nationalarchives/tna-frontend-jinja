@@ -13,18 +13,18 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-      - name: Install dependencies
-        run: |
-          npm ci
-          npx playwright install --with-deps
-          npx playwright install-deps
-        shell: bash
       - name: Start test server
         run: docker compose up --detach --wait app
       - name: Run fixture tests
         run: node test/test-fixtures.mjs || exit 1
       - name: Run Python tests
         run: docker compose exec app poetry run python -m pytest
+      - name: Install dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps
+          npx playwright install-deps
+        shell: bash
       - name: Run Playwright tests
         run: npx playwright test
 
