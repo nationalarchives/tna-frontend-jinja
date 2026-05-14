@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v0.41.0...HEAD)
 
 ### Added
+
+- Allowed the code block component to have a `caller()` function
+
 ### Changed
 ### Deprecated
 ### Removed
