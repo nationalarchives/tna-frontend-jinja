@@ -3,6 +3,7 @@
 # TNA Frontend Jinja
 
 [![Main build status](https://img.shields.io/github/actions/workflow/status/nationalarchives/tna-frontend-jinja/ci.yml?style=flat-square&event=push&branch=main)](https://github.com/nationalarchives/tna-frontend-jinja/actions/workflows/ci.yml?query=branch%3Amain)
+![TNA Frontend version](https://img.shields.io/github/package-json/dependency-version/nationalarchives/tna-frontend-jinja/%40nationalarchives%2Ffrontend?style=flat-square&label=@nationalarchives/frontend)
 [![Latest release](https://img.shields.io/github/v/release/nationalarchives/tna-frontend-jinja?style=flat-square&logo=github&logoColor=white&sort=semver)](https://github.com/nationalarchives/tna-frontend-jinja/releases)
 [![PyPi version](https://img.shields.io/pypi/v/tna-frontend-jinja?style=flat-square&logo=pypi&logoColor=white)](https://pypi.org/project/tna-frontend-jinja/)
 ![Python version](https://img.shields.io/pypi/pyversions/tna-frontend-jinja?style=flat-square&logo=python&logoColor=white)
@@ -148,6 +149,7 @@ Ensure you install the correct version of TNA Frontend for the version of the te
 
 | TNA Frontend Jinja | Compatible TNA Frontend version(s) |
 | ------------------ | ---------------------------------- |
+| `0.42.0`           | `0.41.x`                           |
 | `0.41.0`           | `0.41.x`                           |
 | `0.40.0`           | `0.40.x`                           |
 | `0.38.0`           | `0.38.x`                           |
