@@ -149,6 +149,7 @@ Ensure you install the correct version of TNA Frontend for the version of the te
 
 | TNA Frontend Jinja | Compatible TNA Frontend version(s) |
 | ------------------ | ---------------------------------- |
+| `0.44.0`           | `0.44.x`                           |
 | `0.43.0`           | `0.43.x`                           |
 | `0.42.0`           | `0.42.x`                           |
 | `0.41.0`           | `0.41.x`                           |
