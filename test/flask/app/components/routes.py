@@ -1,14 +1,13 @@
 import json
 
-from app.components import bp
 from flask import render_template, request
+
+from app.components import bp
 
 
 def render_component(template):
     params = request.args.get("params")
-    return render_template(
-        template, params=json.loads(params) if params else {}
-    )
+    return render_template(template, params=json.loads(params) if params else {})
 
 
 @bp.route("/accordion")

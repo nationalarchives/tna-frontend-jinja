@@ -2,6 +2,10 @@ import datetime
 import unittest
 
 from flask_wtf import FlaskForm
+from werkzeug.datastructures import MultiDict
+from wtforms import RadioField, StringField
+
+from app import app
 from tna_frontend_jinja.wtforms import (
     TnaDateField,
 )
@@ -11,10 +15,6 @@ from tna_frontend_jinja.wtforms.validators import (
     PastDate,
     UKPostcode,
 )
-from werkzeug.datastructures import MultiDict
-from wtforms import RadioField, StringField
-
-from app import app
 
 
 class TextInputForm(FlaskForm):
@@ -112,9 +112,7 @@ class TestPastDateValidator(unittest.TestCase):
                 ]
             )
             form = DateInputForm(formdata=formdata)
-            form.date.validators = [
-                PastDate(message=self.error_message_past_date)
-            ]
+            form.date.validators = [PastDate(message=self.error_message_past_date)]
             assert form.date.data == datetime.date(2103, 2, 1)
             complete = form.validate()
             assert form.errors == {"date": [self.error_message_past_date]}
@@ -124,9 +122,7 @@ class TestPastDateValidator(unittest.TestCase):
         with app.test_request_context():
             data = {"date": "01 02 2103"}
             form = DateInputForm(formdata=None, data=data)
-            form.date.validators = [
-                PastDate(message=self.error_message_past_date)
-            ]
+            form.date.validators = [PastDate(message=self.error_message_past_date)]
             assert form.date.data == datetime.date(2103, 2, 1)
             complete = form.validate()
             assert form.errors == {"date": [self.error_message_past_date]}
@@ -136,9 +132,7 @@ class TestPastDateValidator(unittest.TestCase):
         with app.test_request_context():
             data = {"date": "2103-02-01"}
             form = DateInputForm(formdata=None, data=data)
-            form.date.validators = [
-                PastDate(message=self.error_message_past_date)
-            ]
+            form.date.validators = [PastDate(message=self.error_message_past_date)]
             assert form.date.data == datetime.date(2103, 2, 1)
             complete = form.validate()
             assert form.errors == {"date": [self.error_message_past_date]}
@@ -148,9 +142,7 @@ class TestPastDateValidator(unittest.TestCase):
         with app.test_request_context():
             data = {"date": datetime.date(2103, 2, 1)}
             form = DateInputForm(formdata=None, data=data)
-            form.date.validators = [
-                PastDate(message=self.error_message_past_date)
-            ]
+            form.date.validators = [PastDate(message=self.error_message_past_date)]
             assert form.date.data == datetime.date(2103, 2, 1)
             complete = form.validate()
             assert form.errors == {"date": [self.error_message_past_date]}
@@ -217,9 +209,7 @@ class TestFutureDateValidator(unittest.TestCase):
                 ]
             )
             form = DateInputForm(formdata=formdata)
-            form.date.validators = [
-                FutureDate(message=self.error_message_future_date)
-            ]
+            form.date.validators = [FutureDate(message=self.error_message_future_date)]
             assert form.date.data == datetime.date(2003, 2, 1)
             complete = form.validate()
             assert form.errors == {"date": [self.error_message_future_date]}
@@ -229,9 +219,7 @@ class TestFutureDateValidator(unittest.TestCase):
         with app.test_request_context():
             data = {"date": "01 02 2003"}
             form = DateInputForm(formdata=None, data=data)
-            form.date.validators = [
-                FutureDate(message=self.error_message_future_date)
-            ]
+            form.date.validators = [FutureDate(message=self.error_message_future_date)]
             assert form.date.data == datetime.date(2003, 2, 1)
             complete = form.validate()
             assert form.errors == {"date": [self.error_message_future_date]}
@@ -241,9 +229,7 @@ class TestFutureDateValidator(unittest.TestCase):
         with app.test_request_context():
             data = {"date": "2003-02-01"}
             form = DateInputForm(formdata=None, data=data)
-            form.date.validators = [
-                FutureDate(message=self.error_message_future_date)
-            ]
+            form.date.validators = [FutureDate(message=self.error_message_future_date)]
             assert form.date.data == datetime.date(2003, 2, 1)
             complete = form.validate()
             assert form.errors == {"date": [self.error_message_future_date]}
@@ -253,9 +239,7 @@ class TestFutureDateValidator(unittest.TestCase):
         with app.test_request_context():
             data = {"date": datetime.date(2003, 2, 1)}
             form = DateInputForm(formdata=None, data=data)
-            form.date.validators = [
-                FutureDate(message=self.error_message_future_date)
-            ]
+            form.date.validators = [FutureDate(message=self.error_message_future_date)]
             assert form.date.data == datetime.date(2003, 2, 1)
             complete = form.validate()
             assert form.errors == {"date": [self.error_message_future_date]}
@@ -315,9 +299,7 @@ class TestUKPostcodeValidator(unittest.TestCase):
                 ]
             )
             form = TextInputForm(formdata=formdata)
-            form.string.validators = [
-                UKPostcode(message="Enter a valid postcode")
-            ]
+            form.string.validators = [UKPostcode(message="Enter a valid postcode")]
             assert form.string.data == "INVALID"
             complete = form.validate()
             assert form.errors == {"string": ["Enter a valid postcode"]}

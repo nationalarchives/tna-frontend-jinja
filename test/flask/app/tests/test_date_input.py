@@ -2,16 +2,16 @@ import datetime
 import unittest
 
 from flask_wtf import FlaskForm
+from werkzeug.datastructures import MultiDict
+from wtforms import validators
+
+from app import app
 from tna_frontend_jinja.wtforms import (
     TnaDateField,
     TnaMonthField,
     TnaProgressiveDateField,
     TnaYearField,
 )
-from werkzeug.datastructures import MultiDict
-from wtforms import validators
-
-from app import app
 
 
 class DateInputForm(FlaskForm):

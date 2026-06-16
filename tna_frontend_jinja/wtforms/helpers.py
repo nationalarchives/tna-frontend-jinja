@@ -1,18 +1,16 @@
-def flatten_errors(errors, prefix="", id_map={}):
+def flatten_errors(errors, prefix="", id_map=None):
     """Return list of errors from form errors."""
+    if id_map is None:
+        id_map = {}
     error_list = []
     if isinstance(errors, dict):
         for key, value in errors.items():
             if key in id_map:
                 key = id_map[key]
-            error_list += flatten_errors(
-                value, prefix=f"{prefix}{key}-", id_map=id_map
-            )
+            error_list += flatten_errors(value, prefix=f"{prefix}{key}-", id_map=id_map)
     elif isinstance(errors, list) and isinstance(errors[0], dict):
         for idx, error in enumerate(errors):
-            error_list += flatten_errors(
-                error, prefix=f"{prefix}{idx}-", id_map=id_map
-            )
+            error_list += flatten_errors(error, prefix=f"{prefix}{idx}-", id_map=id_map)
     elif isinstance(errors, list):
         error_list.append(
             {
@@ -30,7 +28,9 @@ def flatten_errors(errors, prefix="", id_map={}):
     return error_list
 
 
-def wtforms_errors(form, params={}):
+def wtforms_errors(form, params=None):
+    if params is None:
+        params = {}
     wtforms_params = {"title": "There is a problem", "items": []}
 
     id_map = {}

@@ -1,8 +1,12 @@
-import fetch from "node-fetch";
+/* eslint-disable no-console, max-statements, no-magic-numbers, max-lines-per-function, no-ternary */
+
 import fs from "fs";
+
 import { diffChars } from "diff";
 import { globSync } from "glob";
+/* eslint-disable-next-line camelcase */
 import { html_beautify } from "js-beautify/js/lib/beautify-html.js";
+import fetch from "node-fetch";
 
 const pass = (message) => {
   console.log("\x1b[42m%s\x1b[0m", " PASS ", "\x1b[0m", message);
@@ -57,33 +61,43 @@ const components = globSync(`${fixturesDirectory}*/fixtures.json`)
   })
   .reverse();
 
-for (let i = 0; i < components.length; i++) {
-  const component = components[i];
+for (
+  let intComponent = 0;
+  intComponent < components.length;
+  intComponent += 1
+) {
+  const component = components[intComponent];
   console.log(`\nComponent: ${component.name}`);
-  const { fixtures } = JSON.parse(
-    fs.readFileSync(
-      `${fixturesDirectory}${component.name}/fixtures.json`,
-      "utf8",
-    ),
-  );
+  // const { fixtures } = JSON.parse(
+  //   fs.readFileSync(
+  //     `${fixturesDirectory}${component.name}/fixtures.json`,
+  //     "utf8",
+  //   ),
+  // );
 
-  for (let j = 0; j < component.fixtures.length; j++) {
-    const fixture = component.fixtures[j];
+  for (
+    let intFixture = 0;
+    intFixture < component.fixtures.length;
+    intFixture += 1
+  ) {
+    const fixture = component.fixtures[intFixture];
     const testUrl = `${component.testUrl}?params=${encodeURIComponent(
       JSON.stringify(fixture.options),
     )}`;
+    /* eslint-disable-next-line no-await-in-loop */
     const response = await fetch(testUrl)
-      .then((response) => {
-        if (response.status >= 400 && response.status < 600) {
+      .then((fetchResponse) => {
+        if (fetchResponse.status >= 400 && fetchResponse.status < 600) {
           fail(`${fixture.name}\n`);
           throw new Error("Bad response from server");
         }
-        return response;
+        return fetchResponse;
       })
-      .catch((e) => {
+      .catch((err) => {
         fail(`${fixture.name}\n`);
-        console.error(e, testUrl);
+        console.error(err, testUrl);
       });
+    /* eslint-disable-next-line no-await-in-loop */
     const body = await response.text();
     const bodyPretty = standardiseHtml(body);
     const fixturePretty = standardiseHtml(fixture.html);
@@ -95,6 +109,7 @@ for (let i = 0; i < components.length; i++) {
         .map(
           (part) =>
             `${
+              /* eslint-disable-next-line no-nested-ternary */
               part.added ? "\x1b[32m" : part.removed ? "\x1b[31m" : "\x1b[0m"
             }${part.value === " " ? "█" : part.value}`,
         )
@@ -103,6 +118,7 @@ for (let i = 0; i < components.length; i++) {
       console.log("\n");
       console.log("GREEN text shows expected content that wasn't rendered");
       console.log("RED text shows rendered content that wasn't expected");
+      /* eslint-disable-next-line no-undef */
       process.exitCode = 1;
       throw new Error("Fixtures tests failed");
     } else {
@@ -136,33 +152,39 @@ const utilities = globSync(`${utilitiesFixturesDirectory}*/fixtures.json`)
   })
   .reverse();
 
-for (let i = 0; i < utilities.length; i++) {
-  const utility = utilities[i];
+for (let intUtility = 0; intUtility < utilities.length; intUtility += 1) {
+  const utility = utilities[intUtility];
   console.log(`\nUtility: ${utility.name}`);
-  const { fixtures } = JSON.parse(
-    fs.readFileSync(
-      `${utilitiesFixturesDirectory}${utility.name}/fixtures.json`,
-      "utf8",
-    ),
-  );
+  // const { fixtures } = JSON.parse(
+  //   fs.readFileSync(
+  //     `${utilitiesFixturesDirectory}${utility.name}/fixtures.json`,
+  //     "utf8",
+  //   ),
+  // );
 
-  for (let j = 0; j < utility.fixtures.length; j++) {
-    const fixture = utility.fixtures[j];
+  for (
+    let intFixture = 0;
+    intFixture < utility.fixtures.length;
+    intFixture += 1
+  ) {
+    const fixture = utility.fixtures[intFixture];
     const testUrl = `${utility.testUrl}?params=${encodeURIComponent(
       JSON.stringify(fixture.options),
     )}`;
+    /* eslint-disable-next-line no-await-in-loop */
     const response = await fetch(testUrl)
-      .then((response) => {
-        if (response.status >= 400 && response.status < 600) {
+      .then((fetchResponse) => {
+        if (fetchResponse.status >= 400 && fetchResponse.status < 600) {
           fail(`${fixture.name}\n`);
           throw new Error("Bad response from server");
         }
-        return response;
+        return fetchResponse;
       })
-      .catch((e) => {
+      .catch((err) => {
         fail(`${fixture.name}\n`);
-        console.error(e, testUrl);
+        console.error(err, testUrl);
       });
+    /* eslint-disable-next-line no-await-in-loop */
     const body = await response.text();
     const bodyPretty = standardiseHtml(body);
     const fixturePretty = standardiseHtml(fixture.html);
@@ -174,6 +196,7 @@ for (let i = 0; i < utilities.length; i++) {
         .map(
           (part) =>
             `${
+              /* eslint-disable-next-line no-nested-ternary */
               part.added ? "\x1b[32m" : part.removed ? "\x1b[31m" : "\x1b[0m"
             }${part.value === " " ? "█" : part.value}`,
         )
@@ -182,6 +205,7 @@ for (let i = 0; i < utilities.length; i++) {
       console.log("\n");
       console.log("GREEN text shows expected content that wasn't rendered");
       console.log("RED text shows rendered content that wasn't expected");
+      /* eslint-disable-next-line no-undef */
       process.exitCode = 1;
       throw new Error("Fixtures tests failed");
     } else {
@@ -203,16 +227,16 @@ await fixtures
       JSON.stringify(fixture.options),
     )}`;
     const response = await fetch(testUrl)
-      .then((response) => {
-        if (response.status >= 400 && response.status < 600) {
+      .then((fetchResponse) => {
+        if (fetchResponse.status >= 400 && fetchResponse.status < 600) {
           fail(`${fixture.name}\n`);
           throw new Error("Bad response from server");
         }
-        return response;
+        return fetchResponse;
       })
-      .catch((e) => {
+      .catch((err) => {
         fail(`${fixture.name}\n`);
-        console.error(e, testUrl);
+        console.error(err, testUrl);
       });
     const body = await response.text();
     const bodyPretty = standardiseHtml(body);
@@ -232,6 +256,7 @@ await fixtures
         .map(
           (part) =>
             `${
+              /* eslint-disable-next-line no-nested-ternary */
               part.added ? "\x1b[32m" : part.removed ? "\x1b[31m" : "\x1b[0m"
             }${part.value === " " ? "█" : part.value}`,
         )
@@ -240,6 +265,7 @@ await fixtures
       console.log("\n");
       console.log("GREEN text shows expected content that wasn't rendered");
       console.log("RED text shows rendered content that wasn't expected");
+      /* eslint-disable-next-line no-undef */
       process.exitCode = 1;
       throw new Error("Fixtures tests failed");
     } else {

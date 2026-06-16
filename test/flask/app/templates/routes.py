@@ -1,7 +1,8 @@
 import json
 
-from app.templates import bp
 from flask import render_template, request
+
+from app.templates import bp
 
 
 @bp.route("/<path:template>")
