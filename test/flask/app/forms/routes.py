@@ -1,6 +1,8 @@
 # import io
 # import os
 
+from flask import current_app, render_template, url_for  # , request
+
 from app.forms import bp
 from app.forms.forms import (
     CheckboxesForm,
@@ -30,7 +32,6 @@ from app.forms.forms import (
     TextInputTelForm,
     TextInputURLForm,
 )
-from flask import current_app, render_template, url_for  # , request
 
 # from PIL import Image
 # from werkzeug.utils import secure_filename
@@ -52,9 +53,7 @@ def index():
             and rule.endpoint not in ["forms.index", "forms.success"]
             and rule.endpoint.startswith("forms.")
         ):
-            urls[rule.endpoint] = url_for(
-                rule.endpoint, **(rule.defaults or {})
-            )
+            urls[rule.endpoint] = url_for(rule.endpoint, **(rule.defaults or {}))
     return render_template("index.html", urls=urls)
 
 

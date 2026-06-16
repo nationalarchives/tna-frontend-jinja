@@ -217,9 +217,7 @@ class TnaPartialDateField(TnaDateField):
 
         for format in self.strptime_format:
             try:
-                parsed_date = datetime.datetime.strptime(
-                    date_str, format
-                ).date()
+                parsed_date = datetime.datetime.strptime(date_str, format).date()
 
                 if self.end_of_partial_date_range and not has_day:
                     if has_month and has_year:

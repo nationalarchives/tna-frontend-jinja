@@ -30,8 +30,8 @@ class FutureDate:
             if type(field_date) is not datetime.date:
                 try:
                     field_date = datetime.date.fromisoformat(field.data)
-                except Exception:
-                    raise ValueError()
+                except Exception as exc:
+                    raise ValueError from exc
             if (self.include_now and field_date < datetime.date.today()) or (
                 not self.include_now and field_date <= datetime.date.today()
             ):
@@ -66,8 +66,8 @@ class PastDate:
             if type(field_date) is not datetime.date:
                 try:
                     field_date = datetime.date.fromisoformat(field.data)
-                except Exception:
-                    raise ValueError()
+                except Exception as exc:
+                    raise ValueError from exc
             if (self.include_now and field_date > datetime.date.today()) or (
                 not self.include_now and field_date >= datetime.date.today()
             ):
@@ -92,9 +92,7 @@ class MaxOptions:
     def __call__(self, form, field):
         message = self.message
         if message is None:
-            message = field.gettext(
-                f"You must select no more than {self.max} options"
-            )
+            message = field.gettext(f"You must select no more than {self.max} options")
         try:
             if len(field.data) > self.max:
                 raise ValidationError(message)

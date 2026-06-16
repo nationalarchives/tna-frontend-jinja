@@ -97,13 +97,9 @@ class TnaIterableWidget(TnaWidget):
         choices_attributes = {}
         if hasattr(field, "choices"):
             choices_attributes = {
-                choice[0]: choice[2]
-                for choice in field.choices
-                if len(choice) > 2
+                choice[0]: choice[2] for choice in field.choices if len(choice) > 2
             }
-            field.choices = [
-                (choice[0], choice[1]) for choice in field.iter_choices()
-            ]
+            field.choices = [(choice[0], choice[1]) for choice in field.iter_choices()]
 
         for subfield in field:
             choice_attributes = choices_attributes.get(subfield._value(), {})
@@ -287,7 +283,7 @@ class TnaSelectWidget(TnaWidget, Select):
             )
 
         kwargs["items"] = []
-        for val, label, selected, render_kw in field.iter_choices():
+        for val, label, selected, _render_kw in field.iter_choices():
             item = {"text": label, "value": val, "selected": selected}
             kwargs["items"].append(item)
             if selected:
