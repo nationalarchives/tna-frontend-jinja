@@ -6,6 +6,7 @@ COPY ./package.json /app/package.json
 COPY ./package-lock.json /app/package-lock.json
 
 RUN . tna-nvm; \
+    npm config set min-release-age=0 --location=global; \
     npm i; \
     tna-build
 
