@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
-## [1.0.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v1.0.0...v1.1.0) - 2026-07-14
+## [1.1.0](https://github.com/nationalarchives/tna-frontend-jinja/compare/v1.0.0...v1.1.0) - 2026-07-14
 
 ### Changed
 
