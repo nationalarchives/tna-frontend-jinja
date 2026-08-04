@@ -19,7 +19,7 @@ jobs:
       - name: Start test server
         run: docker compose up --detach --wait app
       - name: Run fixture tests
-        run: node test/test-fixtures.mjs || exit 1
+        run: npm run test:fixtures || exit 1
       - name: Run Python tests
         run: docker compose exec app poetry run python -m pytest
       - name: Run Playwright tests
