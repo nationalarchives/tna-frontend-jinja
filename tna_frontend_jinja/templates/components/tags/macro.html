@@ -1,0 +1,22 @@
+{% macro tnaTags(params) %}
+{%- set containerClasses = [params.classes] if params.classes else [] -%}
+{%- if params.stack -%}
+  {%- set containerClasses = containerClasses + ['tna-tags--stacked'] -%}
+{%- endif -%}
+{%- if params.small -%}
+  {%- set containerClasses = containerClasses + ['tna-tags--small'] -%}
+{%- endif -%}
+{%- set classes = ' '.join(containerClasses) -%}
+<ul class="tna-tags{% if classes %} {{ classes }}{% endif %}" {%- if params.attributes %}{% for attribute, value in params.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
+  {%- for item in params['items'] -%}
+  {%- set itemClasses = ([item.classes] if item.classes else []) | join(' ') -%}
+  <li class="tna-tags__item{%- if item.selected %} tna-tags__item--selected{% endif %}">
+    {% if item.href %}
+    <a href="{{ item.href }}" {%- if item.title %} aria-label="{{ item.title }}" title="{{ item.title }}"{% endif %} class="tna-tags__link{% if itemClasses %} {{ itemClasses }}{% endif %}" {%- if item.attributes %}{% for attribute, value in item.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>{{ item.label }}</a>
+    {% else %}
+    <span class="tna-tags__link{% if itemClasses %} {{ itemClasses }}{% endif %}" {%- if item.attributes %}{% for attribute, value in item.attributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>{{ item.label }}</span>
+    {% endif %}
+  </li>
+  {%- endfor -%}
+</ul>
+{% endmacro %}

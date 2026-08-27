@@ -140,11 +140,6 @@ def picture():
     return render_component("widgets/picture.html")
 
 
-@bp.route("/quick-filters")
-def quick_filters():
-    return render_component("widgets/quick-filters.html")
-
-
 @bp.route("/radios")
 def radios():
     return render_component("widgets/radios.html")
@@ -178,6 +173,11 @@ def skip_link():
 @bp.route("/tabs")
 def tabs():
     return render_component("widgets/tabs.html")
+
+
+@bp.route("/tags")
+def tags():
+    return render_component("widgets/tags.html")
 
 
 @bp.route("/text-input")
