@@ -131,7 +131,7 @@ test("checkboxes", async ({ page }) => {
   await expect(page.getByLabel("C++")).toBeFocused();
   await expectSingleFieldValue(page, []);
   await page.getByLabel("C++").check();
-  await page.getByLabel("Python").check();
+  await page.getByLabel("Python 3").check();
   await page.getByLabel("PHP").check();
   await page.getByRole("button", { name: "Submit" }).click();
 
@@ -142,11 +142,11 @@ test("checkboxes", async ({ page }) => {
     /You must select no more than 2 items/,
   );
   await expect(page.getByLabel("C++")).toBeChecked();
-  await expect(page.getByLabel("Python")).toBeChecked();
+  await expect(page.getByLabel("Python 3")).toBeChecked();
   await expect(page.getByLabel("PHP")).toBeChecked();
   await expectSingleFieldValue(page, ["cpp", "py", "php"]);
   await page.getByLabel("C++").check();
-  await page.getByLabel("Python").uncheck();
+  await page.getByLabel("Python 3").uncheck({force: true});
   await page.getByLabel("PHP").check();
   await page.getByRole("button", { name: "Submit" }).click();
 
@@ -154,7 +154,7 @@ test("checkboxes", async ({ page }) => {
   await checkAccessibility(page);
   await validateHtml(page);
   await expect(page.getByLabel("C++")).toBeChecked();
-  await expect(page.getByLabel("Python")).not.toBeChecked();
+  await expect(page.getByLabel("Python 3")).not.toBeChecked();
   await expect(page.getByLabel("PHP")).toBeChecked();
   await expectSingleFieldValue(page, ["cpp", "php"]);
 });
