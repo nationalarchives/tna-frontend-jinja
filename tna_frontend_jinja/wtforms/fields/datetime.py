@@ -1,6 +1,6 @@
 import calendar
-import datetime
 import itertools
+from datetime import UTC, date, datetime
 
 from wtforms.fields.datetime import DateField
 from wtforms.utils import clean_datetime_format_for_strptime, unset_value
@@ -73,9 +73,7 @@ class TnaDateField(DateField):
             for part in self.format[len(self.format) - 1].split(" ")
         ]
 
-    def process(  # noqa: C901
-        self, formdata, data=unset_value, extra_filters=None
-    ):
+    def process(self, formdata, data=unset_value, extra_filters=None):
         """
         Process incoming data, calling process_data, process_formdata as needed,
         and run filters.
@@ -131,12 +129,14 @@ class TnaDateField(DateField):
 
     def process_data(self, value):
         if value:
-            if type(value) is datetime.date:
+            if type(value) is date:
                 self.data = value
                 return
             for format in self.strptime_format:
                 try:
-                    self.data = datetime.datetime.strptime(value, format).date()
+                    self.data = (
+                        datetime.strptime(value, format).replace(tzinfo=UTC).date()
+                    )
                     return
                 except ValueError:
                     pass
@@ -152,7 +152,9 @@ class TnaDateField(DateField):
         date_str = " ".join([value for value in valuelist if value])
         for format in self.strptime_format:
             try:
-                self.data = datetime.datetime.strptime(date_str, format).date()
+                self.data = (
+                    datetime.strptime(date_str, format).replace(tzinfo=UTC).date()
+                )
                 return
             except ValueError:
                 self.data = None
@@ -217,7 +219,9 @@ class TnaPartialDateField(TnaDateField):
 
         for format in self.strptime_format:
             try:
-                parsed_date = datetime.datetime.strptime(date_str, format).date()
+                parsed_date = (
+                    datetime.strptime(date_str, format).replace(tzinfo=UTC).date()
+                )
 
                 if self.end_of_partial_date_range and not has_day:
                     if has_month and has_year:
@@ -337,7 +341,7 @@ class TnaProgressiveDateField(TnaPartialDateField):
 
     #     for format in self.strptime_format:
     #         try:
-    #             parsed_date = datetime.datetime.strptime(date_str, format).date()
+    #             parsed_date = datetime.strptime(date_str, format, tz=UTC).date()
 
     #             if self.end_of_partial_date_range:
     #                 if has_day and has_month and has_year:

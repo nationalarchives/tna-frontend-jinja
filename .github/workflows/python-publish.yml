@@ -27,14 +27,15 @@ jobs:
         run: docker compose up --detach --wait app
       - name: Run fixture tests
         run: node test/test-fixtures.mjs || exit 1
-      - name: Run Playwright tests
-        run: npx playwright test
       - name: Run Python tests
         run: docker compose exec app poetry run python -m pytest
+      - name: Run Playwright tests
+        run: npx playwright test
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [test]
+    needs:
+    - test
     environment: production
     permissions:
       contents: read

@@ -146,7 +146,7 @@ test("checkboxes", async ({ page }) => {
   await expect(page.getByLabel("PHP")).toBeChecked();
   await expectSingleFieldValue(page, ["cpp", "py", "php"]);
   await page.getByLabel("C++").check();
-  await page.getByLabel("Python 3").uncheck({force: true});
+  await page.getByLabel("Python 3").uncheck({ force: true });
   await page.getByLabel("PHP").check();
   await page.getByRole("button", { name: "Submit" }).click();
 

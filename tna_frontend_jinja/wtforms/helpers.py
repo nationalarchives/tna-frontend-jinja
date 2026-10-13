@@ -34,7 +34,7 @@ def wtforms_errors(form, params=None):
     wtforms_params = {"title": "There is a problem", "items": []}
 
     id_map = {}
-    for field_name in form._fields.keys():
+    for field_name in form._fields:
         field = getattr(form, field_name, None)
         if field and hasattr(field, "id"):
             if field.type in ["SelectMultipleField", "RadioField"] and hasattr(
@@ -74,7 +74,7 @@ def wtforms_errors(form, params=None):
     return merged
 
 
-class WTFormsHelpers(object):
+class WTFormsHelpers:
     """WTForms helpers
 
     Register some template helpers to allow developers to

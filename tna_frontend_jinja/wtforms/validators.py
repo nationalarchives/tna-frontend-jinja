@@ -1,5 +1,5 @@
-import datetime
 import re
+from datetime import UTC, date, datetime
 
 from wtforms import ValidationError
 
@@ -27,13 +27,14 @@ class FutureDate:
                 field_date = field.data.date()
             except AttributeError:
                 field_date = field.data
-            if type(field_date) is not datetime.date:
+            if type(field_date) is not date:
                 try:
-                    field_date = datetime.date.fromisoformat(field.data)
+                    field_date = date.fromisoformat(field.data)
                 except Exception as exc:
                     raise ValueError from exc
-            if (self.include_now and field_date < datetime.date.today()) or (
-                not self.include_now and field_date <= datetime.date.today()
+            today = datetime.now(tz=UTC).date()
+            if (self.include_now and field_date < today) or (
+                not self.include_now and field_date <= today
             ):
                 raise ValueError(message)
         except ValueError as exc:
@@ -63,13 +64,14 @@ class PastDate:
                 field_date = field.data.date()
             except AttributeError:
                 field_date = field.data
-            if type(field_date) is not datetime.date:
+            if type(field_date) is not date:
                 try:
-                    field_date = datetime.date.fromisoformat(field.data)
+                    field_date = date.fromisoformat(field.data)
                 except Exception as exc:
                     raise ValueError from exc
-            if (self.include_now and field_date > datetime.date.today()) or (
-                not self.include_now and field_date >= datetime.date.today()
+            today = datetime.now(tz=UTC).date()
+            if (self.include_now and field_date > today) or (
+                not self.include_now and field_date >= today
             ):
                 raise ValueError(message)
         except ValueError as exc:

@@ -1,10 +1,10 @@
-from .fields.datetime import (  # noqa: F401
+from .fields.datetime import (
     TnaDateField,
     TnaMonthField,
     TnaProgressiveDateField,
     TnaYearField,
 )
-from .widgets import (  # noqa: F401
+from .widgets import (
     TnaCheckboxesWidget,
     TnaCheckboxWidget,
     TnaDroppableFileInputWidget,

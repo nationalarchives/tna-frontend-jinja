@@ -8,21 +8,22 @@ from wtforms.widgets.core import (
 )
 
 
-class TnaWidget(object):
+class TnaWidget:
     """
     Base class for all TNA Frontend WTForms widgets
     """
 
-    allowed_template_params = [
-        "label",
-        "headingLevel",
-        "headingSize",
-        "hint",
-        "classes",
-        "attributes",
-        "formItemClasses",
-        "formItemAttributes",
-    ]
+    def __init__(self):
+        self.allowed_template_params = [
+            "label",
+            "headingLevel",
+            "headingSize",
+            "hint",
+            "classes",
+            "attributes",
+            "formItemClasses",
+            "formItemAttributes",
+        ]
 
     def __call__(self, field, **kwargs):
         kwargs.setdefault("id", kwargs.get("id", field.id))
@@ -162,7 +163,7 @@ class TnaCheckboxesWidget(TnaIterableWidget):
 
 class TnaCheckboxWidget(TnaCheckboxesWidget):
     def __call__(self, field, **kwargs):
-        class IterableField(object):
+        class IterableField:
             def __init__(self, field):
                 self.field = field
                 self.max = 1
@@ -275,11 +276,9 @@ class TnaSelectWidget(TnaWidget, Select):
     template = "widgets/select.html"
 
     def __call__(self, field, **kwargs):
-        if self.multiple:
-            raise Exception(
-                "Please do not render mutliselect elements as a select box"
-                " - you should use checkboxes instead in order to comply with"
-                " the GOV.UK service manual"
+        if hasattr(self, "multiple") and self.multiple:
+            raise ValueError(
+                "Do not render mutliselect elements as a select box. Use checkboxes instead to comply with National Archives' standards."
             )
 
         kwargs["items"] = []

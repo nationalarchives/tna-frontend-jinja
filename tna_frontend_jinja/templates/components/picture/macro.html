@@ -30,7 +30,7 @@
     {{ tnaTabs({
       'itemHeadingLevel': params.informationItemHeadingLevel,
       'items': params.information,
-      'classes': 'tna-tabs--small'
+      'small': True
     }) }}
   {%- else -%}
     {{ params.information[0].body | safe }}
