@@ -276,7 +276,7 @@ class TnaSelectWidget(TnaWidget, Select):
     template = "widgets/select.html"
 
     def __call__(self, field, **kwargs):
-        if self.multiple:
+        if hasattr(self, "multiple") and self.multiple:
             raise ValueError(
                 "Do not render mutliselect elements as a select box. Use checkboxes instead to comply with National Archives' standards."
             )
