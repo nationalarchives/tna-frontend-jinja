@@ -183,6 +183,7 @@ def my_form():
     # If the request is a GET or validation is not successful, render the form
     return render_template("my-form.html", form=form)
 
+
 @app.route("/success/")
 def success():
     # Render the success/next page

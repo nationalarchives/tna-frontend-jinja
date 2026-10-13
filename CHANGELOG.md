@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Allowed the code block component to have a `caller()` function
 
 ### Changed
+
+- Ensured all datetime functions are timezone-aware
+
 ### Deprecated
 ### Removed
 ### Fixed

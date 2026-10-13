@@ -42,9 +42,7 @@ year_birth = TnaYearField(
     include_now=False,  # Don't consider the current year valid
     validators=[
         validators.InputRequired(message="Enter a year of birth"),
-        tna_frontend_validators.PastDate(
-            message="Year of birth must be in the past"
-        ),
+        tna_frontend_validators.PastDate(message="Year of birth must be in the past"),
     ],
 )
 ```
@@ -66,8 +64,7 @@ contact_preference = SelectMultipleField(
     choices=[("phone", "Phone"), ("email", "Email"), ("sms", "SMS")],
     validators=[
         tna_frontend_validators.MaxOptions(
-            max=2,
-            message="Select a maximum of 2 items"
+            max=2, message="Select a maximum of 2 items"
         ),
     ],
     widget=TnaCheckboxesWidget(),
