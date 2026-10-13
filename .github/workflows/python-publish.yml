@@ -30,7 +30,6 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
 
-
   unit-test:
     strategy:
       matrix:
@@ -51,8 +50,6 @@ jobs:
         run: poetry install
       - name: Run tests
         run: poetry run python -m pytest
-
-
 
   deploy:
     runs-on: ubuntu-latest
