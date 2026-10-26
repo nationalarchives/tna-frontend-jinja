@@ -68,13 +68,6 @@ for (
 ) {
   const component = components[intComponent];
   console.log(`\nComponent: ${component.name}`);
-  // const { fixtures } = JSON.parse(
-  //   fs.readFileSync(
-  //     `${fixturesDirectory}${component.name}/fixtures.json`,
-  //     "utf8",
-  //   ),
-  // );
-
   for (
     let intFixture = 0;
     intFixture < component.fixtures.length;
@@ -155,13 +148,6 @@ const utilities = globSync(`${utilitiesFixturesDirectory}*/fixtures.json`)
 for (let intUtility = 0; intUtility < utilities.length; intUtility += 1) {
   const utility = utilities[intUtility];
   console.log(`\nUtility: ${utility.name}`);
-  // const { fixtures } = JSON.parse(
-  //   fs.readFileSync(
-  //     `${utilitiesFixturesDirectory}${utility.name}/fixtures.json`,
-  //     "utf8",
-  //   ),
-  // );
-
   for (
     let intFixture = 0;
     intFixture < utility.fixtures.length;
@@ -220,7 +206,13 @@ const { fixtures } = JSON.parse(
   fs.readFileSync(`${templatesDirectory}fixtures.json`, "utf8"),
 );
 await fixtures
-  .filter((fixture) => fixture.template !== "layouts/_generic.njk")
+  .map((fixture) => ({
+    ...fixture,
+    template: fixture.template.replace(
+      "layouts/_generic.njk",
+      "layouts/base.html",
+    ),
+  }))
   .forEach(async (fixture) => {
     const fixtureHtml = fixture.html;
     const testUrl = `${testEndpoint}templates/${fixture.template.replace(/\.njk/, ".html")}?params=${encodeURIComponent(

@@ -3,13 +3,13 @@
 {%- from 'components/header/macro.html' import tnaHeader -%}
 {%- from 'components/skip-link/macro.html' import tnaSkipLink -%}
 
-{%- set defaultSiteTitle = 'The National Archives' -%}
+{%- from 'macros/title.html' import title -%}
 
 <!DOCTYPE html>
 <html lang="{{ htmlLang | default('en') }}" class="tna-template{% if theme and theme != 'light' %} tna-template--{{ theme }}-theme{% endif %}{% if themeAccent %} tna-template--{{ themeAccent }}-accent{% endif %}{% if htmlClasses %} {{ htmlClasses }}{% endif %}" {%- if htmlAttributes %}{% for attribute, value in htmlAttributes.items() %} {{ attribute }}{% if value != '' %}="{{ value }}"{% endif %}{% endfor %}{% endif %}>
   <head>
     <meta charset="utf-8">
-    <title>{% block pageTitle %}{% if pageTitle %}{{ pageTitle }} - {{ siteTitle or defaultSiteTitle }}{% else %}{{ siteTitle or defaultSiteTitle }}{% endif %}{% endblock %}</title>
+    <title>{% block pageTitle %}{{ title(pageTitle, siteTitle) }}{% endblock pageTitle %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="{{ themeColor | default('#010101') }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
