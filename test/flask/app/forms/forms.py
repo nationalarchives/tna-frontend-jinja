@@ -14,6 +14,7 @@ from wtforms import (
     PasswordField,
     RadioField,
     SearchField,
+    SelectChoice,
     SelectField,
     SelectMultipleField,
     StringField,
@@ -282,10 +283,10 @@ class SelectForm(FlaskForm):
     field = SelectField(
         "Order",
         choices=[
-            ("", "None"),
-            ("date", "Date"),
-            ("relevance", "Relevance"),
-            ("popularity", "Popularity"),
+            SelectChoice("", "None"),
+            SelectChoice("date", "Date"),
+            SelectChoice("relevance", "Relevance"),
+            SelectChoice("popularity", "Popularity"),
         ],
         validators=[
             validators.InputRequired(message="Select an order"),
@@ -527,10 +528,10 @@ class KitchenSinkForm(FlaskForm):
     order = SelectField(
         "Order",
         choices=[
-            ("", "None"),
-            ("date", "Date"),
-            ("relevance", "Relevance"),
-            ("popularity", "Popularity"),
+            SelectChoice("", "None"),
+            SelectChoice("date", "Date"),
+            SelectChoice("relevance", "Relevance"),
+            SelectChoice("popularity", "Popularity"),
         ],
         validators=[
             validators.InputRequired(message="Select an order"),

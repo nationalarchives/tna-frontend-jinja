@@ -12,7 +12,7 @@ All fields support an optional `invalid_date_error_message` parameter to set the
 
 ### `TnaDateField`
 
-Import: **`tna_frontend_jinja.wtforms.fields.TnaDateField`**
+Import: **`tna_frontend_jinja.wtforms.fields.datetime.TnaDateField`**
 
 Day, month and year fields
 
@@ -27,7 +27,7 @@ date_of_birth = TnaDateField(
 
 ### `TnaMonthField`
 
-Import: **`tna_frontend_jinja.wtforms.fields.TnaMonthField`**
+Import: **`tna_frontend_jinja.wtforms.fields.datetime.TnaMonthField`**
 
 Month and year fields
 
@@ -40,7 +40,7 @@ month_of_birth = TnaMonthField(
 
 ### `TnaYearField`
 
-Import: **`tna_frontend_jinja.wtforms.fields.TnaYearField`**
+Import: **`tna_frontend_jinja.wtforms.fields.datetime.TnaYearField`**
 
 Year field
 
@@ -53,7 +53,7 @@ year_of_birth = TnaYearField(
 
 ### `TnaProgressiveDateField`
 
-Import: **`tna_frontend_jinja.wtforms.fields.TnaProgressiveDateField`**
+Import: **`tna_frontend_jinja.wtforms.fields.datetime.TnaProgressiveDateField`**
 
 Date fields that accept year, year/month or year/month/day
 
@@ -80,7 +80,7 @@ year_of_birth = TnaYearField(
 
 #### Coerce partial date to the end of its range
 
-Pass `end_of_partial_date_range=True` parameter to coerse a partial date to the end of its range.
+Pass `end_of_partial_date_range=True` parameter to coerce a partial date to the end of its range.
 
 | Inputs           | `end_of_partial_date_range=False` (default) | `end_of_partial_date_range=True` |
 | ---------------- | ------------------------------------------- | -------------------------------- |

@@ -56,6 +56,17 @@ class TestPastDateValidator(unittest.TestCase):
     def setUp(self):
         self.error_message_past_date = "The date must be in the past"
 
+    def test_include_now(self):
+        with app.test_request_context():
+            today = datetime.datetime.now(datetime.UTC).date()
+            form = DateInputForm(formdata=None, data={"date": today})
+            form.date.validators = [PastDate(include_now=True)]
+            assert form.validate() is True
+
+            form = DateInputForm(formdata=None, data={"date": today})
+            form.date.validators = [PastDate()]
+            assert form.validate() is False
+
     def test_happy_formdata(self):
         with app.test_request_context():
             formdata = MultiDict(
@@ -152,6 +163,17 @@ class TestPastDateValidator(unittest.TestCase):
 class TestFutureDateValidator(unittest.TestCase):
     def setUp(self):
         self.error_message_future_date = "The date must be in the future"
+
+    def test_include_now(self):
+        with app.test_request_context():
+            today = datetime.datetime.now(datetime.UTC).date()
+            form = DateInputForm(formdata=None, data={"date": today})
+            form.date.validators = [FutureDate(include_now=True)]
+            assert form.validate() is True
+
+            form = DateInputForm(formdata=None, data={"date": today})
+            form.date.validators = [FutureDate()]
+            assert form.validate() is False
 
     def test_happy_formdata(self):
         with app.test_request_context():
