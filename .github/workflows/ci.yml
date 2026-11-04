@@ -24,8 +24,7 @@ jobs:
         run: docker compose exec app poetry run python -m pytest
       - name: Run Playwright tests
         run: |
-          npx playwright install --with-deps
-          npx playwright install-deps
+          npx playwright install chromium --with-deps
           npx playwright test
 
   build:
