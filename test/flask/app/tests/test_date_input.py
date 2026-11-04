@@ -23,6 +23,17 @@ class DateInputForm(FlaskForm):
     )
 
 
+class CustomInvalidDateMessageForm(FlaskForm):
+    class Meta:
+        csrf = False
+
+    date = TnaDateField(
+        "Date",
+        validators=[],
+        invalid_date_error_message="Enter a valid calendar date",
+    )
+
+
 class MonthInputForm(FlaskForm):
     class Meta:
         csrf = False
@@ -166,6 +177,20 @@ class TestDateInputField(unittest.TestCase):
             complete = form.validate()
             assert form.errors == {"date": [self.error_message_required]}
             assert complete is False
+
+    def test_invalid_date_error_message(self):
+        with app.test_request_context():
+            formdata = MultiDict(
+                [
+                    ("date-day", "01"),
+                    ("date-month", "13"),
+                    ("date-year", "2003"),
+                ]
+            )
+            form = CustomInvalidDateMessageForm(formdata=formdata)
+            assert form.date.data is None
+            assert form.validate() is False
+            assert form.errors == {"date": ["Enter a valid calendar date"]}
 
     def test_happy_formdata_month_string(self):
         with app.test_request_context():

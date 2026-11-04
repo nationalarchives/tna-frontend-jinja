@@ -20,11 +20,12 @@ year_of_retirement = TnaYearField(
     "Planned year of retirement",
     description="Enter your planned year of retirement in the format YYYY",
     invalid_date_error_message="Planned year of retirement must be a valid year",
-    include_now=True,  # The current year is a valid option
+    end_of_partial_date_range=True,
     validators=[
         validators.InputRequired(message="Enter a year for retirement"),
         tna_frontend_validators.FutureDate(
-            message="Year of retirement must be in the future"
+            message="Year of retirement must be in the future",
+            include_now=True,  # The current year is a valid option
         ),
     ],
 )
@@ -39,10 +40,13 @@ year_birth = TnaYearField(
     "Year of birth",
     description="Enter your year of birth in the format YYYY",
     invalid_date_error_message="Year of birth must be a valid year",
-    include_now=False,  # Don't consider the current year valid
+    end_of_partial_date_range=True,
     validators=[
         validators.InputRequired(message="Enter a year of birth"),
-        tna_frontend_validators.PastDate(message="Year of birth must be in the past"),
+        tna_frontend_validators.PastDate(
+            message="Year of birth must be in the past",
+            include_now=False,  # Don't consider the current year valid
+        ),
     ],
 )
 ```

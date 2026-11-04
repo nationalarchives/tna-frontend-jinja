@@ -6,10 +6,10 @@
 
 ```sh
 # Install the WTForms version with Poetry
-poetry add tna-frontend-jinja[wtforms]
+poetry add "tna-frontend-jinja[wtforms]"
 
 # Install the WTForms version with pip
-pip install tna-frontend-jinja[wtforms]
+pip install "tna-frontend-jinja[wtforms]"
 ```
 
 The dependencies added for [WTForms](https://wtforms.readthedocs.io/en/3.2.x/) are done through [Flask-WTF](https://flask-wtf.readthedocs.io/en/1.2.x/).
@@ -57,7 +57,7 @@ from wtforms import (
 )
 
 
-class TextInputForm(FlaskForm):
+class MyForm(FlaskForm):
     username = StringField(
         "Username",
         description="This will be used to log in",
@@ -87,7 +87,7 @@ from wtforms import (
 )
 
 
-class TextInputForm(FlaskForm):
+class MyForm(FlaskForm):
     username = StringField(
         "Username",
         description="This will be used to log in",
@@ -125,6 +125,7 @@ from flask_wtf import FlaskForm
 + from tna_frontend_jinja.wtforms import (
 +     TnaEmailInputWidget,
 +     TnaTextInputWidget,
++     TnaSubmitWidget,
 + )
 from wtforms import (
     EmailField,
@@ -133,7 +134,7 @@ from wtforms import (
 )
 
 
-class TextInputForm(FlaskForm):
+class MyForm(FlaskForm):
     username = StringField(
         "Username",
         description="This will be used to log in",
@@ -169,6 +170,9 @@ Create a route to display your form and accept `POST` requests and another route
 This allows us to use the [Post/Redirect/Get pattern](https://en.wikipedia.org/wiki/Post/Redirect/Get).
 
 ```python
+from flask import redirect, render_template, url_for
+
+
 # Accept GET and POST requests
 @app.route("/my-form/", methods=["GET", "POST"])
 def my_form():
