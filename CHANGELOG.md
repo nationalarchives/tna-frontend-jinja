@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated `wtforms_errors` for RadioField and SelectMultipleField to work with both tuples and iterables for choices (changed in [WTForms version 3.3.0](https://wtforms.readthedocs.io/en/3.3.x/changes/#version-3-3-0))
+
 ### Deprecated
 ### Removed
 ### Fixed

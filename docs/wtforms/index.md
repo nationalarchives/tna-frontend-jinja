@@ -202,6 +202,8 @@ Output the form fields in whatever order or structure you need.
 
 Customise the components by adding a `params` parameter to the field constructor. These can be any documented in the [National Archives Design System](https://design-system.nationalarchives.gov.uk/components/) for that component.
 
+For `RadioField` and `SelectMultipleField`, `wtforms_errors` links errors to the first choice returned by `iter_choices()`. It accepts iterables of legacy tuples or choice objects with a `value` attribute, and links to the field ID when there are no choices.
+
 ```jinja
 {%- from 'components/error-summary/macro.html' import tnaErrorSummary -%}
 
