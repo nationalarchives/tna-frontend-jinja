@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/tna-frontend-jinja/compare/v1.6.0...HEAD)
 
 ### Added
+
+- When invalid dates are entered in TNA date fields, the error summary now links to the first invalid date field part rather than just the first
+
 ### Changed
 
 - Updated `wtforms_errors` for RadioField and SelectMultipleField to work with both tuples and iterables for choices (changed in [WTForms version 3.3.0](https://wtforms.readthedocs.io/en/3.3.x/changes/#version-3-3-0))

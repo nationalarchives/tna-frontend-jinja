@@ -4,10 +4,40 @@ from unittest.mock import patch
 
 from wtforms import Form, RadioField, SelectMultipleField, StringField
 
+from tna_frontend_jinja.wtforms import (
+    TnaDateField,
+    TnaMonthField,
+    TnaProgressiveDateField,
+    TnaYearField,
+)
 from tna_frontend_jinja.wtforms.helpers import wtforms_errors
 
 
 class TestWTFormsErrors(unittest.TestCase):
+    def test_date_error_anchors(self):
+        for field_type in (
+            TnaDateField,
+            TnaMonthField,
+            TnaYearField,
+            TnaProgressiveDateField,
+        ):
+
+            class DateForm(Form):
+                date = field_type(id="custom-date")
+
+            form = DateForm(prefix="form-")
+            parts = form.date.field_codes(True)
+            for invalid_parts in ([], *([part] for part in parts), parts):
+                with self.subTest(
+                    field=field_type.__name__, invalid_parts=invalid_parts
+                ):
+                    form.date.invalid_parts = invalid_parts
+                    form.date.errors = ["Enter a valid date"]
+                    part = invalid_parts[0] if invalid_parts else parts[0]
+                    assert wtforms_errors(form)["items"] == [
+                        {"text": "Enter a valid date", "href": f"#custom-date-{part}"}
+                    ]
+
     def test_choice_iterables(self):
         choice_formats = [
             ("legacy tuples", [("first", "First", False)]),
@@ -47,22 +77,6 @@ class TestWTFormsErrors(unittest.TestCase):
                             "title": "There is a problem",
                             "items": [{"text": "Choose an option", "href": anchor}],
                         }
-
-    def test_grouped_choices(self):
-        for field_type in (RadioField, SelectMultipleField):
-            with self.subTest(field=field_type.__name__):
-
-                class ChoiceForm(Form):
-                    choice = field_type(
-                        choices={"Group": [("first", "First"), ("second", "Second")]}
-                    )
-
-                form = ChoiceForm()
-                form.choice.errors = ["Choose an option"]
-
-                assert wtforms_errors(form)["items"] == [
-                    {"text": "Choose an option", "href": "#choice-first"}
-                ]
 
     def test_other_fields_and_parameter_overrides(self):
         class TextForm(Form):

@@ -52,10 +52,12 @@ def wtforms_errors(form, params=None):
                 "TnaYearField",
                 "TnaProgressiveDateField",
             ]:
-                # Link to the first subfield of the date-related field
-                id_map[field_name] = (
-                    f"{field.id}-{'m' if field.field_codes(True)[0] in ['m', 'b'] else field.field_codes(True)[0]}"
+                part = (
+                    field.invalid_parts[0]
+                    if field.invalid_parts
+                    else field.field_codes(True)[0]
                 )
+                id_map[field_name] = f"{field.id}-{'m' if part in ['m', 'b'] else part}"
             else:
                 id_map[field_name] = field.id
 

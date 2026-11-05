@@ -8,6 +8,10 @@ These exist mostly because we handle the date field with three inputs for day, m
 
 All fields support an optional `invalid_date_error_message` parameter to set the error message when an invalid date is entered. This defaults to "[field name] must be a real date".
 
+After processing submitted form data, `field.invalid_parts` lists the missing or invalid input names (`"day"`, `"month"`, `"year"`) in input order. It is empty for valid dates and resets when the field is processed again. Impossible calendar dates, such as 31 April or 29 February in a non-leap year, mark `"day"` as invalid. Optional trailing parts of progressive dates are not marked invalid.
+
+This identifies date-parsing failures only; errors from validators such as date-range checks do not identify an invalid part. `wtforms_errors` links each date error to the first invalid part, or the first input when no invalid part is identified.
+
 ## Date fields
 
 ### `TnaDateField`
