@@ -51,14 +51,14 @@ files = [
 
 [[package]]
 name = "dnspython"
-version = "2.9.0"
+version = "2.9.2"
 description = "DNS toolkit"
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "dnspython-2.9.0-py3-none-any.whl", hash = "sha256:9a4aedb833c3c1b49214d04d44d3032ab7a9135f7c1d29a549b4ff78fd82fda9"},
-    {file = "dnspython-2.9.0.tar.gz", hash = "sha256:b44dc6b18f07a8b1c56676a19fbfdb5209415b046a9cece286baafa87ff3f7f1"},
+    {file = "dnspython-2.9.2-py3-none-any.whl", hash = "sha256:af15f7d385a6ae2fb35a796fde2138004c8c42c7389090e2addc83e3b3340fd8"},
+    {file = "dnspython-2.9.2.tar.gz", hash = "sha256:8d4d39a513e649d634004ce4d39ade2352efcea472a0247535a5c2d18a9d7ba9"},
 ]
 
 [package.extras]
@@ -338,14 +338,14 @@ watchdog = ["watchdog (>=2.3)"]
 
 [[package]]
 name = "wtforms"
-version = "3.3.1"
+version = "3.3.2"
 description = "Form validation and rendering for Python web development."
 optional = false
 python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "wtforms-3.3.1-py3-none-any.whl", hash = "sha256:2f4728ef3f67173c22590e60e845937598af7455474330fdb84354a609d67ec1"},
-    {file = "wtforms-3.3.1.tar.gz", hash = "sha256:9d10ccb5740290c9ae6673522d87bcae3b669cf0cb4e4584aee229b4694af10c"},
+    {file = "wtforms-3.3.2-py3-none-any.whl", hash = "sha256:2fac992f39102d6268b06e05cdbdf37a7e9b9a4e103916d2dff1d09a080b531d"},
+    {file = "wtforms-3.3.2.tar.gz", hash = "sha256:49bb51d10b7832d497e758736da4d56f7d129a015db24756f36f28992f175404"},
 ]
 
 [package.dependencies]

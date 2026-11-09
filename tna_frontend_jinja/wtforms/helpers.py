@@ -37,19 +37,27 @@ def wtforms_errors(form, params=None):
     for field_name in form._fields:
         field = getattr(form, field_name, None)
         if field and hasattr(field, "id"):
+            # Find the first choice for SelectMultipleField and RadioField link to
             if field.type in ["SelectMultipleField", "RadioField"] and hasattr(
                 field, "choices"
             ):
-                id_map[field_name] = f"{field.id}-{field.choices[0][0]}"
+                id_map[field_name] = field.id
+                first = next(iter(field.iter_choices()), None)
+                if first is not None:
+                    value = first.value if hasattr(first, "value") else first[0]
+                    id_map[field_name] = f"{field.id}-{value}"
             elif field.type in [
                 "TnaDateField",
                 "TnaMonthField",
                 "TnaYearField",
                 "TnaProgressiveDateField",
             ]:
-                id_map[field_name] = (
-                    f"{field.id}-{'m' if field.field_codes(True)[0] in ['m', 'b'] else field.field_codes(True)[0]}"
+                part = (
+                    field.invalid_parts[0]
+                    if field.invalid_parts
+                    else field.field_codes(True)[0]
                 )
+                id_map[field_name] = f"{field.id}-{'m' if part in ['m', 'b'] else part}"
             else:
                 id_map[field_name] = field.id
 

@@ -41,6 +41,7 @@ class TnaDateField(DateField):
             if format is not None
         ]
         self.progressive = False
+        self.invalid_parts = []
         self.strptime_format = clean_datetime_format_for_strptime(self.format)
         if invalid_date_error_message:
             self.invalid_date_error_message = invalid_date_error_message
@@ -89,6 +90,7 @@ class TnaDateField(DateField):
         :param extra_filters: A sequence of extra filters to run.
         """
         self.process_errors = []
+        self.invalid_parts = []
         if data is unset_value:
             try:
                 data = self.default()
@@ -143,7 +145,9 @@ class TnaDateField(DateField):
         self.data = None
 
     def process_formdata(self, valuelist):
+        self.invalid_parts = []
         if not valuelist:
+            self.invalid_parts = self._get_invalid_parts(valuelist)
             return
 
         if self.progressive and "" in valuelist:
@@ -159,7 +163,46 @@ class TnaDateField(DateField):
             except ValueError:
                 self.data = None
 
+        self.invalid_parts = self._get_invalid_parts(valuelist)
         raise ValueError(self.gettext(self.invalid_date_error_message))
+
+    def _get_invalid_parts(self, valuelist):
+        part_formats = {
+            "day": {"%d"},
+            "month": {"%m", "%b", "%B"},
+            "year": {"%Y", "%y"},
+        }
+        formats = {
+            directive
+            for format in self.strptime_format
+            for directive in format.replace("-", " ").split()
+        }
+        invalid_parts = []
+        parsed_parts = {}
+        for index, part in enumerate(self.field_codes(True)):
+            if self.progressive and index > 0 and index >= len(valuelist):
+                break
+            value = valuelist[index] if index < len(valuelist) else ""
+            for format in part_formats[part] & formats:
+                try:
+                    if part == "day":
+                        parsed = datetime.strptime(f"{value} 2000", f"{format} %Y")
+                    else:
+                        parsed = datetime.strptime(value, format)
+                except ValueError:
+                    continue
+                parsed_parts[part] = getattr(parsed, part)
+                break
+            else:
+                invalid_parts.append(part)
+
+        if all(part in parsed_parts for part in ("day", "month")):
+            last_day = calendar.monthrange(
+                parsed_parts.get("year", 2000), parsed_parts["month"]
+            )[1]
+            if parsed_parts["day"] > last_day:
+                invalid_parts.append("day")
+        return [part for part in self.field_codes(True) if part in invalid_parts]
 
 
 class TnaPartialDateField(TnaDateField):
@@ -205,9 +248,12 @@ class TnaPartialDateField(TnaDateField):
         self.strptime_format = clean_datetime_format_for_strptime(self.format)
 
     def process_formdata(self, valuelist):
+        self.invalid_parts = []
         if not valuelist:
+            self.invalid_parts = self._get_invalid_parts(valuelist)
             return
 
+        submitted_values = valuelist
         if "" in valuelist:
             valuelist = valuelist[: valuelist.index("")]
 
@@ -243,6 +289,7 @@ class TnaPartialDateField(TnaDateField):
             except ValueError:
                 self.data = None
 
+        self.invalid_parts = self._get_invalid_parts(submitted_values)
         raise ValueError(self.gettext(self.invalid_date_error_message))
 
 

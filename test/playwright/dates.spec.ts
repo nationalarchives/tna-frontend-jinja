@@ -7,6 +7,122 @@ import {
   validateHtml,
 } from "./lib";
 
+const dateForms = [
+  { path: "date-input", parts: ["day", "month", "year"] },
+  { path: "date-input-month", parts: ["month", "year"] },
+  { path: "date-input-year", parts: ["year"] },
+  { path: "date-input-progressive", parts: ["year", "month", "day"] },
+  { path: "date-input-progressive-end", parts: ["year", "month", "day"] },
+];
+const validDate: Record<string, string> = {
+  day: "01",
+  month: "02",
+  year: "1999",
+};
+const invalidValues: Record<string, string[]> = {
+  day: ["32", "abc", ""],
+  month: ["13", "abc", ""],
+  year: ["0000", "abc", ""],
+};
+
+for (const { path, parts } of dateForms) {
+  for (const part of parts) {
+    for (const value of invalidValues[part]) {
+      // Empty trailing progressive date inputs are valid partial dates.
+      if (path.includes("progressive") && value === "") continue;
+
+      test(`${path}: invalid ${part} (${JSON.stringify(value)}) summary link`, async ({
+        page,
+      }) => {
+        await page.goto(`/forms/${path}/`);
+        for (const inputPart of parts) {
+          const input = page.locator(`#field-${inputPart}`);
+          const inputValue = inputPart === part ? value : validDate[inputPart];
+          if (path.includes("progressive")) {
+            await input.pressSequentially(inputValue);
+            if (inputPart === part) break;
+          } else {
+            await input.fill(inputValue);
+          }
+        }
+        await page.getByRole("button", { name: "Submit" }).click();
+
+        await expectFormFailure(page);
+        const link = page.locator(".tna-error-summary a");
+        await expect(link).toHaveCount(1);
+        await expect(link).toHaveAttribute("href", `#field-${part}`);
+        await link.click();
+        await expect(page.locator(`#field-${part}`)).toBeFocused();
+      });
+    }
+  }
+}
+
+for (const path of [
+  "date-input",
+  "date-input-progressive",
+  "date-input-progressive-end",
+]) {
+  for (const { day, month, year } of [
+    { day: "31", month: "04", year: "1999" },
+    { day: "29", month: "02", year: "1999" },
+  ]) {
+    test(`${path}: impossible date ${day} ${month} ${year} links to day`, async ({
+      page,
+    }) => {
+      await page.goto(`/forms/${path}/`);
+      await page.getByLabel("Year", { exact: true }).pressSequentially(year);
+      await page.getByLabel("Month", { exact: true }).pressSequentially(month);
+      await page.getByLabel("Day", { exact: true }).pressSequentially(day);
+      await page.getByRole("button", { name: "Submit" }).click();
+
+      await expectFormFailure(page);
+      const link = page.locator(".tna-error-summary a");
+      await expect(link).toHaveCount(1);
+      await expect(link).toHaveAttribute("href", "#field-day");
+      await link.click();
+      await expect(page.getByLabel("Day", { exact: true })).toBeFocused();
+    });
+  }
+}
+
+for (const { path, parts } of dateForms) {
+  if (path.includes("progressive") || parts.length < 2) continue;
+
+  test(`${path}: multiple invalid parts link to first invalid input`, async ({
+    page,
+  }) => {
+    await page.goto(`/forms/${path}/`);
+    for (const part of parts) {
+      await page.locator(`#field-${part}`).fill("abc");
+    }
+    await page.getByRole("button", { name: "Submit" }).click();
+
+    await expectFormFailure(page);
+    const link = page.locator(".tna-error-summary a");
+    await expect(link).toHaveCount(1);
+    await expect(link).toHaveAttribute("href", `#field-${parts[0]}`);
+    await link.click();
+    await expect(page.locator(`#field-${parts[0]}`)).toBeFocused();
+  });
+}
+
+test("date input: date-range error links to first input", async ({ page }) => {
+  await page.goto("/forms/date-input/");
+  await page.getByLabel("Day", { exact: true }).fill("01");
+  await page.getByLabel("Month", { exact: true }).fill("02");
+  await page.getByLabel("Year", { exact: true }).fill("2099");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await expectFormFailure(page);
+  const link = page.getByRole("link", {
+    name: "Date of birth must be in the past",
+  });
+  await expect(link).toHaveAttribute("href", "#field-day");
+  await link.click();
+  await expect(page.getByLabel("Day", { exact: true })).toBeFocused();
+});
+
 test("date input", async ({ page }) => {
   await page.goto("/forms/date-input/");
   await checkAccessibility(page);

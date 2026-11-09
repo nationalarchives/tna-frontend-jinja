@@ -4,6 +4,7 @@ import unittest
 from flask_wtf import FlaskForm
 from werkzeug.datastructures import MultiDict
 from wtforms import RadioField, StringField
+from wtforms.fields.choices import SelectChoice
 
 from app import app
 from tna_frontend_jinja.wtforms import (
@@ -42,11 +43,11 @@ class RadioForm(FlaskForm):
     string = RadioField(
         "Day",
         choices=[
-            ("1", "Monday"),
-            ("2", "Tuesday"),
-            ("3", "Wednesday"),
-            ("4", "Thursday"),
-            ("5", "Friday"),
+            SelectChoice("1", "Monday"),
+            SelectChoice("2", "Tuesday"),
+            SelectChoice("3", "Wednesday"),
+            SelectChoice("4", "Thursday"),
+            SelectChoice("5", "Friday"),
         ],
         validators=[],
     )
