@@ -95,24 +95,35 @@ class TnaIterableWidget(TnaWidget):
         kwargs["items"] = []
         kwargs["selected"] = None
 
-        choices_attributes = {}
         if hasattr(field, "choices"):
-            choices_attributes = {
-                choice[0]: choice[2] for choice in field.choices if len(choice) > 2
-            }
-            field.choices = [(choice[0], choice[1]) for choice in field.iter_choices()]
+            choices = field.iter_choices()
+        else:
+            choices = (
+                (
+                    subfield._value(),
+                    subfield.label.text,
+                    getattr(subfield, "checked", subfield.data),
+                    {},
+                )
+                for subfield in field
+            )
 
-        for subfield in field:
-            choice_attributes = choices_attributes.get(subfield._value(), {})
+        for choice in choices:
+            if hasattr(choice, "value"):
+                value, label = choice.value, choice.label
+                selected, attributes = choice.selected, choice.render_kw
+            else:
+                value, label, selected, *render_kw = choice
+                attributes = render_kw[0] if render_kw else {}
             item = {
-                "text": subfield.label.text,
-                "value": subfield._value(),
-                **choice_attributes,
+                "text": label,
+                "value": str(value),
+                **attributes,
             }
 
-            if getattr(subfield, "checked", subfield.data):
+            if selected:
                 item["checked"] = True
-                kwargs["selected"] = subfield._value()
+                kwargs["selected"] = str(value)
 
             kwargs["items"].append(item)
 

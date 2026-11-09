@@ -230,6 +230,8 @@ For `RadioField` and `SelectMultipleField`, `wtforms_errors` links errors to the
 
 ## Supported fields and widgets
 
+`TnaRadiosWidget` and `TnaCheckboxesWidget` accept legacy choice tuples and WTForms 3.3 `SelectChoice` objects. Per-choice TNA options (such as `hint` and `id`) can be passed in the third tuple element or in `SelectChoice.render_kw`. Rendering does not modify the field's choices.
+
 | WTForms field                                                                                               | TNA widget(s)                                                             |
 | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | [`BooleanField`](https://wtforms.readthedocs.io/en/3.1.x/fields/#wtforms.fields.BooleanField)               | ✅ `TnaCheckboxWidget`                                                    |
