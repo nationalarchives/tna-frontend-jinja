@@ -30,7 +30,7 @@ class CustomInvalidDateMessageForm(FlaskForm):
     date = TnaDateField(
         "Date",
         validators=[],
-        invalid_date_error_message="Enter a valid calendar date",
+        invalid_value_message="Enter a valid calendar date",
     )
 
 
@@ -88,7 +88,7 @@ class ProgressiveDateForm(FlaskForm):
 class TestDateInputField(unittest.TestCase):
     def setUp(self):
         self.error_message_required = "Enter a date"
-        self.error_message_invalid = "Date must be a real date"
+        self.error_message_invalid = "Enter a real date"
 
     def test_empty(self):
         with app.test_request_context():
@@ -178,7 +178,7 @@ class TestDateInputField(unittest.TestCase):
             assert form.errors == {"date": [self.error_message_required]}
             assert complete is False
 
-    def test_invalid_date_error_message(self):
+    def test_invalid_value_message(self):
         with app.test_request_context():
             formdata = MultiDict(
                 [
@@ -322,7 +322,7 @@ class TestInvalidDateParts(unittest.TestCase):
                     assert form.date.invalid_parts == expected
                     assert form.validate() is (not expected)
                     assert form.errors == (
-                        {"date": ["Date must be a real date"]} if expected else {}
+                        {"date": ["Enter a real date"]} if expected else {}
                     )
 
     def test_partial_date_invalid_parts(self):
@@ -415,7 +415,7 @@ class TestInvalidDateParts(unittest.TestCase):
 class TestMonthInputField(unittest.TestCase):
     def setUp(self):
         self.error_message_required = "Enter a date"
-        self.error_message_invalid = "Date must be a real date"
+        self.error_message_invalid = "Enter a real date"
 
     def test_happy_formdata(self):
         with app.test_request_context():
@@ -565,7 +565,7 @@ class TestMonthInputField(unittest.TestCase):
 class TestYearInputField(unittest.TestCase):
     def setUp(self):
         self.error_message_required = "Enter a date"
-        self.error_message_invalid = "Date must be a real date"
+        self.error_message_invalid = "Enter a real date"
 
     def test_happy_formdata(self):
         with app.test_request_context():
@@ -649,7 +649,7 @@ class TestYearInputField(unittest.TestCase):
 class TestProgressiveDateInputField(unittest.TestCase):
     def setUp(self):
         self.error_message_required = "Enter a date"
-        self.error_message_invalid = "Date must be a real date"
+        self.error_message_invalid = "Enter a real date"
 
     def test_happy_formdata_year(self):
         with app.test_request_context():
