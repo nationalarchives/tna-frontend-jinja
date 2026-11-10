@@ -23,7 +23,7 @@ class TnaDateField(DateField):
         label=None,
         validators=None,
         allow_two_digit_year=False,
-        invalid_date_error_message="",
+        invalid_value_message="",
         **kwargs,
     ):
         super().__init__(label, validators, **kwargs)
@@ -43,12 +43,10 @@ class TnaDateField(DateField):
         self.progressive = False
         self.invalid_parts = []
         self.strptime_format = clean_datetime_format_for_strptime(self.format)
-        if invalid_date_error_message:
-            self.invalid_date_error_message = invalid_date_error_message
+        if invalid_value_message:
+            self.invalid_value_message = invalid_value_message
         else:
-            self.invalid_date_error_message = self.gettext(
-                f"{self.label.text} must be a real date"
-            )
+            self.invalid_value_message = self.gettext("Enter a real date")
 
     def field_codes(self, full_code=False):
         """
@@ -164,7 +162,7 @@ class TnaDateField(DateField):
                 self.data = None
 
         self.invalid_parts = self._get_invalid_parts(valuelist)
-        raise ValueError(self.gettext(self.invalid_date_error_message))
+        raise ValueError(self.gettext(self.invalid_value_message))
 
     def _get_invalid_parts(self, valuelist):
         part_formats = {
@@ -211,7 +209,7 @@ class TnaPartialDateField(TnaDateField):
         label=None,
         validators=None,
         allow_two_digit_year=False,
-        invalid_date_error_message="",
+        invalid_value_message="",
         end_of_partial_date_range=False,
         **kwargs,
     ):
@@ -219,7 +217,7 @@ class TnaPartialDateField(TnaDateField):
             label,
             validators,
             allow_two_digit_year,
-            invalid_date_error_message,
+            invalid_value_message,
             **kwargs,
         )
         self.end_of_partial_date_range = end_of_partial_date_range
@@ -290,7 +288,7 @@ class TnaPartialDateField(TnaDateField):
                 self.data = None
 
         self.invalid_parts = self._get_invalid_parts(submitted_values)
-        raise ValueError(self.gettext(self.invalid_date_error_message))
+        raise ValueError(self.gettext(self.invalid_value_message))
 
 
 class TnaMonthField(TnaPartialDateField):
@@ -299,7 +297,7 @@ class TnaMonthField(TnaPartialDateField):
         label=None,
         validators=None,
         allow_two_digit_year=False,
-        invalid_date_error_message="",
+        invalid_value_message="",
         end_of_partial_date_range=False,
         **kwargs,
     ):
@@ -307,7 +305,7 @@ class TnaMonthField(TnaPartialDateField):
             label,
             validators,
             allow_two_digit_year,
-            invalid_date_error_message,
+            invalid_value_message,
             end_of_partial_date_range,
             **kwargs,
         )
@@ -333,7 +331,7 @@ class TnaYearField(TnaPartialDateField):
         label=None,
         validators=None,
         allow_two_digit_year=False,
-        invalid_date_error_message="",
+        invalid_value_message="",
         end_of_partial_date_range=False,
         **kwargs,
     ):
@@ -341,7 +339,7 @@ class TnaYearField(TnaPartialDateField):
             label,
             validators,
             allow_two_digit_year,
-            invalid_date_error_message,
+            invalid_value_message,
             end_of_partial_date_range,
             **kwargs,
         )
@@ -359,7 +357,7 @@ class TnaProgressiveDateField(TnaPartialDateField):
         label=None,
         validators=None,
         allow_two_digit_year=False,
-        invalid_date_error_message="",
+        invalid_value_message="",
         end_of_partial_date_range=False,
         **kwargs,
     ):
@@ -367,7 +365,7 @@ class TnaProgressiveDateField(TnaPartialDateField):
             label,
             validators,
             allow_two_digit_year,
-            invalid_date_error_message,
+            invalid_value_message,
             end_of_partial_date_range,
             **kwargs,
         )
@@ -422,4 +420,4 @@ class TnaProgressiveDateField(TnaPartialDateField):
     #         except ValueError:
     #             self.data = None
 
-    #     raise ValueError(self.gettext(self.invalid_date_error_message))
+    #     raise ValueError(self.gettext(self.invalid_value_message))

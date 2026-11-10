@@ -19,7 +19,7 @@ Import: **`tna_frontend_jinja.wtforms.validators.FutureDate`**
 year_of_retirement = TnaYearField(
     "Planned year of retirement",
     description="Enter your planned year of retirement in the format YYYY",
-    invalid_date_error_message="Planned year of retirement must be a valid year",
+    invalid_value_message="Planned year of retirement must be a valid year",
     end_of_partial_date_range=True,
     validators=[
         validators.InputRequired(message="Enter a year for retirement"),
@@ -39,7 +39,7 @@ Import: **`tna_frontend_jinja.wtforms.validators.PastDate`**
 year_birth = TnaYearField(
     "Year of birth",
     description="Enter your year of birth in the format YYYY",
-    invalid_date_error_message="Year of birth must be a valid year",
+    invalid_value_message="Year of birth must be a valid year",
     end_of_partial_date_range=True,
     validators=[
         validators.InputRequired(message="Enter a year of birth"),

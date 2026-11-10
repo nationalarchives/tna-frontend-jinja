@@ -413,10 +413,10 @@ test("progressive date input", async ({ page }) => {
   await checkAccessibility(page);
   await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(
-    /Search for date must be a real date/,
+    /Search for Enter a real date/,
   );
   await page
-    .getByRole("link", { name: "Search for date must be a real date" })
+    .getByRole("link", { name: "Search for Enter a real date" })
     .click();
   await expectSingleFieldValue(page, null);
   await expect(page.getByLabel("Year")).toBeFocused();
@@ -530,10 +530,10 @@ test("progressive date input end", async ({ page }) => {
   await checkAccessibility(page);
   await validateHtml(page);
   await expect(page.getByRole("main")).toHaveText(
-    /Search for date must be a real date/,
+    /Search for Enter a real date/,
   );
   await page
-    .getByRole("link", { name: "Search for date must be a real date" })
+    .getByRole("link", { name: "Search for Enter a real date" })
     .click();
   await expectSingleFieldValue(page, null);
   await expect(page.getByLabel("Year")).toBeFocused();

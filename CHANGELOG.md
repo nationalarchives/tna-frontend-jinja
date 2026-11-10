@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Changed `invalid_date_error_message` to `invalid_value_message` to match updates in WTForms
+
 ### Deprecated
 ### Removed
 ### Fixed

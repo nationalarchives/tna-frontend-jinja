@@ -83,6 +83,13 @@ class TestIterableWidgets(unittest.TestCase):
                         assert form.choice.choices == []
 
     def test_rendering_preserves_choices_and_attributes(self):
+        """
+        This test produces a know deprecation warning:
+            Passing SelectField choices as tuples is deprecated and will be
+            removed in wtforms 3.4. Please use SelectChoice instead.
+        This test ensures that rendering preserves choices and attributes even
+        when using deprecated tuple choices for people still using them.
+        """
         app = Flask(__name__)
         app.jinja_loader = PackageLoader("tna_frontend_jinja")
         choices = [
