@@ -159,6 +159,7 @@ class DateInputForm(FlaskForm):
     field = TnaDateField(
         "Date of birth",
         description="Enter your date of birth in the format DD MM YYYY",
+        invalid_value_message="Date of birth must be a real date",
         validators=[
             validators.InputRequired(message="Enter your date of birth"),
             tna_frontend_validators.PastDate(
@@ -172,6 +173,7 @@ class DateInputMonthForm(FlaskForm):
     field = TnaMonthField(
         "Month of birth",
         description="Enter your month of birth in the format MM YYYY",
+        invalid_value_message="Month of birth must be a real date",
         validators=[
             validators.InputRequired(message="Enter your month and year of birth"),
             tna_frontend_validators.PastDate(message="Date must be in the past"),
@@ -198,6 +200,7 @@ class DateInputProgressiveForm(FlaskForm):
     field = TnaProgressiveDateField(
         "Search for date",
         description="Enter a year, year and month or a full date",
+        invalid_value_message="Search date must be a real date",
         validators=[
             validators.Optional(),
         ],
@@ -208,6 +211,7 @@ class DateInputProgressiveLastDateForm(FlaskForm):
     field = TnaProgressiveDateField(
         "Search for date",
         description="Enter a year, year and month or a full date",
+        invalid_value_message="Search date must be a real date",
         validators=[
             validators.Optional(),
         ],
