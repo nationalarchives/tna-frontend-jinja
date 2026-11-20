@@ -4,7 +4,7 @@
     "test:playwright": "npx playwright install && playwright test --ui"
   },
   "dependencies": {
-    "@nationalarchives/frontend": "1.6.3"
+    "@nationalarchives/frontend": "1.7.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",
